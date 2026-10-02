@@ -70,3 +70,11 @@ uploads/
 *.bak
 .DS_Store
 Thumbs.db
+
+
+# =========================================================
+# Test Files (large binaries)
+# =========================================================
+
+test_images/
+test_files/

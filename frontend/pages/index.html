@@ -1,0 +1,2523 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="SmartReceiptAI — Intelligent Receipt Processing powered by OpenAI Vision."
+    >
+
+    <title>SmartReceiptAI</title>
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/welcome.css"
+    >
+
+    <script src="/assets/js/language.js" defer></script>
+
+</head>
+
+<body>
+
+    <main class="welcome-page">
+
+        <!-- =====================================================
+             NAVBAR
+        ====================================================== -->
+
+        <header class="welcome-navbar">
+
+            <!-- Brand -->
+
+            <a
+                href="/"
+                class="welcome-brand"
+                aria-label="SmartReceiptAI Home"
+            >
+
+                <div class="welcome-brand-icon">
+
+                    <div class="brand-receipt">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <span class="brand-ai">
+                        AI
+                    </span>
+
+                </div>
+
+                <div class="welcome-brand-text">
+
+                    <span class="brand-name">
+                        Smart<span>Receipt</span>AI
+                    </span>
+
+                    <span
+                        class="brand-tagline"
+                        data-i18n="welcome_brand_tagline"
+                    >
+                        Intelligent Receipt Processing
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- Desktop Navigation -->
+
+            <nav
+                class="welcome-nav"
+                aria-label="Main navigation"
+            >
+
+                <a
+                    href="#home"
+                    data-i18n="welcome_nav_home"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="#features"
+                    data-i18n="welcome_nav_features"
+                >
+                    Features
+                </a>
+
+                <a
+                    href="#how-it-works"
+                    data-i18n="welcome_nav_how"
+                >
+                    How It Works
+                </a>
+
+                <a
+                    href="#about"
+                    data-i18n="welcome_nav_about"
+                >
+                    About
+                </a>
+
+                <a
+                    href="#contact"
+                    data-i18n="welcome_nav_contact"
+                >
+                    Contact
+                </a>
+
+            </nav>
+
+
+            <!-- Desktop Actions -->
+
+            <div class="welcome-nav-actions">
+
+                <button
+                    type="button"
+                    class="language-switcher"
+                    id="languageSwitcher"
+                    aria-label="Change Language"
+                >
+
+                    <!-- Globe SVG -->
+
+                    <span
+                        class="language-icon"
+                        aria-hidden="true"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                            ></circle>
+
+                            <path
+                                d="M3 12h18"
+                            ></path>
+
+                            <path
+                                d="M12 3c2.2 2.4 3.4 5.4 3.4 9s-1.2 6.6-3.4 9c-2.2-2.4-3.4-5.4-3.4-9S9.8 5.4 12 3Z"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span id="currentLanguage">
+                        EN
+                    </span>
+
+                </button>
+
+
+                <a
+                    href="/login"
+                    class="nav-login"
+                    data-i18n="welcome_login"
+                >
+                    Login
+                </a>
+
+                <a
+                    href="/register"
+                    class="nav-register"
+                    data-i18n="welcome_create_account"
+                >
+                    Create Account
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 MOBILE MENU BUTTON
+            ================================================== -->
+
+            <button
+                type="button"
+                class="mobile-menu-toggle"
+                id="mobileMenuToggle"
+                aria-label="Open navigation"
+                aria-controls="mobileMenu"
+                aria-expanded="false"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+        </header>
+
+
+        <!-- =====================================================
+             MOBILE SIDE MENU
+        ====================================================== -->
+
+        <div
+            class="mobile-menu-overlay"
+            id="mobileMenuOverlay"
+            aria-hidden="true"
+        ></div>
+
+
+        <aside
+            class="mobile-menu"
+            id="mobileMenu"
+            aria-hidden="true"
+        >
+
+            <!-- Mobile Menu Header -->
+
+            <div class="mobile-menu-header">
+
+                <a
+                    href="/"
+                    class="mobile-menu-brand"
+                >
+
+                    <div class="welcome-brand-icon">
+
+                        <div class="brand-receipt">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <span class="brand-ai">
+                            AI
+                        </span>
+
+                    </div>
+
+                    <div class="welcome-brand-text">
+
+                        <span class="brand-name">
+                            Smart<span>Receipt</span>AI
+                        </span>
+
+                        <span
+                            class="brand-tagline"
+                            data-i18n="welcome_brand_tagline"
+                        >
+                            Intelligent Receipt Processing
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Close Button -->
+
+                <button
+                    type="button"
+                    class="mobile-menu-close"
+                    id="mobileMenuClose"
+                    aria-label="Close navigation"
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                    >
+
+                        <path d="M6 6l12 12"></path>
+                        <path d="M18 6L6 18"></path>
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <!-- Mobile Navigation -->
+
+            <nav
+                class="mobile-menu-nav"
+                aria-label="Mobile navigation"
+            >
+
+                <!-- Home -->
+
+                <a
+                    href="#home"
+                    class="mobile-menu-link"
+                >
+
+                    <span class="mobile-menu-nav-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M3 10.5 12 3l9 7.5"
+                            ></path>
+
+                            <path
+                                d="M5.5 9.5V21h13V9.5"
+                            ></path>
+
+                            <path
+                                d="M9.5 21v-6h5v6"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="welcome_nav_home">
+                        Home
+                    </span>
+
+                </a>
+
+
+                <!-- Features -->
+
+                <a
+                    href="#features"
+                    class="mobile-menu-link"
+                >
+
+                    <span class="mobile-menu-nav-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <rect
+                                x="3"
+                                y="3"
+                                width="7"
+                                height="7"
+                                rx="1.5"
+                            ></rect>
+
+                            <rect
+                                x="14"
+                                y="3"
+                                width="7"
+                                height="7"
+                                rx="1.5"
+                            ></rect>
+
+                            <rect
+                                x="3"
+                                y="14"
+                                width="7"
+                                height="7"
+                                rx="1.5"
+                            ></rect>
+
+                            <rect
+                                x="14"
+                                y="14"
+                                width="7"
+                                height="7"
+                                rx="1.5"
+                            ></rect>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="welcome_nav_features">
+                        Features
+                    </span>
+
+                </a>
+
+
+                <!-- How It Works -->
+
+                <a
+                    href="#how-it-works"
+                    class="mobile-menu-link"
+                >
+
+                    <span class="mobile-menu-nav-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <circle
+                                cx="5"
+                                cy="12"
+                                r="2"
+                            ></circle>
+
+                            <circle
+                                cx="12"
+                                cy="5"
+                                r="2"
+                            ></circle>
+
+                            <circle
+                                cx="19"
+                                cy="12"
+                                r="2"
+                            ></circle>
+
+                            <circle
+                                cx="12"
+                                cy="19"
+                                r="2"
+                            ></circle>
+
+                            <path
+                                d="M6.8 10.8 10.2 6.2"
+                            ></path>
+
+                            <path
+                                d="M13.8 6.2 17.2 10.8"
+                            ></path>
+
+                            <path
+                                d="M17.2 13.2 13.8 17.8"
+                            ></path>
+
+                            <path
+                                d="M10.2 17.8 6.8 13.2"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="welcome_nav_how">
+                        How It Works
+                    </span>
+
+                </a>
+
+
+                <!-- About -->
+
+                <a
+                    href="#about"
+                    class="mobile-menu-link"
+                >
+
+                    <span class="mobile-menu-nav-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                            ></circle>
+
+                            <path
+                                d="M12 10v6"
+                            ></path>
+
+                            <circle
+                                cx="12"
+                                cy="7"
+                                r="0.8"
+                                fill="currentColor"
+                                stroke="none"
+                            ></circle>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="welcome_nav_about">
+                        About
+                    </span>
+
+                </a>
+
+
+                <!-- Contact -->
+
+                <a
+                    href="#contact"
+                    class="mobile-menu-link"
+                >
+
+                    <span class="mobile-menu-nav-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <rect
+                                x="3"
+                                y="5"
+                                width="18"
+                                height="14"
+                                rx="2"
+                            ></rect>
+
+                            <path
+                                d="m3 7 9 7 9-7"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="welcome_nav_contact">
+                        Contact
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <!-- Mobile Menu Divider -->
+
+            <div class="mobile-menu-divider"></div>
+
+
+            <!-- Mobile Language -->
+
+            <button
+                type="button"
+                class="mobile-menu-language"
+                id="mobileLanguageSwitcher"
+                aria-label="Change Language"
+            >
+
+                <span class="mobile-menu-nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path
+                            d="M3 12h18"
+                        ></path>
+
+                        <path
+                            d="M12 3c2.2 2.4 3.4 5.4 3.4 9s-1.2 6.6-3.4 9c-2.2-2.4-3.4-5.4-3.4-9S9.8 5.4 12 3Z"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span
+                    data-i18n="welcome_language"
+                >
+                    Language
+                </span>
+
+                <strong id="mobileCurrentLanguage">
+                    EN
+                </strong>
+
+            </button>
+
+
+            <!-- Mobile Account Actions -->
+
+            <div class="mobile-menu-actions">
+
+                <a
+                    href="/login"
+                    class="mobile-menu-login"
+                    data-i18n="welcome_login"
+                >
+                    Login
+                </a>
+
+                <a
+                    href="/register"
+                    class="mobile-menu-register"
+                    data-i18n="welcome_create_account"
+                >
+                    Create Account
+                </a>
+
+            </div>
+
+
+            <!-- Mobile Menu Footer -->
+
+            <div class="mobile-menu-footer">
+
+                <span>
+                    SmartReceiptAI
+                </span>
+
+                <small>
+                    OpenAI Vision
+                </small>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section
+            id="home"
+            class="hero-section"
+        >
+
+            <div class="hero-content">
+
+                <div
+                    class="hero-tag"
+                    data-i18n="welcome_hero_tag"
+                >
+                    AI Powered Receipt Intelligence
+                </div>
+
+                <h1>
+
+                    <span
+                        data-i18n="welcome_hero_title_first"
+                    >
+                        The Future of
+                    </span>
+
+                    <span
+                        class="hero-gradient-text"
+                        data-i18n="welcome_hero_title_second"
+                    >
+                        Intelligent Receipt Processing
+                    </span>
+
+                </h1>
+
+                <p
+                    class="hero-description"
+                    data-i18n="welcome_hero_description"
+                >
+                    Transform your receipts into intelligent insights.
+                    SmartReceiptAI uses OpenAI Vision and advanced
+                    Artificial Intelligence to understand, extract,
+                    validate, and organize receipt data into meaningful
+                    information.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a
+                        href="/login"
+                        class="primary-button"
+                        data-i18n="welcome_get_started"
+                    >
+                        Get Started
+                    </a>
+
+                    <a
+                        href="/register"
+                        class="secondary-button"
+                        data-i18n="welcome_create_account"
+                    >
+                        Create Account
+                    </a>
+
+                </div>
+
+                <div class="hero-trust">
+
+                    <span class="trust-dot"></span>
+
+                    <span
+                        data-i18n="welcome_ai_processing_ready"
+                    >
+                        OpenAI Vision-powered receipt processing
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO VISUAL -->
+
+            <div class="hero-visual">
+
+                <div class="visual-glow"></div>
+
+                <div class="visual-orbit orbit-one"></div>
+
+                <div class="visual-orbit orbit-two"></div>
+
+
+                <!-- Receipt -->
+
+                <div class="receipt-card">
+
+                    <div class="receipt-header">
+
+                        <div class="merchant-icon">
+                            SR
+                        </div>
+
+                        <div class="receipt-merchant">
+
+                            <strong>
+                                Smart Market
+                            </strong>
+
+                            <small>
+                                Receipt #10482
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="receipt-items">
+
+                        <div class="receipt-line">
+
+                            <span>
+                                Milk
+                            </span>
+
+                            <strong>
+                                $4.50
+                            </strong>
+
+                        </div>
+
+                        <div class="receipt-line">
+
+                            <span>
+                                Bread
+                            </span>
+
+                            <strong>
+                                $2.20
+                            </strong>
+
+                        </div>
+
+                        <div class="receipt-line">
+
+                            <span>
+                                Fresh Juice
+                            </span>
+
+                            <strong>
+                                $5.80
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <div class="receipt-divider"></div>
+
+                    <div class="receipt-total">
+
+                        <span data-i18n="welcome_total">
+                            Total
+                        </span>
+
+                        <strong>
+                            $12.50
+                        </strong>
+
+                    </div>
+
+                    <div class="ai-status">
+
+                        <span class="status-dot"></span>
+
+                        <span
+                            data-i18n="welcome_ai_analysis_complete"
+                        >
+                            AI Analysis Complete
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Floating Card 01 -->
+
+                <div class="floating-data data-one">
+
+                    <span class="floating-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M5 12.5 9.5 17 19 7.5"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="welcome_receipt_detected">
+                        Receipt detected
+                    </span>
+
+                </div>
+
+
+                <!-- Floating Card 02 -->
+
+                <div class="floating-data data-two">
+
+                    <span class="floating-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M12 2 14 8l6 2-6 2-2 6-2-6-6-2 6-2 2-6Z"
+                            ></path>
+
+                            <path
+                                d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="welcome_ai_analysis">
+                        OpenAI Vision Analysis
+                    </span>
+
+                </div>
+
+
+                <!-- Floating Card 03 -->
+
+                <div class="floating-data data-three">
+
+                    <span class="floating-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M4 16V20H8"
+                            ></path>
+
+                            <path
+                                d="M4 20 10 14"
+                            ></path>
+
+                            <path
+                                d="M14 4h6v6"
+                            ></path>
+
+                            <path
+                                d="M20 4 14 10"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="welcome_smart_insights">
+                        Smart Insights
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FEATURES
+        ====================================================== -->
+
+        <section
+            id="features"
+            class="landing-section features-section"
+        >
+
+            <div class="section-heading">
+
+                <span
+                    class="section-label"
+                    data-i18n="welcome_features_label"
+                >
+                    FEATURES
+                </span>
+
+                <h2
+                    data-i18n="welcome_features_title"
+                >
+                    Intelligent Processing. Meaningful Results.
+                </h2>
+
+                <p
+                    data-i18n="welcome_features_description"
+                >
+                    SmartReceiptAI combines AI-powered receipt
+                    processing, intelligent analysis, validation,
+                    financial processing, and structured data extraction
+                    in one intelligent system.
+                </p>
+
+            </div>
+
+
+            <div class="features-grid">
+
+                <!-- OpenAI Vision -->
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M12 2 14.2 8.8 21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2L12 2Z"
+                            ></path>
+
+                            <path
+                                d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3 data-i18n="welcome_feature_vision_title">
+                        OpenAI Vision
+                    </h3>
+
+                    <p data-i18n="welcome_feature_vision_description">
+                        Analyze receipt images using OpenAI Vision
+                        to understand receipt content and identify
+                        relevant information.
+                    </p>
+
+                </article>
+
+
+                <!-- AI Data Extraction -->
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <rect
+                                x="4"
+                                y="3"
+                                width="16"
+                                height="18"
+                                rx="2"
+                            ></rect>
+
+                            <path d="M8 7h8"></path>
+                            <path d="M8 11h8"></path>
+                            <path d="M8 15h5"></path>
+
+                            <path d="M15.5 15.5 18 18"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3 data-i18n="welcome_feature_extraction_title">
+                        AI Data Extraction
+                    </h3>
+
+                    <p data-i18n="welcome_feature_extraction_description">
+                        Extract and organize receipt information,
+                        product details, and other relevant data
+                        from analyzed receipt images.
+                    </p>
+
+                </article>
+
+
+                <!-- Financial Processing -->
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                            ></circle>
+
+                            <path d="M12 7v10"></path>
+
+                            <path
+                                d="M15 9.5c-.5-1-1.5-1.5-3-1.5-1.7 0-2.8.8-2.8 2s1.1 1.9 2.8 2.1c1.7.2 2.8.9 2.8 2.1s-1.1 2-2.8 2c-1.5 0-2.6-.5-3-1.5"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3 data-i18n="welcome_feature_financial_title">
+                        Financial Processing
+                    </h3>
+
+                    <p data-i18n="welcome_feature_financial_description">
+                        Process totals, taxes, discounts, currencies,
+                        and other financial information extracted
+                        from receipts.
+                    </p>
+
+                </article>
+
+
+                <!-- Smart Insights -->
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path d="M4 19 10 13l4 4 6-8"></path>
+
+                            <path d="M16 9h4v4"></path>
+
+                            <circle
+                                cx="4"
+                                cy="19"
+                                r="1"
+                            ></circle>
+
+                            <circle
+                                cx="10"
+                                cy="13"
+                                r="1"
+                            ></circle>
+
+                            <circle
+                                cx="14"
+                                cy="17"
+                                r="1"
+                            ></circle>
+
+                        </svg>
+
+                    </div>
+
+                    <h3 data-i18n="welcome_feature_insights_title">
+                        Smart Insights
+                    </h3>
+
+                    <p data-i18n="welcome_feature_insights_description">
+                        Transform processed receipt information
+                        into structured and useful insights for
+                        analysis and understanding.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HOW IT WORKS
+        ====================================================== -->
+
+        <section
+            id="how-it-works"
+            class="landing-section how-section"
+        >
+
+            <div class="section-heading">
+
+                <span
+                    class="section-label"
+                    data-i18n="welcome_how_label"
+                >
+                    HOW IT WORKS
+                </span>
+
+                <h2 data-i18n="welcome_how_title">
+                    From Receipt Image to Intelligent Data
+                </h2>
+
+                <p data-i18n="welcome_how_description">
+                    OpenAI Vision and the system's intelligent
+                    processing pipeline transform receipt images
+                    into validated and organized data.
+                </p>
+
+            </div>
+
+
+            <div class="process-flow">
+
+                <!-- Step 01 -->
+
+                <article class="process-step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <div class="step-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M12 16V4"
+                            ></path>
+
+                            <path
+                                d="m7 9 5-5 5 5"
+                            ></path>
+
+                            <path
+                                d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3 data-i18n="welcome_step_upload">
+                        Upload Receipt
+                    </h3>
+
+                    <p data-i18n="welcome_step_upload_description">
+                        Upload a supported receipt image to the system.
+                    </p>
+
+                </article>
+
+
+                <div class="process-connector"></div>
+
+
+                <!-- Step 02 -->
+
+                <article class="process-step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <div class="step-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M12 2 14 8l6 2-6 2-2 6-2-6-6-2 6-2 2-6Z"
+                            ></path>
+
+                            <path
+                                d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3 data-i18n="welcome_step_ai">
+                        OpenAI Vision Analysis
+                    </h3>
+
+                    <p data-i18n="welcome_step_ai_description">
+                        OpenAI Vision analyzes the receipt image
+                        and identifies its relevant information.
+                    </p>
+
+                </article>
+
+
+                <div class="process-connector"></div>
+
+
+                <!-- Step 03 -->
+
+                <article class="process-step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <div class="step-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <rect
+                                x="5"
+                                y="3"
+                                width="14"
+                                height="18"
+                                rx="2"
+                            ></rect>
+
+                            <path d="M8 7h8"></path>
+                            <path d="M8 11h8"></path>
+                            <path d="M8 15h5"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3 data-i18n="welcome_step_extraction">
+                        Data Extraction
+                    </h3>
+
+                    <p data-i18n="welcome_step_extraction_description">
+                        Receipt information, product details,
+                        and financial data are extracted and organized.
+                    </p>
+
+                </article>
+
+
+                <div class="process-connector"></div>
+
+
+                <!-- Step 04 -->
+
+                <article class="process-step">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <div class="step-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.9"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                            ></circle>
+
+                            <path
+                                d="M7.5 12.5 10.5 15.5 16.8 8.8"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3 data-i18n="welcome_step_validation">
+                        Validation
+                    </h3>
+
+                    <p data-i18n="welcome_step_validation_description">
+                        Extracted information passes through
+                        validation to improve data consistency.
+                    </p>
+
+                </article>
+
+
+                <div class="process-connector"></div>
+
+
+                <!-- Step 05 -->
+
+                <article class="process-step">
+
+                    <div class="step-number">
+                        05
+                    </div>
+
+                    <div class="step-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path d="M4 19 10 13l4 4 6-8"></path>
+
+                            <path d="M16 9h4v4"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3 data-i18n="welcome_step_insights">
+                        Smart Insights
+                    </h3>
+
+                    <p data-i18n="welcome_step_insights_description">
+                        The processed receipt becomes structured,
+                        meaningful, and useful information.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+     SUPPORTED RECEIPT TYPES
+====================================================== -->
+
+<section
+    id="supported-receipts"
+    class="landing-section supported-section"
+>
+
+    <div class="section-heading">
+
+        <span
+            class="section-label"
+            data-i18n="welcome_supported_label"
+        >
+            SUPPORTED RECEIPTS
+        </span>
+
+        <h2 data-i18n="welcome_supported_title">
+            Built for Different Receipt Types
+        </h2>
+
+        <p data-i18n="welcome_supported_description">
+            SmartReceiptAI is designed to process the receipt
+            categories supported by the implemented system.
+        </p>
+
+    </div>
+
+
+    <div class="receipt-types-grid">
+
+
+        <!-- =================================================
+             SUPERMARKET
+        ================================================== -->
+
+        <article class="receipt-type-card">
+
+            <div class="receipt-type-icon">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+
+                    <!-- Shopping basket -->
+                    <path
+                        d="M4 8h16l-1.5 9H5.5L4 8Z"
+                    ></path>
+
+                    <!-- Handle -->
+                    <path
+                        d="M7 8 8.5 4h7L17 8"
+                    ></path>
+
+                    <!-- Products -->
+                    <path d="M9 8v5"></path>
+                    <path d="M12 8v5"></path>
+                    <path d="M15 8v5"></path>
+
+                    <!-- Wheels -->
+                    <circle
+                        cx="8"
+                        cy="20"
+                        r="1"
+                    ></circle>
+
+                    <circle
+                        cx="16"
+                        cy="20"
+                        r="1"
+                    ></circle>
+
+                </svg>
+
+            </div>
+
+
+            <h3 data-i18n="welcome_receipt_supermarket">
+                Supermarket
+            </h3>
+
+            <p data-i18n="welcome_receipt_supermarket_description">
+                Grocery and supermarket receipts.
+            </p>
+
+        </article>
+
+
+
+        <!-- =================================================
+             PHARMACY
+        ================================================== -->
+
+        <article class="receipt-type-card">
+
+            <div class="receipt-type-icon">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+
+                    <!-- Capsule -->
+                    <path
+                        d="M7.2 16.8a4.2 4.2 0 0 1 0-5.9l4-4a4.2 4.2 0 0 1 5.9 5.9l-4 4a4.2 4.2 0 0 1-5.9 0Z"
+                    ></path>
+
+                    <!-- Capsule division -->
+                    <path
+                        d="m9.5 9.5 5 5"
+                    ></path>
+
+                    <!-- Medical cross -->
+                    <path
+                        d="M12 3v4"
+                    ></path>
+
+                    <path
+                        d="M10 5h4"
+                    ></path>
+
+                </svg>
+
+            </div>
+
+
+            <h3 data-i18n="welcome_receipt_pharmacy">
+                Pharmacy
+            </h3>
+
+            <p data-i18n="welcome_receipt_pharmacy_description">
+                Pharmacy and medicine purchase receipts.
+            </p>
+
+        </article>
+
+
+
+        <!-- =================================================
+             HOSPITAL
+        ================================================== -->
+
+        <article class="receipt-type-card">
+
+            <div class="receipt-type-icon">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+
+                    <!-- Hospital building -->
+                    <path
+                        d="M5 21V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v15"
+                    ></path>
+
+                    <!-- Ground -->
+                    <path
+                        d="M4 21h16"
+                    ></path>
+
+                    <!-- Medical cross -->
+                    <path
+                        d="M12 7v6"
+                    ></path>
+
+                    <path
+                        d="M9 10h6"
+                    ></path>
+
+                    <!-- Windows -->
+                    <path
+                        d="M8 16h2"
+                    ></path>
+
+                    <path
+                        d="M14 16h2"
+                    ></path>
+
+                    <path
+                        d="M8 19h2"
+                    ></path>
+
+                    <path
+                        d="M14 19h2"
+                    ></path>
+
+                </svg>
+
+            </div>
+
+
+            <h3 data-i18n="welcome_receipt_hospital">
+                Hospital
+            </h3>
+
+            <p data-i18n="welcome_receipt_hospital_description">
+                Hospital and healthcare-related receipts.
+            </p>
+
+        </article>
+
+
+
+        <!-- =================================================
+             RESTAURANT
+        ================================================== -->
+
+        <article class="receipt-type-card">
+
+            <div class="receipt-type-icon">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+
+                    <!-- Plate -->
+                    <circle
+                        cx="12"
+                        cy="13"
+                        r="7"
+                    ></circle>
+
+                    <circle
+                        cx="12"
+                        cy="13"
+                        r="4"
+                    ></circle>
+
+                    <!-- Fork -->
+                    <path
+                        d="M4 3v7"
+                    ></path>
+
+                    <path
+                        d="M2.5 3v4"
+                    ></path>
+
+                    <path
+                        d="M5.5 3v4"
+                    ></path>
+
+                    <path
+                        d="M4 10v11"
+                    ></path>
+
+                    <!-- Knife -->
+                    <path
+                        d="M20 3v18"
+                    ></path>
+
+                    <path
+                        d="M20 3c-2 1.5-2.5 4-2.5 6.5H20"
+                    ></path>
+
+                </svg>
+
+            </div>
+
+
+            <h3 data-i18n="welcome_receipt_restaurant">
+                Restaurant
+            </h3>
+
+            <p data-i18n="welcome_receipt_restaurant_description">
+                Restaurant and food service receipts.
+            </p>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+        <!-- =====================================================
+             ABOUT
+        ====================================================== -->
+
+        <section
+            id="about"
+            class="landing-section about-section"
+        >
+
+            <div class="about-content">
+
+                <div class="about-copy">
+
+                    <span
+                        class="section-label"
+                        data-i18n="welcome_about_label"
+                    >
+                        ABOUT SMARTRECEIPTAI
+                    </span>
+
+                    <h2 data-i18n="welcome_about_title">
+                        Intelligent Receipt Processing Powered by AI
+                    </h2>
+
+                    <p data-i18n="welcome_about_description">
+                        SmartReceiptAI is an AI-based receipt processing
+                        system designed to transform receipt images into
+                        structured and meaningful information using
+                        OpenAI Vision.
+                    </p>
+
+                    <p data-i18n="welcome_about_description_two">
+                        The system combines image processing,
+                        OpenAI Vision analysis, data extraction,
+                        financial processing, validation, and
+                        intelligent data organization.
+                    </p>
+
+                </div>
+
+
+                <div class="about-highlight">
+
+                    <div class="about-highlight-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M12 2 14 8l6 2-6 2-2 6-2-6-6-2 6-2 2-6Z"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+                    <strong data-i18n="welcome_about_highlight_title">
+                        From Image to Insight
+                    </strong>
+
+                    <p data-i18n="welcome_about_highlight_description">
+                        A structured AI-powered approach to
+                        understanding receipt information.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTACT
+        ====================================================== -->
+
+        <section
+            id="contact"
+            class="landing-section contact-section"
+        >
+
+            <div class="section-heading">
+
+                <span
+                    class="section-label"
+                    data-i18n="welcome_contact_label"
+                >
+                    CONTACT US
+                </span>
+
+                <h2 data-i18n="welcome_contact_title">
+                    Get in Touch
+                </h2>
+
+                <p data-i18n="welcome_contact_description">
+                    Have a question about SmartReceiptAI?
+                    Reach out through one of the available channels.
+                </p>
+
+            </div>
+
+
+            <div class="contact-grid">
+
+                <!-- Email -->
+
+                <a
+                    href="mailto:khalidelsadig10@gmail.com"
+                    class="contact-card"
+                >
+
+                    <div class="contact-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <rect
+                                x="3"
+                                y="5"
+                                width="18"
+                                height="14"
+                                rx="2"
+                            ></rect>
+
+                            <path d="m3 7 9 7 9-7"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <div>
+
+                        <span
+                            class="contact-label"
+                            data-i18n="welcome_contact_email"
+                        >
+                            Email
+                        </span>
+
+                        <strong>
+                            khalidelsadig10@gmail.com
+                        </strong>
+
+                    </div>
+
+                </a>
+
+
+                <!-- WhatsApp -->
+
+                <a
+                    href="https://wa.me/249964643294"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-card"
+                >
+
+                    <div class="contact-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <path
+                                d="M20 11.5a8.3 8.3 0 0 1-12.3 7.2L4 20l1.3-3.6A8.3 8.3 0 1 1 20 11.5Z"
+                            ></path>
+
+                            <path
+                                d="M8.5 8.5c.3-.4.6-.4.9-.1l1 1.2c.2.2.2.5 0 .8l-.5.6c.5 1 1.3 1.8 2.4 2.3l.6-.5c.2-.2.5-.2.8 0l1.2 1c.3.2.3.6.1.9-.4.5-1 .8-1.6.7-3.3-.6-5.9-3.2-6.5-6.5-.1-.5.2-1.1.6-1.4Z"
+                                fill="currentColor"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+                    <div>
+
+                        <span
+                            class="contact-label"
+                            data-i18n="welcome_contact_whatsapp"
+                        >
+                            WhatsApp
+                        </span>
+
+                        <strong>
+                            0964643294
+                        </strong>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Facebook -->
+
+                <a
+                    href="https://www.facebook.com/share/1KwuR387nV/?mibextid=wwXIfr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-card"
+                >
+
+                    <div class="contact-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                            ></circle>
+
+                            <path
+                                d="M13.5 20v-7h2.5l.4-2.8h-2.9V8.4c0-.9.3-1.5 1.6-1.5h1.7V4.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v1.8H8v2.8h2.4v7"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+                    <div>
+
+                        <span
+                            class="contact-label"
+                            data-i18n="welcome_contact_facebook"
+                        >
+                            Facebook
+                        </span>
+
+                        <strong data-i18n="welcome_contact_facebook_open">
+                            Visit Facebook
+                        </strong>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FOOTER
+        ====================================================== -->
+
+        <footer class="welcome-footer">
+
+            <div class="footer-main">
+
+                <div class="footer-brand">
+
+                    <a
+                        href="/"
+                        class="welcome-brand"
+                    >
+
+                        <div class="welcome-brand-icon">
+
+                            <div class="brand-receipt">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <span class="brand-ai">
+                                AI
+                            </span>
+
+                        </div>
+
+                        <div class="welcome-brand-text">
+
+                            <span class="brand-name">
+                                Smart<span>Receipt</span>AI
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                    <p data-i18n="welcome_footer_description">
+                        Intelligent receipt processing powered by
+                        OpenAI Vision.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <h3 data-i18n="welcome_footer_navigation">
+                        Navigation
+                    </h3>
+
+                    <a href="#home" data-i18n="welcome_nav_home">
+                        Home
+                    </a>
+
+                    <a href="#features" data-i18n="welcome_nav_features">
+                        Features
+                    </a>
+
+                    <a href="#how-it-works" data-i18n="welcome_nav_how">
+                        How It Works
+                    </a>
+
+                    <a href="#about" data-i18n="welcome_nav_about">
+                        About
+                    </a>
+
+                    <a href="#contact" data-i18n="welcome_nav_contact">
+                        Contact
+                    </a>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <h3 data-i18n="welcome_footer_account">
+                        Account
+                    </h3>
+
+                    <a href="/login" data-i18n="welcome_login">
+                        Login
+                    </a>
+
+                    <a
+                        href="/register"
+                        data-i18n="welcome_create_account"
+                    >
+                        Create Account
+                    </a>
+
+                </div>
+
+
+                <div class="footer-social">
+
+                    <h3 data-i18n="welcome_footer_social">
+                        Social Links
+                    </h3>
+
+                    <div class="social-links">
+
+                        <!-- Email -->
+
+                        <a
+                            href="mailto:khalidelsadig10@gmail.com"
+                            class="social-link email-link"
+                            aria-label="Email"
+                            title="Email"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                ></rect>
+
+                                <path d="m3 7 9 7 9-7"></path>
+
+                            </svg>
+
+                        </a>
+
+
+                        <!-- WhatsApp -->
+
+                        <a
+                            href="https://wa.me/249964643294"
+                            class="social-link whatsapp-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="WhatsApp"
+                            title="WhatsApp"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <path
+                                    d="M20 11.5a8.3 8.3 0 0 1-12.3 7.2L4 20l1.3-3.6A8.3 8.3 0 1 1 20 11.5Z"
+                                ></path>
+
+                                <path
+                                    d="M8.5 8.5c.3-.4.6-.4.9-.1l1 1.2c.2.2.2.5 0 .8l-.5.6c.5 1 1.3 1.8 2.4 2.3l.6-.5c.2-.2.5-.2.8 0l1.2 1c.3.2.3.6.1.9-.4.5-1 .8-1.6.7-3.3-.6-5.9-3.2-6.5-6.5-.1-.5.2-1.1.6-1.4Z"
+                                    fill="currentColor"
+                                ></path>
+
+                            </svg>
+
+                        </a>
+
+
+                        <!-- Facebook -->
+
+                        <a
+                            href="https://www.facebook.com/share/1KwuR387nV/?mibextid=wwXIfr"
+                            class="social-link facebook-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Facebook"
+                            title="Facebook"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="9"
+                                ></circle>
+
+                                <path
+                                    d="M13.5 20v-7h2.5l.4-2.8h-2.9V8.4c0-.9.3-1.5 1.6-1.5h1.7V4.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v1.8H8v2.8h2.4v7"
+                                ></path>
+
+                            </svg>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+                    © 2026 SmartReceiptAI.
+                </span>
+
+                <span data-i18n="welcome_all_rights_reserved">
+                    All Rights Reserved.
+                </span>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+
+    <!-- =====================================================
+        MOBILE MENU SCRIPT
+    ====================================================== -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const menuToggle = document.getElementById("mobileMenuToggle");
+            const menu = document.getElementById("mobileMenu");
+            const overlay = document.getElementById("mobileMenuOverlay");
+            const closeButton = document.getElementById("mobileMenuClose");
+
+            const menuLinks =
+                document.querySelectorAll(".mobile-menu-link");
+
+            const menuBrand =
+                document.querySelector(".mobile-menu-brand");
+
+
+            /* =====================================================
+            OPEN MOBILE MENU
+            ====================================================== */
+
+            function openMobileMenu() {
+
+                if (!menu || !overlay || !menuToggle) {
+                    return;
+                }
+
+                document.body.classList.add("menu-open");
+
+                menu.setAttribute("aria-hidden", "false");
+                overlay.setAttribute("aria-hidden", "false");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "true"
+                );
+
+                menuToggle.setAttribute(
+                    "aria-label",
+                    "Close navigation"
+                );
+
+            }
+
+
+            /* =====================================================
+            CLOSE MOBILE MENU
+            ====================================================== */
+
+            function closeMobileMenu() {
+
+                if (!menu || !overlay || !menuToggle) {
+                    return;
+                }
+
+                document.body.classList.remove("menu-open");
+
+                menu.setAttribute("aria-hidden", "true");
+                overlay.setAttribute("aria-hidden", "true");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                menuToggle.setAttribute(
+                    "aria-label",
+                    "Open navigation"
+                );
+
+            }
+
+
+            /* =====================================================
+            HAMBURGER
+            ====================================================== */
+
+            if (menuToggle) {
+
+                menuToggle.addEventListener(
+                    "click",
+                    function () {
+
+                        const isOpen =
+                            document.body.classList.contains(
+                                "menu-open"
+                            );
+
+                        if (isOpen) {
+                            closeMobileMenu();
+                        } else {
+                            openMobileMenu();
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+            CLOSE BUTTON
+            ====================================================== */
+
+            if (closeButton) {
+
+                closeButton.addEventListener(
+                    "click",
+                    closeMobileMenu
+                );
+
+            }
+
+
+            /* =====================================================
+            OVERLAY
+            ====================================================== */
+
+            if (overlay) {
+
+                overlay.addEventListener(
+                    "click",
+                    closeMobileMenu
+                );
+
+            }
+
+
+            /* =====================================================
+            CLOSE AFTER NAVIGATION
+            ====================================================== */
+
+            menuLinks.forEach(function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        closeMobileMenu();
+
+                    }
+                );
+
+            });
+
+
+            /* =====================================================
+            CLOSE AFTER BRAND CLICK
+            ====================================================== */
+
+            if (menuBrand) {
+
+                menuBrand.addEventListener(
+                    "click",
+                    closeMobileMenu
+                );
+
+            }
+
+
+            /* =====================================================
+            ESCAPE KEY
+            ====================================================== */
+
+            document.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key === "Escape" &&
+                        document.body.classList.contains(
+                            "menu-open"
+                        )
+                    ) {
+
+                        closeMobileMenu();
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+            CLOSE WHEN RETURNING TO DESKTOP
+            ====================================================== */
+
+            window.addEventListener(
+                "resize",
+                function () {
+
+                    if (window.innerWidth > 780) {
+
+                        closeMobileMenu();
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+            MOBILE LANGUAGE INDICATOR
+            
+            Language switching itself is handled by
+            language.js.
+            ====================================================== */
+
+            function updateMobileLanguage() {
+
+                const desktopLanguage =
+                    document.getElementById(
+                        "currentLanguage"
+                    );
+
+                const mobileLanguageText =
+                    document.getElementById(
+                        "mobileCurrentLanguage"
+                    );
+
+                if (
+                    desktopLanguage &&
+                    mobileLanguageText
+                ) {
+
+                    mobileLanguageText.textContent =
+                        desktopLanguage.textContent.trim();
+
+                }
+
+            }
+
+
+            /* =====================================================
+            SYNC LANGUAGE
+            ====================================================== */
+
+            window.addEventListener(
+                "languageChanged",
+                function () {
+
+                    updateMobileLanguage();
+
+                }
+            );
+
+
+            /* Initial sync */
+
+            setTimeout(
+                updateMobileLanguage,
+                150
+            );
+
+
+        });
+
+    </script>
+
+
+    <script src="/assets/js/theme.js?v=1"></script>
+
+</body>
+
+</html>

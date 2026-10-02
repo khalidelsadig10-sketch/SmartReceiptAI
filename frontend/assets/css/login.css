@@ -1,0 +1,687 @@
+/* =====================================================
+   SmartReceiptAI Login Page
+===================================================== */
+
+
+/* Page Container */
+
+.login-page {
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f8fbff,
+        #eef6ff
+    );
+
+}
+
+
+
+/* Background Glow */
+
+.login-background {
+
+    position:absolute;
+
+    inset:0;
+
+    overflow:hidden;
+
+}
+
+
+
+.glow-circle {
+
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    border-radius:50%;
+
+
+    background:
+
+    radial-gradient(
+        circle,
+        rgba(56,189,248,.35),
+        rgba(37,99,235,.08),
+        transparent 70%
+    );
+
+
+    top:-150px;
+
+    right:-150px;
+
+
+    animation:
+    glowMove 8s ease-in-out infinite;
+
+}
+
+
+
+
+/* Login Card */
+
+
+.login-card {
+
+
+    width:430px;
+
+
+    padding:45px;
+
+
+    border-radius:30px;
+
+
+    background:
+
+    rgba(255,255,255,.85);
+
+
+    backdrop-filter:
+
+    blur(20px);
+
+
+    border:
+
+    1px solid rgba(255,255,255,.8);
+
+
+    box-shadow:
+
+    0 30px 80px
+    rgba(15,23,42,.12);
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+    animation:
+
+    cardAppear .8s ease;
+
+
+}
+
+
+
+
+/* Logo */
+
+
+.login-logo {
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+
+
+.login-logo-icon {
+
+
+    width:80px;
+
+    height:80px;
+
+    margin:auto;
+
+
+    border-radius:24px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #38bdf8
+    );
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    position:relative;
+
+
+    box-shadow:
+
+    0 15px 35px
+    rgba(37,99,235,.25);
+
+
+}
+
+
+
+.mini-receipt {
+
+
+    width:35px;
+
+    height:48px;
+
+    background:white;
+
+    border-radius:6px;
+
+
+    padding:8px;
+
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    gap:5px;
+
+
+}
+
+
+
+.mini-receipt span {
+
+
+    height:3px;
+
+    background:#2563eb;
+
+    border-radius:10px;
+
+
+}
+
+
+
+.mini-ai {
+
+
+    position:absolute;
+
+    right:5px;
+
+    bottom:5px;
+
+
+    background:white;
+
+    color:#2563eb;
+
+
+    font-size:11px;
+
+    font-weight:bold;
+
+
+    padding:4px 7px;
+
+
+    border-radius:20px;
+
+
+}
+
+
+
+
+.login-logo h1 {
+
+
+    margin-top:18px;
+
+
+    font-size:32px;
+
+
+    color:#0f172a;
+
+
+}
+
+
+
+.login-logo h1 span {
+
+
+    color:#2563eb;
+
+
+}
+
+
+
+.login-logo p {
+
+
+    margin-top:8px;
+
+
+    color:#64748b;
+
+
+}
+
+
+
+/* Form */
+
+
+.input-group {
+
+
+    margin-bottom:22px;
+
+
+}
+
+
+
+.input-group label {
+
+
+    display:block;
+
+
+    margin-bottom:8px;
+
+
+    color:#334155;
+
+
+    font-size:14px;
+
+
+    font-weight:600;
+
+
+}
+
+
+
+.input-group input {
+
+
+    width:100%;
+
+
+    padding:15px 18px;
+
+
+    border-radius:14px;
+
+
+    border:1px solid #dbeafe;
+
+
+    background:#f8fbff;
+
+
+    outline:none;
+
+
+    font-size:15px;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.input-group input:focus {
+
+
+    border-color:#2563eb;
+
+
+    box-shadow:
+
+    0 0 0 4px
+    rgba(37,99,235,.12);
+
+
+}
+
+
+
+
+/* Options */
+
+
+.form-options {
+
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+
+    margin-bottom:28px;
+
+
+    font-size:13px;
+
+
+}
+
+
+
+.remember {
+
+
+    display:flex;
+
+    gap:8px;
+
+    color:#64748b;
+
+
+}
+
+
+
+.form-options a {
+
+
+    color:#2563eb;
+
+    font-weight:600;
+
+
+}
+
+
+
+/* Button */
+
+
+.login-form button {
+
+
+    width:100%;
+
+
+    padding:16px;
+
+
+    border:none;
+
+
+    border-radius:15px;
+
+
+    color:white;
+
+
+    font-size:16px;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #38bdf8
+    );
+
+
+    box-shadow:
+
+    0 15px 35px
+    rgba(37,99,235,.25);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.login-form button:hover {
+
+
+    transform:translateY(-3px);
+
+
+    box-shadow:
+
+    0 20px 40px
+    rgba(37,99,235,.35);
+
+
+}
+
+
+
+/* Register */
+
+
+.register-link {
+
+
+    text-align:center;
+
+
+    margin-top:28px;
+
+
+    color:#64748b;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+.register-link a {
+
+
+    color:#2563eb;
+
+
+    font-weight:700;
+
+
+}
+
+
+
+/* Animations */
+
+
+@keyframes cardAppear {
+
+
+    from {
+
+        opacity:0;
+
+        transform:
+        translateY(40px);
+
+    }
+
+
+    to {
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+
+    }
+
+}
+
+
+
+@keyframes glowMove {
+
+
+    0%,100% {
+
+        transform:translate(0,0);
+
+    }
+
+
+    50% {
+
+        transform:translate(-40px,40px);
+
+    }
+
+}
+/* =====================================================
+   Input Enhancements
+===================================================== */
+
+
+.input-wrapper {
+
+    position:relative;
+
+}
+
+
+
+.input-wrapper input {
+
+    padding-left:48px;
+
+    padding-right:45px;
+
+}
+
+
+
+.input-icon {
+
+
+    position:absolute;
+
+
+    left:16px;
+
+
+    top:50%;
+
+
+    transform:translateY(-50%);
+
+
+    color:#94a3b8;
+
+
+    font-size:16px;
+
+
+}
+
+
+
+.password-toggle {
+
+
+    position:absolute;
+
+
+    right:16px;
+
+
+    top:50%;
+
+
+    transform:translateY(-50%);
+
+
+    cursor:pointer;
+
+
+    color:#64748b;
+
+
+    font-size:16px;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.password-toggle:hover {
+
+
+    color:#2563eb;
+
+
+}
+/* =========================================
+   LOGIN BUTTON LOADING STATE
+========================================= */
+
+#login-button .button-loader {
+    display: none;
+}
+
+#login-button.loading .button-text {
+    display: none;
+}
+
+#login-button.loading .button-loader {
+    display: inline-flex;
+}
+
+#login-button.loading {
+    cursor: wait;
+    opacity: 0.8;
+}

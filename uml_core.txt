@@ -1,0 +1,1022 @@
+===== services\receipt_pipeline.py =====
+from app.core.database import SessionLocal
+from app.core.openai_vision_engine import OpenAIVisionEngine
+from app.core.product_normalizer import ProductNormalizer
+from app.core.currency_normalizer import CurrencyNormalizer
+from app.core.receipt_validator import ReceiptValidator
+from app.services.receipt_storage import ReceiptStorage
+from app.core.financial_recovery import FinancialRecovery
+
+
+class ReceiptPipeline:
+
+    def __init__(self, vision_engine=None):
+
+        self.vision_engine = (
+            vision_engine
+            if vision_engine is not None
+            else OpenAIVisionEngine()
+        )
+
+        self.product_normalizer = ProductNormalizer()
+        self.financial_recovery = FinancialRecovery()
+        self.currency_normalizer = CurrencyNormalizer()
+
+        self.validator = ReceiptValidator()
+        self.storage = ReceiptStorage()
+
+    def process(
+        self,
+        image_path: str,
+        user_id: int,
+    ) -> dict:
+
+        db = SessionLocal()
+
+        try:
+
+            # =================================================
+            # 1. Vision Analysis
+            # =================================================
+
+            receipt = self.vision_engine.analyze(
+                image_path
+            )
+
+            # =================================================
+            # 2. Normalize Currency
+            # =================================================
+
+            receipt = self.currency_normalizer.normalize(
+                receipt
+            )
+
+            # =================================================
+            # 3. Normalize Products
+            # =================================================
+
+            receipt = self.product_normalizer.normalize(
+                receipt
+            )
+
+            # =================================================
+            # 4. Financial Recovery
+            # =================================================
+
+            receipt = self.financial_recovery.normalize(
+                receipt
+            )
+
+            # =================================================
+            # 5. Validate Receipt
+            # =================================================
+
+            validation = self.validator.validate(
+                receipt
+            )
+
+            # =================================================
+            # 6. Save Receipt
+            # =================================================
+
+            saved_receipt = self.storage.save(
+                db=db,
+                receipt=receipt,
+                image_path=image_path,
+                model_name=self.vision_engine.model,
+                user_id=user_id,
+            )
+
+            # =================================================
+            # 7. Return Result
+            # =================================================
+
+            return {
+                "success": validation.is_valid,
+
+                "receipt": receipt,
+
+                "validation": {
+                    "is_valid": validation.is_valid,
+                    "warnings": validation.warnings,
+                    "errors": validation.errors,
+                },
+
+                "database": {
+                    "saved": True,
+                    "receipt_id": saved_receipt.id,
+                },
+            }
+
+        except Exception:
+
+            db.rollback()
+            raise
+
+        finally:
+
+            db.close()
+===== services\receipt_repository.py =====
+import json
+from pathlib import Path
+
+from sqlalchemy.orm import Session
+
+from app.core.config import settings
+from app.models.receipt import ReceiptModel
+from app.models.receipt_item import ReceiptItemModel
+from app.models.receipt_image import ReceiptImageModel
+from app.models.vision_analysis import VisionAnalysisModel
+from app.schemas.receipt import Receipt
+
+
+class ReceiptRepository:
+
+    def __init__(self, db: Session):
+        self.db = db
+
+    # =========================================================
+    # Save Receipt
+    # =========================================================
+
+    def save_receipt(
+        self,
+        receipt: Receipt,
+        image_path: str | None = None,
+        raw_response: str | None = None,
+        vision_status: str = "success",
+        user_id: int | None = None,
+    ) -> ReceiptModel:
+
+        receipt_model = ReceiptModel(
+            user_id=user_id,
+
+            merchant_name=receipt.merchant.name,
+            merchant_category=receipt.merchant.category,
+            merchant_address=receipt.merchant.address,
+            merchant_phone=receipt.merchant.phone,
+
+            invoice_number=receipt.receipt_info.invoice_number,
+            receipt_date=receipt.receipt_info.date,
+            receipt_time=receipt.receipt_info.time,
+            currency=receipt.receipt_info.currency,
+
+            subtotal=receipt.financial.subtotal,
+            tax=receipt.financial.tax,
+            tax_rate=receipt.financial.tax_rate,
+            discount=receipt.financial.discount,
+            total=receipt.financial.total,
+
+            payment_method=receipt.payment.method,
+        )
+
+        self.db.add(receipt_model)
+        self.db.flush()
+
+        for item in receipt.items:
+
+            item_model = ReceiptItemModel(
+                receipt_id=receipt_model.id,
+                name=item.name,
+                quantity=item.quantity,
+                unit_price=item.unit_price,
+                total_price=item.total_price,
+            )
+
+            self.db.add(item_model)
+
+        if image_path is not None:
+
+            path = Path(image_path)
+
+            image_model = ReceiptImageModel(
+                receipt_id=receipt_model.id,
+                file_name=path.name,
+                file_path=str(path),
+                mime_type=self._guess_mime_type(path),
+            )
+
+            self.db.add(image_model)
+
+        vision_model = VisionAnalysisModel(
+            receipt_id=receipt_model.id,
+            model_name=settings.OPENAI_MODEL,
+            status=vision_status,
+            raw_response=raw_response,
+            error_message=None,
+        )
+
+        self.db.add(vision_model)
+
+        self.db.commit()
+        self.db.refresh(receipt_model)
+
+        return receipt_model
+
+    # =========================================================
+    # Get Single Receipt
+    # =========================================================
+
+    def get_receipt(
+        self,
+        receipt_id: int,
+    ) -> ReceiptModel | None:
+
+        return self.db.get(
+            ReceiptModel,
+            receipt_id,
+        )
+
+    # =========================================================
+    # Get Single Receipt For User
+    # =========================================================
+
+    def get_receipt_by_user(
+        self,
+        receipt_id: int,
+        user_id: int,
+    ) -> ReceiptModel | None:
+
+        return (
+            self.db.query(ReceiptModel)
+            .filter(
+                ReceiptModel.id == receipt_id,
+                ReceiptModel.user_id == user_id,
+            )
+            .first()
+        )
+
+    # =========================================================
+    # Get Receipts
+    # =========================================================
+
+    def get_receipts(
+        self,
+        user_id: int,
+        skip: int = 0,
+        limit: int = 20,
+    ) -> tuple[list[ReceiptModel], int]:
+
+        query = (
+            self.db.query(ReceiptModel)
+            .filter(
+                ReceiptModel.user_id == user_id
+            )
+            .order_by(
+                ReceiptModel.created_at.desc()
+            )
+        )
+
+        total = query.count()
+
+        receipts = (
+            query
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
+
+        return receipts, total
+
+    # =========================================================
+    # Update Receipt
+    # =========================================================
+
+    def update_receipt(
+        self,
+        receipt_model: ReceiptModel,
+        data: dict,
+    ) -> ReceiptModel:
+
+        allowed_fields = {
+            "merchant_name",
+            "merchant_category",
+            "merchant_address",
+            "merchant_phone",
+            "invoice_number",
+            "receipt_date",
+            "receipt_time",
+            "currency",
+            "subtotal",
+            "tax",
+            "tax_rate",
+            "discount",
+            "total",
+            "payment_method",
+        }
+
+        for field, value in data.items():
+
+            if field in allowed_fields:
+                setattr(
+                    receipt_model,
+                    field,
+                    value,
+                )
+
+        self.db.commit()
+        self.db.refresh(receipt_model)
+
+        return receipt_model
+
+    # =========================================================
+    # Delete Receipt
+    # =========================================================
+
+    def delete_receipt(
+        self,
+        receipt_model: ReceiptModel,
+    ) -> None:
+
+        self.db.delete(receipt_model)
+        self.db.commit()
+
+    # =========================================================
+    # MIME Type
+    # =========================================================
+
+    @staticmethod
+    def _guess_mime_type(
+        path: Path,
+    ) -> str | None:
+
+        extension = path.suffix.lower()
+
+        mime_types = {
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+            ".png": "image/png",
+            ".webp": "image/webp",
+            ".bmp": "image/bmp",
+            ".gif": "image/gif",
+        }
+
+        return mime_types.get(extension)
+===== services\receipt_storage.py =====
+from pathlib import Path
+import json
+
+from sqlalchemy.orm import Session
+
+from app.models.receipt import ReceiptModel
+from app.models.receipt_item import ReceiptItemModel
+from app.models.receipt_image import ReceiptImageModel
+from app.models.vision_analysis import VisionAnalysisModel
+from app.models.notification import NotificationModel
+from app.schemas.receipt import Receipt
+
+
+class ReceiptStorage:
+
+    def save(
+        self,
+        db: Session,
+        receipt: Receipt,
+        image_path: str,
+        model_name: str,
+        user_id: int,
+        raw_response: dict | None = None,
+    ) -> ReceiptModel:
+
+        # -------------------------------------------------
+        # 1. Create Receipt
+        # -------------------------------------------------
+
+        receipt_model = ReceiptModel(
+            user_id=user_id,
+
+            merchant_name=receipt.merchant.name,
+            merchant_category=receipt.merchant.category,
+            merchant_address=receipt.merchant.address,
+            merchant_phone=receipt.merchant.phone,
+
+            invoice_number=receipt.receipt_info.invoice_number,
+            receipt_date=receipt.receipt_info.date,
+            receipt_time=receipt.receipt_info.time,
+            currency=receipt.receipt_info.currency,
+
+            subtotal=receipt.financial.subtotal,
+            tax=receipt.financial.tax,
+            tax_rate=receipt.financial.tax_rate,
+            discount=receipt.financial.discount,
+            total=receipt.financial.total,
+
+            payment_method=receipt.payment.method,
+        )
+
+        db.add(receipt_model)
+        db.flush()
+
+        # -------------------------------------------------
+        # 2. Save Items
+        # -------------------------------------------------
+
+        for item in receipt.items:
+
+            item_model = ReceiptItemModel(
+                receipt_id=receipt_model.id,
+                name=item.name,
+                quantity=item.quantity,
+                unit_price=item.unit_price,
+                total_price=item.total_price,
+            )
+
+            db.add(item_model)
+
+        # -------------------------------------------------
+        # 3. Save Image
+        # -------------------------------------------------
+
+        path = Path(image_path)
+
+        image_model = ReceiptImageModel(
+            receipt_id=receipt_model.id,
+            file_name=path.name,
+            file_path=str(path),
+            mime_type=None,
+        )
+
+        db.add(image_model)
+
+        # -------------------------------------------------
+        # 4. Save Vision Analysis
+        # -------------------------------------------------
+
+        vision_model = VisionAnalysisModel(
+            receipt_id=receipt_model.id,
+            model_name=model_name,
+            status="success",
+            raw_response=(
+                json.dumps(
+                    raw_response,
+                    ensure_ascii=False,
+                )
+                if raw_response is not None
+                else None
+            ),
+            error_message=None,
+        )
+
+        db.add(vision_model)
+
+        # -------------------------------------------------
+        # 5. Create Notification
+        # -------------------------------------------------
+
+        notification = NotificationModel(
+            user_id=user_id,
+            type="receipt_processed",
+            title="Receipt Processed",
+            message=(
+                f"Your receipt from "
+                f"{receipt.merchant.name or 'Unknown Merchant'} "
+                f"was processed successfully."
+            ),
+            is_read=False,
+            reference_id=receipt_model.id,
+        )
+
+        db.add(notification)
+
+        # -------------------------------------------------
+        # 6. Commit
+        # -------------------------------------------------
+
+        db.commit()
+
+        # Refresh the saved receipt so that the generated
+        # database ID and other persisted values are available.
+
+        db.refresh(receipt_model)
+
+        # -------------------------------------------------
+        # 7. Return Saved Receipt
+        # -------------------------------------------------
+
+        return receipt_model
+===== services\receipt\pdf_receipt_processor.py =====
+from pathlib import Path
+
+from app.core.pdf_processor import PDFProcessor
+from app.schemas.receipt import Receipt
+from app.services.receipt_pipeline import ReceiptPipeline
+
+
+class PDFReceiptProcessor:
+
+    def __init__(
+        self,
+        pipeline: ReceiptPipeline | None = None,
+    ):
+        self.pdf_processor = PDFProcessor()
+        self.pipeline = (
+            pipeline or ReceiptPipeline()
+        )
+
+    def process(
+        self,
+        pdf_path: str,
+        user_id: int,
+    ) -> list[Receipt]:
+
+        path = Path(pdf_path)
+
+        if not path.exists():
+            raise FileNotFoundError(
+                f"PDF file not found: {pdf_path}"
+            )
+
+        if path.suffix.lower() != ".pdf":
+            raise ValueError(
+                "Only PDF files are supported."
+            )
+
+        image_paths = (
+            self.pdf_processor.convert_to_images(
+                str(path)
+            )
+        )
+
+        receipts: list[Receipt] = []
+
+        for image_path in image_paths:
+            result = self.pipeline.process(
+                image_path,
+                user_id=user_id,
+            )
+
+            receipt = result.get("receipt")
+
+            if receipt is not None:
+                receipts.append(receipt)
+
+        return receipts
+===== core\openai_vision_engine.py =====
+import base64
+import mimetypes
+from pathlib import Path
+
+from app.core.config import settings
+from app.core.openai_client import OpenAIClient
+from app.schemas.receipt import Receipt
+
+
+class OpenAIVisionEngine:
+    def __init__(self):
+        self.client = OpenAIClient().get_client()
+        self.model = settings.OPENAI_MODEL
+
+    @staticmethod
+    def _encode_image(image_path: str) -> str:
+        path = Path(image_path)
+
+        if not path.exists():
+            raise FileNotFoundError(f"Image not found: {path}")
+
+        mime_type, _ = mimetypes.guess_type(path.name)
+
+        if mime_type is None:
+            mime_type = "image/jpeg"
+
+        with open(path, "rb") as image_file:
+            encoded = base64.b64encode(
+                image_file.read()
+            ).decode("utf-8")
+
+        return f"data:{mime_type};base64,{encoded}"
+
+    def analyze(self, image_path: str) -> Receipt:
+        image_data = self._encode_image(image_path)
+
+        response = self.client.responses.parse(
+            model=self.model,
+            input=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "input_text",
+                            "text": """
+Analyze this receipt or invoice image as a document with a visual layout.
+
+Extract the receipt information into the provided structured schema.
+
+IMPORTANT ITEM EXTRACTION RULES:
+
+1. Read each product line according to its visual position on the receipt.
+
+2. Do not assign a number to quantity, unit_price, or total_price merely
+   because the number appears near the product name.
+
+3. Distinguish carefully between:
+   - quantity
+   - unit price
+   - line total
+
+4. If the receipt uses weighted products, preserve the printed
+   weight/quantity exactly as quantity when it is clearly shown.
+
+5. If a number is part of the product name or description, do not treat it
+   as a price or quantity.
+
+6. If the visual relationship between a number and a field is unclear,
+   use null instead of guessing.
+
+7. Never move a price from one item to another.
+
+8. Never infer a missing line total from quantity × unit price unless the
+   receipt clearly indicates that this is the intended calculation.
+
+9. Preserve duplicate products as separate line items when they appear as
+   separate lines on the receipt.
+
+10. Preserve the original order of receipt items.
+
+FINANCIAL RULES:
+
+1. Extract subtotal, tax, discount, and total only when visibly present.
+
+2. Do not calculate a missing subtotal or tax unless it is explicitly printed.
+
+3. Do not calculate a missing total.
+
+4. If a value is unclear or not visible, use null.
+
+GENERAL RULES:
+
+- Read Arabic and English text.
+- Preserve product names as printed when possible.
+- Do not invent merchant information.
+- Do not invent dates, invoice numbers, currencies, prices, or payment methods.
+- Use null whenever the information is not reliably visible.
+- The image is the source of truth.
+""",
+                        },
+                        {
+                            "type": "input_image",
+                            "image_url": image_data,
+                        },
+                    ],
+                }
+            ],
+            text_format=Receipt,
+        )
+
+        if response.output_parsed is None:
+            raise ValueError(
+                "OpenAI returned no structured receipt data."
+            )
+
+        return response.output_parsed
+===== core\product_normalizer.py =====
+from app.schemas.receipt import Receipt
+
+
+class ProductNormalizer:
+
+    PLACEHOLDER_NAMES = {
+        "",
+        "--",
+        "-",
+        "N/A",
+        "NA",
+        "NULL",
+        "NONE",
+    }
+
+    def normalize(self, receipt: Receipt) -> Receipt:
+
+        normalized_items = []
+
+        for item in receipt.items:
+
+            # Normalize product name
+            name = self._normalize_name(item.name)
+
+            # Ignore empty products
+            if name is None:
+                continue
+
+            item.name = name
+
+            # Calculate missing unit price
+            item = self._calculate_unit_price(item)
+
+            normalized_items.append(item)
+
+        receipt.items = normalized_items
+
+        return receipt
+
+
+    @classmethod
+    def _normalize_name(cls, name: str | None) -> str | None:
+
+        if name is None:
+            return None
+
+        cleaned = " ".join(name.strip().split())
+
+        if cleaned.upper() in cls.PLACEHOLDER_NAMES:
+            return None
+
+        return cleaned
+
+
+    @staticmethod
+    def _calculate_unit_price(item):
+
+        """
+        Calculate unit price when receipt only provides
+        quantity and total price.
+        """
+
+        if (
+            (item.unit_price is None or item.unit_price == 0)
+            and item.total_price is not None
+            and item.quantity is not None
+            and item.quantity > 0
+        ):
+
+            item.unit_price = round(
+                item.total_price / item.quantity,
+                2
+            )
+
+        return item
+===== core\currency_normalizer.py =====
+from app.schemas.receipt import Receipt
+
+
+class CurrencyNormalizer:
+
+    DEFAULT_CURRENCY = "SDG"
+
+    CURRENCY_MAP = {
+        "SD": "SDG",
+        "SDG": "SDG",
+        "جنيه": "SDG",
+        "جنيه سوداني": "SDG",
+
+        "$": "USD",
+        "USD": "USD",
+        "دولار": "USD",
+
+        "€": "EUR",
+        "EUR": "EUR",
+
+        "SAR": "SAR",
+        "ريال": "SAR",
+    }
+
+
+    def normalize(self, receipt: Receipt) -> Receipt:
+
+        currency = receipt.receipt_info.currency
+
+        if not currency:
+            receipt.receipt_info.currency = self.DEFAULT_CURRENCY
+            return receipt
+
+
+        cleaned = currency.strip().upper()
+
+        receipt.receipt_info.currency = self.CURRENCY_MAP.get(
+            cleaned,
+            self.DEFAULT_CURRENCY
+        )
+
+        return receipt
+===== core\financial_recovery.py =====
+from app.schemas.receipt import Receipt
+
+
+class FinancialRecovery:
+
+    def normalize(
+        self,
+        receipt: Receipt
+    ) -> Receipt:
+
+        financial = receipt.financial
+
+        # Recover subtotal from detected products
+        if (
+            financial.subtotal is None
+            or financial.subtotal == 0
+        ):
+
+            items_total = sum(
+                item.total_price or 0
+                for item in receipt.items
+            )
+
+            if items_total > 0:
+                financial.subtotal = round(
+                    items_total,
+                    2
+                )
+
+        # Recover total if missing
+        if (
+            financial.total is None
+            and financial.subtotal is not None
+        ):
+
+            total = financial.subtotal
+
+            if financial.tax:
+                total += financial.tax
+
+            if financial.discount:
+                total -= financial.discount
+
+            financial.total = round(
+                total,
+                2
+            )
+
+        return receipt
+===== core\receipt_validator.py =====
+from typing import List
+
+from app.schemas.receipt import Receipt
+
+
+class ReceiptValidationResult:
+    def __init__(
+        self,
+        receipt: Receipt,
+        warnings: List[str],
+        errors: List[str],
+    ):
+        self.receipt = receipt
+        self.warnings = warnings
+        self.errors = errors
+
+    @property
+    def is_valid(self) -> bool:
+        return len(self.errors) == 0
+
+    def to_dict(self):
+        return {
+            "is_valid": self.is_valid,
+            "warnings": self.warnings,
+            "errors": self.errors,
+        }
+
+
+class ReceiptValidator:
+    PRICE_TOLERANCE = 0.02
+
+    @staticmethod
+    def _is_placeholder_item(name: str) -> bool:
+        normalized = name.strip().lower()
+
+        placeholders = {
+            "",
+            "-",
+            "--",
+            "---",
+            "n/a",
+            "na",
+            "null",
+            "none",
+        }
+
+        return normalized in placeholders
+
+    def validate(self, receipt: Receipt) -> ReceiptValidationResult:
+        warnings: List[str] = []
+        errors: List[str] = []
+
+        self._validate_items(receipt, warnings, errors)
+        self._validate_financials(receipt, warnings, errors)
+
+        return ReceiptValidationResult(
+            receipt=receipt,
+            warnings=warnings,
+            errors=errors,
+        )
+
+    def _validate_items(
+        self,
+        receipt: Receipt,
+        warnings: List[str],
+        errors: List[str],
+    ) -> None:
+        for index, item in enumerate(receipt.items, start=1):
+            name = item.name.strip()
+
+            if self._is_placeholder_item(name):
+                warnings.append(
+                    f"Item {index} appears to be a placeholder: '{item.name}'."
+                )
+
+            if item.quantity is not None and item.quantity < 0:
+                errors.append(
+                    f"Item {index} has negative quantity: {item.quantity}."
+                )
+
+            if item.unit_price is not None and item.unit_price < 0:
+                errors.append(
+                    f"Item {index} has negative unit price: {item.unit_price}."
+                )
+
+            if item.total_price is not None and item.total_price < 0:
+                errors.append(
+                    f"Item {index} has negative total price: {item.total_price}."
+                )
+
+            if (
+                item.quantity is not None
+                and item.unit_price is not None
+                and item.total_price is not None
+            ):
+                expected_total = item.quantity * item.unit_price
+
+                if abs(expected_total - item.total_price) > self.PRICE_TOLERANCE:
+                    warnings.append(
+                        f"Item {index} price mismatch: "
+                        f"quantity={item.quantity}, "
+                        f"unit_price={item.unit_price}, "
+                        f"total_price={item.total_price}."
+                    )
+
+    def _validate_financials(
+        self,
+        receipt: Receipt,
+        warnings: List[str],
+        errors: List[str],
+    ) -> None:
+        financial = receipt.financial
+
+        if financial.subtotal is not None and financial.subtotal < 0:
+            errors.append(
+                f"Negative subtotal: {financial.subtotal}."
+            )
+
+        if financial.tax is not None and financial.tax < 0:
+            errors.append(
+                f"Negative tax: {financial.tax}."
+            )
+
+        if financial.discount is not None and financial.discount < 0:
+            errors.append(
+                f"Negative discount: {financial.discount}."
+            )
+
+        if financial.total is not None and financial.total < 0:
+            errors.append(
+                f"Negative total: {financial.total}."
+            )
+
+        if financial.subtotal is not None:
+            item_totals = [
+                item.total_price
+                for item in receipt.items
+                if item.total_price is not None
+            ]
+
+            if item_totals:
+                calculated_subtotal = round(sum(item_totals), 2)
+
+                if abs(calculated_subtotal - financial.subtotal) > self.PRICE_TOLERANCE:
+                    warnings.append(
+                        "Items total does not match receipt subtotal: "
+                        f"items={calculated_subtotal}, "
+                        f"subtotal={financial.subtotal}."
+                    )
+
+        if (
+                financial.subtotal is not None
+                and financial.subtotal > 0
+            ):
+            # Some receipts only show the final total
+            # without subtotal/tax details.
+            # Avoid false mismatch warnings.
+
+            has_financial_breakdown = (
+                financial.subtotal > 0
+                or (financial.tax is not None and financial.tax > 0)
+                or (financial.discount is not None and financial.discount > 0)
+            )
+
+            if has_financial_breakdown:
+
+                expected_total = financial.subtotal
+
+                if financial.tax is not None:
+                    expected_total += financial.tax
+
+                if financial.discount is not None:
+                    expected_total -= financial.discount
+
+                expected_total = round(expected_total, 2)
+
+                if abs(expected_total - financial.total) > self.PRICE_TOLERANCE:
+                    warnings.append(
+                        "Financial total mismatch: "
+                        f"calculated={expected_total}, "
+                        f"receipt_total={financial.total}."
+                    )

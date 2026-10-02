@@ -1,0 +1,960 @@
+/* =========================================================
+   SmartReceiptAI — Profile Page
+   Light Mode
+   Profile-only stylesheet
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.profile-page {
+    min-height: 100vh;
+}
+
+.profile-content {
+    max-width: 1250px;
+}
+
+.profile-page-header {
+    margin-bottom: 30px;
+}
+
+.profile-page-header h1 {
+    margin: 6px 0 8px;
+    font-size: clamp(32px, 3vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -1.4px;
+    color: #1f2937;
+}
+
+.profile-page-header > div > p:last-child {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   PROFILE LAYOUT
+   ========================================================= */
+
+.profile-layout {
+    display: grid;
+    grid-template-columns:
+        minmax(320px, 0.85fr)
+        minmax(420px, 1.15fr);
+    gap: 18px;
+}
+
+
+/* =========================================================
+   PROFILE CARD
+   ========================================================= */
+
+.profile-card {
+    padding: 24px;
+    border-radius: 20px;
+
+    border: 1px solid #e5e7eb;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.07),
+        0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.profile-card-heading {
+    margin-bottom: 24px;
+}
+
+.profile-card-heading h2 {
+    margin: 5px 0 0;
+
+    color: #111827;
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PROFILE PHOTO
+   ========================================================= */
+
+.profile-photo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 22px;
+
+    overflow: hidden;
+
+    border-radius: 38px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #d7a85b,
+            #a87935
+        );
+
+    color: #17130d;
+
+    font-size: 44px;
+    font-weight: 900;
+
+    box-shadow:
+        0 20px 45px rgba(215, 168, 91, 0.18);
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-photo-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-photo-actions small {
+    color: #6b7280;
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   PROFILE FORM
+   ========================================================= */
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-field label {
+    color: #374151;
+
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.profile-field input {
+    width: 100%;
+    height: 46px;
+
+    box-sizing: border-box;
+
+    padding: 0 13px;
+
+    border-radius: 11px;
+
+    border: 1px solid #dfe3e8;
+
+    background: #f9fafb;
+
+    color: #111827;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.profile-field input::placeholder {
+    color: #9ca3af;
+}
+
+.profile-field input:hover {
+    border-color: #d1d5db;
+    background: #ffffff;
+}
+
+.profile-field input:focus {
+    border-color: rgba(215, 168, 91, 0.75);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(215, 168, 91, 0.12);
+}
+
+.profile-field input:disabled {
+    opacity: 1;
+
+    color: #6b7280;
+
+    background: #f3f4f6;
+
+    border-color: #e5e7eb;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   ACCOUNT STATUS
+   ========================================================= */
+
+.profile-status {
+    min-height: 46px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 13px;
+
+    box-sizing: border-box;
+
+    border-radius: 11px;
+
+    background: rgba(34, 197, 94, 0.07);
+
+    border:
+        1px solid rgba(34, 197, 94, 0.18);
+
+    color: #15803d;
+
+    font-size: 12px;
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.profile-form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 8px;
+}
+
+.profile-page .primary-button,
+.profile-page .secondary-button {
+    min-height: 44px;
+
+    border-radius: 11px;
+
+    padding: 0 16px;
+
+    border: 1px solid transparent;
+
+    font-family: inherit;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+   ========================================================= */
+
+.profile-page .primary-button {
+    background: #d7a85b;
+
+    color: #17130d;
+
+    border-color: #d7a85b;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.profile-page .primary-button:hover {
+    background: #e0b66d;
+
+    border-color: #e0b66d;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px rgba(215, 168, 91, 0.20);
+}
+
+.profile-page .primary-button:active {
+    transform: translateY(0);
+}
+
+.profile-page .primary-button:focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(215, 168, 91, 0.20);
+}
+
+
+/* =========================================================
+   DISABLED BUTTONS
+   ========================================================= */
+
+.profile-page .primary-button:disabled,
+.profile-page .secondary-button:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.profile-page .secondary-button {
+    background: #ffffff;
+
+    border-color: #dfe3e8;
+
+    color: #374151;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease;
+}
+
+.profile-page .secondary-button:hover {
+    background: #f9fafb;
+
+    border-color: #cfd5dc;
+
+    color: #111827;
+}
+
+.profile-page .secondary-button:focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(215, 168, 91, 0.12);
+}
+
+
+/* =========================================================
+   CHOOSE PHOTO
+   ========================================================= */
+
+.profile-choose-button {
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 16px;
+
+    border-radius: 11px;
+
+    background: #d7a85b;
+
+    color: #17130d;
+
+    border: 1px solid #d7a85b;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.profile-choose-button:hover {
+    background: #e0b66d;
+
+    border-color: #e0b66d;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px rgba(215, 168, 91, 0.20);
+}
+
+.profile-choose-button:active {
+    transform: translateY(0);
+}
+
+.profile-choose-button:focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(215, 168, 91, 0.20);
+}
+
+
+/* =========================================================
+   TOPBAR USER
+   ========================================================= */
+
+.profile-topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-topbar-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: #d7a85b;
+
+    color: #17130d;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.profile-topbar-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-topbar-user strong {
+    display: block;
+
+    max-width: 180px;
+
+    overflow: hidden;
+
+    color: #1f2937;
+
+    font-size: 12px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.profile-topbar-user span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #6b7280;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SECTION EYEBROW
+   ========================================================= */
+
+.profile-page .section-eyebrow,
+.profile-page .page-eyebrow {
+    color: #a87935;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.1px;
+}
+
+
+/* =========================================================
+   PROFILE NAV ICON
+   ========================================================= */
+
+.profile-nav-icon {
+    width: 17px;
+    min-width: 17px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: currentColor;
+
+    font-size: 14px;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   PROFILE TOAST
+   ========================================================= */
+
+.profile-toast-container {
+    position: fixed;
+
+    right: 22px;
+    bottom: 22px;
+
+    z-index: 5000;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.profile-toast {
+    min-width: 280px;
+
+    padding: 13px 15px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid #e5e7eb;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.14);
+
+    font-size: 12px;
+
+    opacity: 0;
+
+    transform: translateY(8px);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.profile-toast.visible {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+.profile-toast.success {
+    border-color:
+        rgba(34, 197, 94, 0.25);
+
+    color: #166534;
+}
+
+.profile-toast.error {
+    border-color:
+        rgba(239, 68, 68, 0.25);
+
+    color: #b91c1c;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .profile-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .profile-content {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .profile-card {
+        padding: 19px;
+    }
+
+    .profile-avatar {
+        width: 125px;
+        height: 125px;
+
+        border-radius: 32px;
+    }
+
+    .profile-form-actions {
+        justify-content: stretch;
+    }
+
+    .profile-form-actions .primary-button {
+        width: 100%;
+    }
+
+    .profile-topbar-user > div:last-child {
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 430px) {
+
+    .profile-page-header h1 {
+        font-size: 28px;
+    }
+
+    .profile-avatar {
+        width: 110px;
+        height: 110px;
+
+        font-size: 34px;
+
+        border-radius: 28px;
+    }
+
+    .profile-toast-container {
+        right: 14px;
+        left: 14px;
+        bottom: 14px;
+    }
+
+    .profile-toast {
+        min-width: 0;
+        width: 100%;
+    }
+
+}
+/* ==========================================================
+   PROFESSIONAL SIDEBAR ICONS
+   ========================================================== */
+
+.nav-icon {
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--sidebar-icon-color, var(--rc-text-mid));
+
+    transition:
+        color .2s ease,
+        transform .2s ease,
+        filter .2s ease;
+}
+
+.nav-icon svg {
+    width: 18px;
+    height: 18px;
+
+    display: block;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    transition:
+        stroke .2s ease,
+        transform .2s ease;
+}
+
+
+/* Individual icon colors */
+
+.icon-dashboard {
+    --sidebar-icon-color: #7567e8;
+}
+
+.icon-receipts {
+    --sidebar-icon-color: #e99a16;
+}
+
+.icon-analytics {
+    --sidebar-icon-color: #557fe5;
+}
+
+.icon-intelligence {
+    --sidebar-icon-color: #a45ad8;
+}
+
+.icon-profile {
+    --sidebar-icon-color: #2aa6b8;
+}
+
+.icon-security {
+    --sidebar-icon-color: #20a879;
+}
+
+.icon-settings {
+    --sidebar-icon-color: #7b8494;
+}
+
+.icon-logout {
+    --sidebar-icon-color: #dc4f5d;
+}
+
+
+/* Normal navigation */
+
+.nav-item {
+    position: relative;
+}
+
+.nav-item .nav-icon {
+    opacity: .82;
+}
+
+
+/* Hover */
+
+.nav-item:hover .nav-icon {
+    opacity: 1;
+    transform: translateX(1px);
+}
+
+.nav-item:hover .nav-icon svg {
+    transform: scale(1.05);
+}
+
+
+/* Active item */
+
+.nav-item.active .nav-icon {
+    opacity: 1;
+    filter: drop-shadow(0 2px 4px rgba(110,92,240,.20));
+}
+
+.nav-item.active .nav-icon svg {
+    stroke-width: 2;
+}
+
+
+/* Logout */
+
+.logout-button:hover .icon-logout {
+    color: var(--rc-red);
+}
+
+
+/* RTL */
+
+html[dir="rtl"] .nav-item:hover .nav-icon {
+    transform: translateX(-1px);
+}
+
+
+/* Dark mode */
+
+html[data-theme="dark"] .icon-dashboard {
+    --sidebar-icon-color: #8b7df4;
+}
+
+html[data-theme="dark"] .icon-receipts {
+    --sidebar-icon-color: #f0aa32;
+}
+
+html[data-theme="dark"] .icon-analytics {
+    --sidebar-icon-color: #78a0f5;
+}
+
+html[data-theme="dark"] .icon-intelligence {
+    --sidebar-icon-color: #bb70e5;
+}
+
+html[data-theme="dark"] .icon-profile {
+    --sidebar-icon-color: #36b9ca;
+}
+
+html[data-theme="dark"] .icon-security {
+    --sidebar-icon-color: #32c994;
+}
+
+html[data-theme="dark"] .icon-settings {
+    --sidebar-icon-color: #a0a8b5;
+}
+
+html[data-theme="dark"] .icon-logout {
+    --sidebar-icon-color: #ef6975;
+}
+/* =========================================================
+   PROFESSIONAL SIDEBAR ICONS
+   ========================================================= */
+
+.sidebar .nav-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: #8d9aaa;
+
+    transition:
+        color .25s ease,
+        background .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.sidebar .nav-icon svg {
+    width: 21px;
+    height: 21px;
+
+    display: block;
+
+    fill: none;
+    stroke: currentColor;
+
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    transition:
+        color .25s ease,
+        transform .25s ease;
+}
+
+/* Hover */
+
+.sidebar .nav-item:hover .nav-icon {
+    color: #d7a85b;
+
+    background: rgba(215, 168, 91, 0.10);
+
+    transform: translateX(2px);
+}
+
+.sidebar .nav-item:hover .nav-icon svg {
+    transform: scale(1.06);
+}
+
+/* Active */
+
+.sidebar .nav-item.active .nav-icon {
+    color: #d7a85b;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(215, 168, 91, 0.18),
+            rgba(215, 168, 91, 0.06)
+        );
+
+    box-shadow:
+        0 0 0 1px rgba(215, 168, 91, 0.12),
+        0 6px 18px rgba(215, 168, 91, 0.08);
+}
+
+.sidebar .nav-item.active .nav-icon svg {
+    stroke-width: 2;
+}
+
+/* =========================================================
+   INDIVIDUAL ICON COLORS
+   ========================================================= */
+
+.sidebar .icon-dashboard {
+    color: #6ea8ff;
+}
+
+.sidebar .icon-receipts {
+    color: #8b9cff;
+}
+
+.sidebar .icon-analytics {
+    color: #55d6be;
+}
+
+.sidebar .icon-intelligence {
+    color: #c084fc;
+}
+
+.sidebar .icon-profile {
+    color: #60a5fa;
+}
+
+.sidebar .icon-security {
+    color: #f59e8b;
+}
+
+.sidebar .icon-settings {
+    color: #94a3b8;
+}
+
+.sidebar .icon-logout {
+    color: #ef7777;
+}
+
+/* Active item always uses accent */
+
+.sidebar .nav-item.active .nav-icon {
+    color: #d7a85b;
+}
+
+/* Logout hover */
+
+.sidebar .logout-button:hover .nav-icon {
+    color: #ff7d7d;
+
+    background: rgba(239, 119, 119, 0.10);
+}

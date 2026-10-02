@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-page="reports">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Reports — SmartReceiptAI</title>
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/analytics.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/reports.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="analytics reports">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="sidebar">
+
+
+            <!-- BRAND -->
+
+            <div class="sidebar-brand">
+
+                <div class="brand-icon">
+
+                    <div class="mini-receipt">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="mini-ai">
+                        AI
+                    </div>
+
+                </div>
+
+                <div class="brand-text">
+                    Smart<span>Receipt</span>AI
+                </div>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="sidebar-nav">
+
+
+                <!-- Dashboard -->
+
+                <a
+                    href="/dashboard"
+                    class="nav-item"
+                >
+
+                    <span
+                        class="nav-icon icon-dashboard"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M3 10.5 12 3l9 7.5"></path>
+
+                            <path d="M5 9.5V21h14V9.5"></path>
+
+                            <path d="M9 21v-7h6v7"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="dashboard">
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <!-- Receipts -->
+
+                <a
+                    href="/receipts"
+                    class="nav-item"
+                >
+
+                    <span
+                        class="nav-icon icon-receipts"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"></path>
+
+                            <path d="M9 8h6"></path>
+
+                            <path d="M9 12h6"></path>
+
+                            <path d="M9 16h3"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="receipts">
+                        Receipts
+                    </span>
+
+                </a>
+
+
+                <!-- Analytics -->
+
+                <a
+                    href="/analytics"
+                    class="nav-item"
+                >
+
+                    <span
+                        class="nav-icon icon-analytics"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M4 19V5"></path>
+
+                            <path d="M4 19h17"></path>
+
+                            <rect
+                                x="7"
+                                y="12"
+                                width="3"
+                                height="5"
+                                rx="1"
+                            ></rect>
+
+                            <rect
+                                x="12"
+                                y="9"
+                                width="3"
+                                height="8"
+                                rx="1"
+                            ></rect>
+
+                            <rect
+                                x="17"
+                                y="5"
+                                width="3"
+                                height="12"
+                                rx="1"
+                            ></rect>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="analytics">
+                        Analytics
+                    </span>
+
+                </a>
+
+
+                <!-- Reports -->
+
+                <a
+                    href="/reports"
+                    class="nav-item active"
+                >
+
+                    <span
+                        class="nav-icon icon-reports"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M6 3h12v18H6z"></path>
+
+                            <path d="M9 7h6"></path>
+
+                            <path d="M9 11h6"></path>
+
+                            <path d="M9 15h3"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="reports">
+                        Reports
+                    </span>
+
+                </a>
+
+
+                <!-- AI Intelligence -->
+
+                <a
+                    href="/intelligence"
+                    class="nav-item"
+                >
+
+                    <span
+                        class="nav-icon icon-intelligence"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M12 3l1.4 4.6L18 9l-4.6 1.4L12 15l-1.4-4.6L6 9l4.6-1.4L12 3z"></path>
+
+                            <path d="M19 14l.7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7L19 14z"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="intelligence">
+                        AI Intelligence
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <!-- SIDEBAR BOTTOM -->
+
+            <div class="sidebar-bottom">
+
+
+                <!-- Profile -->
+
+                <a
+                    href="/profile"
+                    class="nav-item"
+                >
+
+                    <span
+                        class="nav-icon icon-profile"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="12"
+                                cy="8"
+                                r="4"
+                            ></circle>
+
+                            <path d="M4 21c.8-4.1 3.5-6 8-6s7.2 1.9 8 6"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="profile">
+                        Profile
+                    </span>
+
+                </a>
+
+
+                <!-- Security -->
+
+                <a
+                    href="/security"
+                    class="nav-item"
+                >
+
+                    <span
+                        class="nav-icon icon-security"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M12 3l8 3v5c0 5.2-3.3 8.9-8 10-4.7-1.1-8-4.8-8-10V6l8-3z"></path>
+
+                            <path d="M9 12l2 2 4-4"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="security">
+                        Security
+                    </span>
+
+                </a>
+
+
+                <!-- Settings -->
+
+                <a
+                    href="/settings"
+                    class="nav-item"
+                >
+
+                    <span
+                        class="nav-icon icon-settings"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="3"
+                            ></circle>
+
+                            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 1.7-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5v.2h-2.4v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1L8 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H6v-2.4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L7.3 8.6 9 6.9l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5v-.2h2.4v.2a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.7 1.7-.1.1a1.7 1.7 0 0 0 1.5 1h.2v2.4h-.2a1.7 1.7 0 0 0-1.5 1z"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="settings">
+                        Settings
+                    </span>
+
+                </a>
+
+
+                <!-- Logout -->
+
+                <button
+                    type="button"
+                    class="nav-item logout-button"
+                    id="logout-button"
+                >
+
+                    <span
+                        class="nav-icon icon-logout"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M10 17l5-5-5-5"></path>
+
+                            <path d="M15 12H3"></path>
+
+                            <path d="M13 4h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="logout">
+                        Logout
+                    </span>
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="analytics-main">
+
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+
+                <!-- Mobile Menu -->
+
+                <div class="mobile-menu">
+
+                    <button
+                        type="button"
+                        id="mobile-menu-button"
+                        aria-label="Open navigation"
+                        data-i18n-title="open_navigation"
+                        title="Open navigation"
+                    >
+                        ☰
+                    </button>
+
+                </div>
+
+
+                <div class="topbar-spacer"></div>
+
+
+                <!-- Notifications -->
+
+                <button
+                    type="button"
+                    class="global-notification-button"
+                    data-notifications-link
+                    aria-label="Notifications"
+                    title="Notifications"
+                >
+
+                    <span class="global-notification-icon">
+                        🔔
+                    </span>
+
+                    <span
+                        class="global-notification-badge"
+                        data-notification-badge
+                        hidden
+                    >
+                        0
+                    </span>
+
+                </button>
+
+
+                <!-- User Account -->
+
+                <div class="user-account-wrapper">
+
+                    <button
+                        type="button"
+                        class="user-area"
+                        id="user-account-button"
+                        aria-expanded="false"
+                        aria-controls="user-account-menu"
+                    >
+
+                        <div
+                            class="user-avatar"
+                            id="user-avatar"
+                        >
+                            <span id="user-initial">
+                                U
+                            </span>
+                        </div>
+
+
+                        <div class="user-info">
+
+                            <strong id="user-email">
+                                Loading...
+                            </strong>
+
+                            <span
+                                class="user-role"
+                                data-i18n="account"
+                            >
+                                Account
+                            </span>
+
+                        </div>
+
+
+                        <span class="user-account-chevron">
+                            ⌄
+                        </span>
+
+                    </button>
+
+
+                    <!-- Account Menu -->
+
+                    <div
+                        class="user-account-menu"
+                        id="user-account-menu"
+                        hidden
+                    >
+
+                        <div class="user-account-menu-header">
+
+                            <div
+                                class="user-account-menu-avatar"
+                                id="user-menu-avatar"
+                            >
+
+                                <span id="user-menu-initial">
+                                    U
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <strong id="user-menu-name">
+                                    Loading...
+                                </strong>
+
+                                <span id="user-menu-email">
+                                    —
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="user-account-menu-divider"></div>
+
+
+                        <a
+                            href="/profile"
+                            class="user-account-menu-item"
+                        >
+
+                            <span class="account-menu-icon">
+                                ◯
+                            </span>
+
+                            <span data-i18n="profile">
+                                Profile
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="/security"
+                            class="user-account-menu-item"
+                        >
+
+                            <span class="account-menu-icon">
+                                ◈
+                            </span>
+
+                            <span data-i18n="security">
+                                Security
+                            </span>
+
+                        </a>
+
+
+                        <div class="user-account-menu-divider"></div>
+
+
+                        <button
+                            type="button"
+                            class="user-account-menu-item logout-menu-item"
+                            id="account-menu-logout"
+                        >
+
+                            <span class="account-menu-icon">
+                                ↪
+                            </span>
+
+                            <span data-i18n="logout">
+                                Logout
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 REPORTS CONTENT
+            ================================================== -->
+
+            <div class="analytics-content reports-content">
+
+
+                <!-- HERO -->
+
+                <section class="analytics-hero">
+
+                    <p
+                        class="analytics-eyebrow"
+                        data-i18n="smartreceiptai"
+                    >
+                        SMARTRECEIPTAI
+                    </p>
+
+                    <h1 data-i18n="reports">
+                        Reports
+                    </h1>
+
+                    <p
+                        class="analytics-subtitle"
+                        data-i18n="reports_subtitle"
+                    >
+                        Generate reports from your processed receipts and activity.
+                    </p>
+
+                </section>
+
+
+                <!-- REPORT BUILDER -->
+
+                <section class="analytics-section">
+
+                    <div class="reports-builder-card">
+
+                        <div class="reports-builder-heading">
+
+                            <div>
+
+                                <p
+                                    class="section-eyebrow"
+                                    data-i18n="report_builder"
+                                >
+                                    REPORT BUILDER
+                                </p>
+
+                                <h2 data-i18n="create_a_report">
+                                    Create a Report
+                                </h2>
+
+                                <p
+                                    data-i18n="create_report_description"
+                                >
+                                    Choose the period you want to analyze.
+                                </p>
+
+                            </div>
+
+
+                            <div class="reports-builder-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path d="M6 3h12v18H6z"></path>
+
+                                    <path d="M9 7h6"></path>
+
+                                    <path d="M9 11h6"></path>
+
+                                    <path d="M9 15h3"></path>
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- FILTERS -->
+
+                        <div class="reports-filters">
+
+
+                            <!-- Start Date -->
+
+                            <div class="report-field">
+
+                                <label
+                                    for="report-start-date"
+                                    data-i18n="start_date"
+                                >
+                                    Start Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="report-start-date"
+                                >
+
+                            </div>
+
+
+                            <!-- End Date -->
+
+                            <div class="report-field">
+
+                                <label
+                                    for="report-end-date"
+                                    data-i18n="end_date"
+                                >
+                                    End Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="report-end-date"
+                                >
+
+                            </div>
+
+
+                            <!-- Generate -->
+
+                            <div class="report-field report-field-action">
+
+                                <button
+                                    type="button"
+                                    id="generate-report-button"
+                                    class="report-generate-button"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+
+                                        <path d="M12 3v12"></path>
+
+                                        <path d="m7 10 5 5 5-5"></path>
+
+                                        <path d="M5 21h14"></path>
+
+                                    </svg>
+
+                                    <span data-i18n="generate_report">
+                                        Generate Report
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Status -->
+
+                        <div
+                            class="report-status"
+                            id="report-status"
+                            hidden
+                        ></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     REPORT RESULTS
+                ================================================== -->
+
+                <section
+                    class="analytics-section"
+                    id="report-results"
+                    hidden
+                >
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p
+                                class="section-eyebrow"
+                                data-i18n="report"
+                            >
+                                REPORT
+                            </p>
+
+
+                            <h2
+                                id="report-title"
+                                data-i18n="generated_report"
+                            >
+                                Generated Report
+                            </h2>
+
+
+                            <p id="report-period">
+                                —
+                            </p>
+
+
+                            <!-- EXPORT ACTIONS -->
+
+                            <div class="report-actions">
+
+
+                                <!-- PDF -->
+
+                                <button
+                                    type="button"
+                                    id="download-report-pdf"
+                                    class="report-action-button"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+
+                                        <path d="M6 3h9l4 4v14H6z"></path>
+
+                                        <path d="M15 3v5h5"></path>
+
+                                        <path d="M9 14h6"></path>
+
+                                        <path d="M9 17h4"></path>
+
+                                    </svg>
+
+                                    <span data-i18n="download_pdf">
+                                        Download PDF
+                                    </span>
+
+                                </button>
+
+
+                                <!-- Excel -->
+
+                                <button
+                                    type="button"
+                                    id="export-report-excel"
+                                    class="report-action-button"
+                                >
+
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+
+                                        <path d="M4 4h16v16H4z"></path>
+
+                                        <path d="M8 8l8 8"></path>
+
+                                        <path d="M16 8l-8 8"></path>
+
+                                    </svg>
+
+                                    <span data-i18n="export_excel">
+                                        Export Excel
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- OVERVIEW CARDS -->
+
+                    <div class="analytics-stats-grid">
+
+
+                        <!-- Total Receipts -->
+
+                        <article class="analytics-stat-card">
+
+                            <div class="analytics-stat-top">
+
+                                <div class="analytics-stat-icon receipts-icon">
+                                    №
+                                </div>
+
+                                <div class="analytics-stat-content">
+
+                                    <span
+                                        class="analytics-stat-label"
+                                        data-i18n="total_receipts"
+                                    >
+                                        Total Receipts
+                                    </span>
+
+                                    <strong
+                                        id="report-total-receipts"
+                                        class="analytics-stat-value"
+                                    >
+                                        0
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <div class="analytics-stat-footer">
+
+                                <span class="stat-footer-dot"></span>
+
+                                <span data-i18n="processed_receipts">
+                                    Processed receipts
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+                        <!-- Total Items -->
+
+                        <article class="analytics-stat-card">
+
+                            <div class="analytics-stat-top">
+
+                                <div class="analytics-stat-icon items-icon">
+                                    #
+                                </div>
+
+                                <div class="analytics-stat-content">
+
+                                    <span
+                                        class="analytics-stat-label"
+                                        data-i18n="total_items"
+                                    >
+                                        Total Items
+                                    </span>
+
+                                    <strong
+                                        id="report-total-items"
+                                        class="analytics-stat-value"
+                                    >
+                                        0
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <div class="analytics-stat-footer">
+
+                                <span class="stat-footer-dot"></span>
+
+                                <span data-i18n="extracted_items">
+                                    Extracted items
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+                        <!-- Total Amount -->
+
+                        <article class="analytics-stat-card">
+
+                            <div class="analytics-stat-top">
+
+                                <div class="analytics-stat-icon amount-icon">
+                                    $
+                                </div>
+
+                                <div class="analytics-stat-content">
+
+                                    <span
+                                        class="analytics-stat-label"
+                                        data-i18n="total_amount"
+                                    >
+                                        Total Amount
+                                    </span>
+
+                                    <strong
+                                        id="report-total-amount"
+                                        class="analytics-stat-value"
+                                    >
+                                        —
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <div class="analytics-stat-footer">
+
+                                <span class="stat-footer-dot"></span>
+
+                                <span data-i18n="single_currency_summary">
+                                    Single currency summary
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+                        <!-- Average Receipt -->
+
+                        <article class="analytics-stat-card">
+
+                            <div class="analytics-stat-top">
+
+                                <div class="analytics-stat-icon average-icon">
+                                    ∼
+                                </div>
+
+                                <div class="analytics-stat-content">
+
+                                    <span
+                                        class="analytics-stat-label"
+                                        data-i18n="average_receipt"
+                                    >
+                                        Average Receipt
+                                    </span>
+
+                                    <strong
+                                        id="report-average-receipt"
+                                        class="analytics-stat-value"
+                                    >
+                                        —
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                            <div class="analytics-stat-footer">
+
+                                <span class="stat-footer-dot"></span>
+
+                                <span data-i18n="average_receipt_value">
+                                    Average receipt value
+                                </span>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     FINANCIAL
+                ================================================== -->
+
+                <section
+                    class="analytics-section"
+                    id="report-financial-section"
+                    hidden
+                >
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p
+                                class="section-eyebrow"
+                                data-i18n="financial"
+                            >
+                                FINANCIAL
+                            </p>
+
+                            <h2 data-i18n="financial_summary">
+                                Financial Summary
+                            </h2>
+
+                            <p data-i18n="financial_summary_description">
+                                Financial totals grouped by currency.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="financial-grid"
+                        id="report-financial-container"
+                    ></div>
+
+                </section>
+
+
+                <!-- =================================================
+                     PROCESSING ACTIVITY
+                ================================================== -->
+
+                <section
+                    class="analytics-section"
+                    id="report-processing-section"
+                    hidden
+                >
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p
+                                class="section-eyebrow"
+                                data-i18n="processing_activity"
+                            >
+                                ACTIVITY
+                            </p>
+
+                            <h2 data-i18n="processing_activity_report">
+                                Processing Activity
+                            </h2>
+
+                            <p
+                                data-i18n="processing_activity_report_description"
+                            >
+                                Receipt processing grouped by date.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="report-table-card"
+                        id="report-processing-container"
+                    ></div>
+
+                </section>
+
+
+                <!-- =================================================
+                     INSIGHTS
+                ================================================== -->
+
+                <section
+                    class="analytics-section"
+                    id="report-insights-section"
+                    hidden
+                >
+
+                    <div class="insights-grid">
+
+
+                        <!-- Payment Methods -->
+
+                        <article class="insight-card">
+
+                            <div class="section-heading insight-heading">
+
+                                <div>
+
+                                    <p
+                                        class="section-eyebrow"
+                                        data-i18n="payment"
+                                    >
+                                        PAYMENT
+                                    </p>
+
+                                    <h2 data-i18n="payment_methods">
+                                        Payment Methods
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="insight-list"
+                                id="report-payment-methods"
+                            ></div>
+
+                        </article>
+
+
+                        <!-- Merchant Categories -->
+
+                        <article class="insight-card">
+
+                            <div class="section-heading insight-heading">
+
+                                <div>
+
+                                    <p
+                                        class="section-eyebrow"
+                                        data-i18n="merchants"
+                                    >
+                                        MERCHANTS
+                                    </p>
+
+                                    <h2 data-i18n="merchant_categories">
+                                        Merchant Categories
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="insight-list"
+                                id="report-merchant-categories"
+                            ></div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     QUALITY
+                ================================================== -->
+
+                <section
+                    class="analytics-section"
+                    id="report-quality-section"
+                    hidden
+                >
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p
+                                class="section-eyebrow"
+                                data-i18n="quality"
+                            >
+                                QUALITY
+                            </p>
+
+                            <h2 data-i18n="processing_qr_summary">
+                                Processing & QR Summary
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-quality-grid">
+
+
+                        <!-- Successful -->
+
+                        <article class="report-quality-card">
+
+                            <span data-i18n="successful_analyses">
+                                Successful Analyses
+                            </span>
+
+                            <strong id="report-successful">
+                                0
+                            </strong>
+
+                        </article>
+
+
+                        <!-- Failed -->
+
+                        <article class="report-quality-card">
+
+                            <span data-i18n="failed_analyses">
+                                Failed Analyses
+                            </span>
+
+                            <strong id="report-failed">
+                                0
+                            </strong>
+
+                        </article>
+
+
+                        <!-- Success Rate -->
+
+                        <article class="report-quality-card">
+
+                            <span data-i18n="success_rate">
+                                Success Rate
+                            </span>
+
+                            <strong id="report-success-rate">
+                                0%
+                            </strong>
+
+                        </article>
+
+
+                        <!-- QR -->
+
+                        <article class="report-quality-card">
+
+                            <span data-i18n="receipts_with_qr">
+                                Receipts With QR
+                            </span>
+
+                            <strong id="report-qr-detected">
+                                0
+                            </strong>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     RECEIPT DETAILS
+                ================================================== -->
+
+                <section
+                    class="analytics-section"
+                    id="report-receipts-section"
+                    hidden
+                >
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p
+                                class="section-eyebrow"
+                                data-i18n="details"
+                            >
+                                DETAILS
+                            </p>
+
+                            <h2 data-i18n="receipt_details">
+                                Receipt Details
+                            </h2>
+
+                            <p data-i18n="receipt_details_description">
+                                Receipts processed during the selected period.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="report-table-card report-receipts-table-card"
+                        id="report-receipts-container"
+                    ></div>
+
+                </section>
+
+
+                <!-- =================================================
+                     EMPTY STATE
+                ================================================== -->
+
+                <section
+                    class="analytics-empty-state"
+                    id="reports-empty-state"
+                >
+
+                    <div class="analytics-empty-icon">
+                        ▤
+                    </div>
+
+                    <h2 data-i18n="no_report_generated">
+                        No Report Generated
+                    </h2>
+
+                    <p data-i18n="no_report_description">
+                        Select a start and end date to generate a report from your receipt activity.
+                    </p>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="/assets/js/theme.js?v=1"></script>
+
+    <script src="/assets/js/language.js?v=6"></script>
+
+    <script src="/assets/js/notifications-global.js?v=1"></script>
+
+    <script src="/assets/js/reports.js?v=2"></script>
+
+</body>
+
+</html>

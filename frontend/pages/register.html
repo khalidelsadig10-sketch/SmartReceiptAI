@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account — SmartReceiptAI</title>
+
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/register.css">
+
+</head>
+
+
+<body>
+
+
+    <main class="register-page">
+
+
+        <!-- =========================================
+             BACKGROUND
+        ========================================== -->
+
+        <div class="register-background">
+
+            <div class="glow-circle glow-one"></div>
+
+            <div class="glow-circle glow-two"></div>
+
+        </div>
+
+
+
+        <!-- =========================================
+             REGISTER CARD
+        ========================================== -->
+
+        <section class="register-card">
+
+
+            <!-- LOGO -->
+
+            <div class="register-logo">
+
+
+                <div class="register-logo-icon">
+
+
+                    <div class="mini-receipt">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+
+                    <div class="mini-ai">
+                        AI
+                    </div>
+
+
+                </div>
+
+
+
+                <h1>
+
+                    Smart<span>Receipt</span>AI
+
+                </h1>
+
+
+
+                <p>
+
+                    Create your account
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- =====================================
+                 FORM
+            ====================================== -->
+
+            <form class="register-form">
+
+                <!-- Full Name -->
+
+                <div class="input-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+                        <input
+                            type="text"
+                            id="full-name"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="input-group">
+
+                    <label>
+                        Email Address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="input-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                        <span
+                            class="password-toggle"
+                            onclick="togglePassword('password', this)"
+                        >
+                            👁
+                        </span>
+
+                    </div>
+
+
+                    <!-- Password Strength -->
+
+                    <div class="password-strength">
+
+                        <div class="strength-bar">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                        <p class="strength-text">
+                            Enter a password
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confirm Password -->
+
+                <div class="input-group">
+
+                    <label>
+                        Confirm Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔐
+                        </span>
+
+                        <input
+                            type="password"
+                            id="confirm-password"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                        <span
+                            class="password-toggle"
+                            onclick="togglePassword('confirm-password', this)"
+                        >
+                            👁
+                        </span>
+
+                    </div>
+
+                    <p class="password-match"></p>
+
+                </div>
+
+
+                <!-- Terms -->
+
+                <label class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required
+                    >
+
+                    <span>
+
+                        I agree to the
+
+                        <a href="#">
+                            Terms & Conditions
+                        </a>
+
+                        and
+
+                        <a href="#">
+                            Privacy Policy
+                        </a>
+
+                    </span>
+
+                </label>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="register-button"
+                    id="register-button"
+                >
+
+                    <span class="button-text">
+                        Create Account
+                    </span>
+
+                    <span class="button-loader">
+                        Creating account...
+                    </span>
+
+                </button>
+
+            </form>
+
+
+
+            <div class="login-link">
+
+                Already have an account?
+
+                <a href="/login">
+                    Login
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    
+    <script src="/static/assets/js/theme.js"></script>
+    <script src="/assets/js/register.js"></script>
+</body>
+
+</html>

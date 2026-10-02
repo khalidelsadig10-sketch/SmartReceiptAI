@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+
+<html
+    lang="en"
+    dir="ltr"
+    data-page="admin"
+>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="SmartReceiptAI Administration Dashboard"
+    >
+
+    <title>
+        Admin Dashboard — SmartReceiptAI
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/admin.css?v=4"
+    >
+
+</head>
+
+
+<body>
+
+<div class="admin-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="admin-sidebar">
+
+
+        <!-- BRAND -->
+
+        <div class="admin-brand">
+
+            <div class="admin-brand-icon">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path
+                        d="M6 4.5h10.5A1.5 1.5 0 0 1 18 6v13.5H7.5A1.5 1.5 0 0 0 6 21V4.5Z"
+                    />
+
+                    <path
+                        d="M6 19.5A1.5 1.5 0 0 1 7.5 18H18"
+                    />
+
+                    <path
+                        d="M9 8h6"
+                    />
+
+                    <path
+                        d="M9 11h5"
+                    />
+
+                </svg>
+
+                <span class="admin-brand-ai">
+                    AI
+                </span>
+
+            </div>
+
+
+            <div class="admin-brand-text">
+
+                <div class="admin-brand-name">
+                    Smart<span>Receipt</span>AI
+                </div>
+
+                <span
+                    class="admin-brand-subtitle"
+                    data-i18n="administration"
+                >
+                    Administration
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav
+            class="admin-nav"
+            aria-label="Admin navigation"
+        >
+
+            <div
+                class="admin-nav-label"
+                data-i18n="administration"
+            >
+                Administration
+            </div>
+
+
+            <!-- Overview -->
+
+            <a
+                href="/admin"
+                class="admin-nav-item active"
+            >
+
+                <span class="admin-nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <rect
+                            x="4"
+                            y="4"
+                            width="6"
+                            height="6"
+                            rx="1"
+                        />
+
+                        <rect
+                            x="14"
+                            y="4"
+                            width="6"
+                            height="6"
+                            rx="1"
+                        />
+
+                        <rect
+                            x="4"
+                            y="14"
+                            width="6"
+                            height="6"
+                            rx="1"
+                        />
+
+                        <rect
+                            x="14"
+                            y="14"
+                            width="6"
+                            height="6"
+                            rx="1"
+                        />
+
+                    </svg>
+
+                </span>
+
+                <span data-i18n="admin_overview">
+                    Overview
+                </span>
+
+            </a>
+
+
+            <!-- Users -->
+
+            <a
+                href="#users"
+                class="admin-nav-item"
+            >
+
+                <span class="admin-nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <circle
+                            cx="9"
+                            cy="8"
+                            r="3"
+                        />
+
+                        <path
+                            d="M3.5 19.5v-1.2A4.8 4.8 0 0 1 8.3 13.5h1.4a4.8 4.8 0 0 1 4.8 4.8v1.2"
+                        />
+
+                        <path
+                            d="M15.2 5.4a3 3 0 0 1 0 5.7"
+                        />
+
+                        <path
+                            d="M16 13.7h.8a4.2 4.2 0 0 1 4.2 4.2v1.6"
+                        />
+
+                    </svg>
+
+                </span>
+
+                <span data-i18n="users">
+                    Users
+                </span>
+
+            </a>
+
+
+            <!-- Receipts -->
+
+            <a
+                href="#admin-receipts"
+                class="admin-nav-item"
+            >
+
+                <span class="admin-nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M6 3.5h10A2.5 2.5 0 0 1 18.5 6v14.5H8A2.5 2.5 0 0 0 5.5 23V6A2.5 2.5 0 0 1 6 3.5Z"
+                        />
+
+                        <path
+                            d="M8.5 9.5h7"
+                        />
+
+                        <path
+                            d="M8.5 13.5h7"
+                        />
+
+                        <path
+                            d="M8.5 17.5h4.5"
+                        />
+
+                    </svg>
+
+                </span>
+
+                <span data-i18n="receipts">
+                    Receipts
+                </span>
+
+            </a>
+
+
+            <!-- Home -->
+
+            <a
+                href="/dashboard"
+                class="admin-nav-item"
+            >
+
+                <span class="admin-nav-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M3 10.5 12 3l9 7.5"
+                        />
+
+                        <path
+                            d="M5.5 9.5V21h13V9.5"
+                        />
+
+                        <path
+                            d="M9.5 21v-6h5v6"
+                        />
+
+                    </svg>
+
+                </span>
+
+                <span data-i18n="welcome_nav_home">
+                    Home
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR ADMIN INFO -->
+
+        <div class="admin-sidebar-bottom">
+
+            <div class="admin-user-card">
+
+                <div class="admin-user-card-top">
+
+                    <div class="admin-user-mini-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="8"
+                                r="3.2"
+                            />
+
+                            <path
+                                d="M5 20a7 7 0 0 1 14 0"
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <div class="admin-user-card-info">
+
+                        <span
+                            id="admin-sidebar-name"
+                            class="admin-user-name"
+                            data-i18n="loading"
+                        >
+                            Loading...
+                        </span>
+
+                        <span
+                            class="admin-user-role"
+                            data-i18n="admin_role"
+                        >
+                            Administrator
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="admin-main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="admin-topbar">
+
+            <div class="admin-topbar-title">
+
+                <span class="admin-topbar-title-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <path
+                            d="M12 3 20 6v5c0 5-3.1 8.7-8 10-4.9-1.3-8-5-8-10V6l8-3Z"
+                        />
+
+                        <path
+                            d="m8.5 12 2.2 2.2 4.8-5"
+                        />
+
+                    </svg>
+
+                </span>
+
+                <span
+                    data-i18n="smartreceiptai_administration"
+                >
+                    SmartReceiptAI Administration
+                </span>
+
+            </div>
+
+
+            <div class="admin-topbar-actions">
+
+
+                <!-- LANGUAGE -->
+
+                <button
+                    type="button"
+                    id="languageSwitcher"
+                    class="admin-language-button"
+                    aria-label="Change Language"
+                    title="Change Language"
+                >
+
+                    <span id="currentLanguage">
+                        EN
+                    </span>
+
+                </button>
+
+
+                <!-- ADMIN STATUS -->
+
+                <div class="admin-status-pill">
+
+                    <span class="admin-status-dot"></span>
+
+                    <span data-i18n="admin_access">
+                        Admin Access
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- CONTENT -->
+
+        <div class="admin-content">
+
+
+            <!-- =================================================
+                 PAGE HEADING
+            ================================================== -->
+
+            <section class="admin-page-heading">
+
+                <p
+                    class="admin-eyebrow"
+                    data-i18n="administration"
+                >
+                    ADMINISTRATION
+                </p>
+
+
+                <div class="admin-heading-row">
+
+                    <div>
+
+                        <h1 data-i18n="admin_dashboard">
+                            Admin Dashboard
+                        </h1>
+
+
+                        <p
+                            data-i18n="monitor_users_receipts_activity"
+                        >
+                            Monitor users, receipts and system-level activity.
+                        </p>
+
+                    </div>
+
+
+                    <div class="admin-heading-badge">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path
+                                d="M12 3 20 6v5c0 5-3.1 8.7-8 10-4.9-1.3-8-5-8-10V6l8-3Z"
+                            />
+
+                            <path
+                                d="m8.5 12 2.2 2.2 4.8-5"
+                            />
+
+                        </svg>
+
+
+                        <span data-i18n="admin_role">
+                            Administrator
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="admin-message"
+                class="admin-message"
+            ></div>
+
+
+
+            <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+            <section class="admin-stats">
+
+
+                <!-- Total Users -->
+
+                <article class="admin-stat-card">
+
+                    <div class="admin-stat-top">
+
+                        <div class="admin-stat-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <circle
+                                    cx="9"
+                                    cy="8"
+                                    r="3"
+                                />
+
+                                <path
+                                    d="M3.5 19.5v-1.2A4.8 4.8 0 0 1 8.3 13.5h1.4a4.8 4.8 0 0 1 4.8 4.8v1.2"
+                                />
+
+                                <path
+                                    d="M15.2 5.4a3 3 0 0 1 0 5.7"
+                                />
+
+                                <path
+                                    d="M16 13.7h.8a4.2 4.2 0 0 1 4.2 4.2v1.6"
+                                />
+
+                            </svg>
+
+                        </div>
+
+                        <span
+                            class="admin-stat-trend neutral"
+                            data-i18n="accounts"
+                        >
+                            Accounts
+                        </span>
+
+                    </div>
+
+                    <span
+                        class="admin-stat-label"
+                        data-i18n="total_users"
+                    >
+                        Total Users
+                    </span>
+
+                    <strong
+                        id="total-users"
+                        class="admin-stat-value"
+                    >
+                        —
+                    </strong>
+
+                </article>
+
+
+
+                <!-- Active Users -->
+
+                <article class="admin-stat-card">
+
+                    <div class="admin-stat-top">
+
+                        <div class="admin-stat-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="8"
+                                />
+
+                                <path
+                                    d="m8.5 12 2.3 2.3 4.8-5"
+                                />
+
+                            </svg>
+
+                        </div>
+
+                        <span
+                            class="admin-stat-trend success"
+                            data-i18n="active"
+                        >
+                            Active
+                        </span>
+
+                    </div>
+
+                    <span
+                        class="admin-stat-label"
+                        data-i18n="active_users"
+                    >
+                        Active Users
+                    </span>
+
+                    <strong
+                        id="active-users"
+                        class="admin-stat-value"
+                    >
+                        —
+                    </strong>
+
+                </article>
+
+
+
+                <!-- Admin Users -->
+
+                <article class="admin-stat-card">
+
+                    <div class="admin-stat-top">
+
+                        <div class="admin-stat-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <path
+                                    d="M12 3 20 6v5c0 5-3.1 8.7-8 10-4.9-1.3-8-5-8-10V6l8-3Z"
+                                />
+
+                                <path
+                                    d="m8.5 12 2.2 2.2 4.8-5"
+                                />
+
+                            </svg>
+
+                        </div>
+
+                        <span
+                            class="admin-stat-trend accent"
+                            data-i18n="admin_role"
+                        >
+                            Admin
+                        </span>
+
+                    </div>
+
+                    <span
+                        class="admin-stat-label"
+                        data-i18n="admin_users"
+                    >
+                        Admin Users
+                    </span>
+
+                    <strong
+                        id="admin-users"
+                        class="admin-stat-value"
+                    >
+                        —
+                    </strong>
+
+                </article>
+
+
+
+                <!-- Total Receipts -->
+
+                <article class="admin-stat-card">
+
+                    <div class="admin-stat-top">
+
+                        <div class="admin-stat-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <path
+                                    d="M6 3.5h10A2.5 2.5 0 0 1 18.5 6v14.5H8A2.5 2.5 0 0 0 5.5 23V6A2.5 2.5 0 0 1 6 3.5Z"
+                                />
+
+                                <path
+                                    d="M8.5 17.5h7"
+                                />
+
+                                <path
+                                    d="M8.5 13.5h7"
+                                />
+
+                                <path
+                                    d="M8.5 9.5h4.5"
+                                />
+
+                            </svg>
+
+                        </div>
+
+                        <span
+                            class="admin-stat-trend purple"
+                            data-i18n="system"
+                        >
+                            System
+                        </span>
+
+                    </div>
+
+                    <span
+                        class="admin-stat-label"
+                        data-i18n="total_receipts"
+                    >
+                        Total Receipts
+                    </span>
+
+                    <strong
+                        id="total-receipts"
+                        class="admin-stat-value"
+                    >
+                        —
+                    </strong>
+
+                </article>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SYSTEM DISTRIBUTION
+            ================================================== -->
+
+            <section class="admin-distribution-grid">
+
+
+                <!-- User Status -->
+
+                <article class="admin-distribution-card">
+
+                    <div class="admin-distribution-heading">
+
+                        <div>
+
+                            <p
+                                class="admin-section-eyebrow"
+                                data-i18n="account_status"
+                            >
+                                ACCOUNT STATUS
+                            </p>
+
+                            <h2 data-i18n="user_status">
+                                User Status
+                            </h2>
+
+                            <p
+                                data-i18n="user_status_description"
+                            >
+                                Active and disabled account distribution.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-progress-list">
+
+
+                        <div class="admin-progress-row">
+
+                            <div class="admin-progress-label">
+
+                                <span data-i18n="active">
+                                    Active
+                                </span>
+
+                                <strong id="active-users-percent">
+                                    0%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-progress-track">
+
+                                <div
+                                    id="active-users-bar"
+                                    class="admin-progress-fill success"
+                                    style="width:0%"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="admin-progress-row">
+
+                            <div class="admin-progress-label">
+
+                                <span data-i18n="disabled">
+                                    Disabled
+                                </span>
+
+                                <strong id="disabled-users-percent">
+                                    0%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-progress-track">
+
+                                <div
+                                    id="disabled-users-bar"
+                                    class="admin-progress-fill danger"
+                                    style="width:0%"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- User Roles -->
+
+                <article class="admin-distribution-card">
+
+                    <div class="admin-distribution-heading">
+
+                        <div>
+
+                            <p
+                                class="admin-section-eyebrow"
+                                data-i18n="access_roles"
+                            >
+                                ACCESS ROLES
+                            </p>
+
+                            <h2 data-i18n="user_roles">
+                                User Roles
+                            </h2>
+
+                            <p
+                                data-i18n="user_roles_description"
+                            >
+                                Distribution of administrator and regular accounts.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-progress-list">
+
+
+                        <div class="admin-progress-row">
+
+                            <div class="admin-progress-label">
+
+                                <span data-i18n="regular_users">
+                                    Regular Users
+                                </span>
+
+                                <strong id="regular-users-percent">
+                                    0%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-progress-track">
+
+                                <div
+                                    id="regular-users-bar"
+                                    class="admin-progress-fill blue"
+                                    style="width:0%"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="admin-progress-row">
+
+                            <div class="admin-progress-label">
+
+                                <span data-i18n="administrators">
+                                    Administrators
+                                </span>
+
+                                <strong id="admin-users-percent">
+                                    0%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-progress-track">
+
+                                <div
+                                    id="admin-users-bar"
+                                    class="admin-progress-fill accent"
+                                    style="width:0%"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 USER ACTIVITY ANALYTICS
+            ================================================== -->
+
+            <section class="admin-analytics-section">
+
+                <div class="admin-section-heading">
+
+                    <div>
+
+                        <p
+                            class="admin-section-eyebrow"
+                            data-i18n="system_analytics"
+                        >
+                            SYSTEM ANALYTICS
+                        </p>
+
+                        <h2 data-i18n="user_activity">
+                            User Activity
+                        </h2>
+
+                        <p data-i18n="user_activity_description">
+                            Registration activity and current system distribution.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-analytics-grid">
+
+
+                    <!-- Registration Trend -->
+
+                    <article
+                        class="admin-analytics-card admin-analytics-trend-card"
+                    >
+
+                        <div class="admin-analytics-card-heading">
+
+                            <div>
+
+                                <span data-i18n="user_registrations">
+                                    USER REGISTRATIONS
+                                </span>
+
+                                <strong data-i18n="last_six_months">
+                                    Last 6 Months
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-analytics-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+
+                                    <path
+                                        d="M4 19V5"
+                                    />
+
+                                    <path
+                                        d="M4 19h16"
+                                    />
+
+                                    <path
+                                        d="m7 15 3-4 3 2 5-7"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="registration-chart"
+                            class="admin-registration-chart"
+                        >
+
+                            <div class="admin-chart-loading"
+                                 data-i18n="loading_analytics"
+                            >
+                                Loading analytics...
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- System Snapshot -->
+
+                    <article class="admin-analytics-card">
+
+                        <div class="admin-analytics-card-heading">
+
+                            <div>
+
+                                <span data-i18n="system_snapshot">
+                                    SYSTEM SNAPSHOT
+                                </span>
+
+                                <strong data-i18n="current_distribution">
+                                    Current Distribution
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-analytics-icon purple">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+
+                                    <rect
+                                        x="4"
+                                        y="4"
+                                        width="16"
+                                        height="16"
+                                        rx="3"
+                                    />
+
+                                    <path
+                                        d="M8 16v-4"
+                                    />
+
+                                    <path
+                                        d="M12 16V8"
+                                    />
+
+                                    <path
+                                        d="M16 16v-7"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-snapshot-list">
+
+
+                            <div class="admin-snapshot-item">
+
+                                <div>
+
+                                    <span data-i18n="active_accounts">
+                                        Active Accounts
+                                    </span>
+
+                                    <small data-i18n="currently_enabled">
+                                        Currently enabled
+                                    </small>
+
+                                </div>
+
+                                <strong id="analytics-active-count">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-snapshot-item">
+
+                                <div>
+
+                                    <span data-i18n="disabled_accounts">
+                                        Disabled Accounts
+                                    </span>
+
+                                    <small data-i18n="currently_restricted">
+                                        Currently restricted
+                                    </small>
+
+                                </div>
+
+                                <strong id="analytics-disabled-count">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-snapshot-item">
+
+                                <div>
+
+                                    <span data-i18n="administrators">
+                                        Administrators
+                                    </span>
+
+                                    <small data-i18n="admin_accounts">
+                                        Accounts with admin role
+                                    </small>
+
+                                </div>
+
+                                <strong id="analytics-admin-count">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-snapshot-item">
+
+                                <div>
+
+                                    <span data-i18n="total_receipts">
+                                        Total Receipts
+                                    </span>
+
+                                    <small data-i18n="processed_in_system">
+                                        Processed in system
+                                    </small>
+
+                                </div>
+
+                                <strong id="analytics-receipts-count">
+                                    —
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 RECEIPT ANALYTICS
+            ================================================== -->
+
+            <section class="admin-receipt-analytics">
+
+                <div class="admin-section-heading">
+
+                    <div>
+
+                        <p
+                            class="admin-section-eyebrow"
+                            data-i18n="receipt_analytics"
+                        >
+                            RECEIPT ANALYTICS
+                        </p>
+
+                        <h2 data-i18n="receipt_reports">
+                            Receipt Reports
+                        </h2>
+
+                        <p data-i18n="receipt_analytics_description">
+                            System-wide receipt activity grouped by month, currency and user.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-receipt-analytics-grid">
+
+
+                    <!-- Monthly -->
+
+                    <article class="admin-receipt-report-card">
+
+                        <div class="admin-report-card-header">
+
+                            <div>
+
+                                <span data-i18n="monthly_activity">
+                                    MONTHLY ACTIVITY
+                                </span>
+
+                                <strong data-i18n="receipts_by_month">
+                                    Receipts by Month
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-report-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+
+                                    <path
+                                        d="M4 19V5"
+                                    />
+
+                                    <path
+                                        d="M4 19h16"
+                                    />
+
+                                    <path
+                                        d="m7 15 3-4 3 2 5-7"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="receipt-monthly-report"
+                            class="admin-report-content"
+                        >
+
+                            <div
+                                class="admin-report-loading"
+                                data-i18n="loading_report"
+                            >
+                                Loading report...
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- Currency -->
+
+                    <article class="admin-receipt-report-card">
+
+                        <div class="admin-report-card-header">
+
+                            <div>
+
+                                <span data-i18n="currency_distribution">
+                                    CURRENCY DISTRIBUTION
+                                </span>
+
+                                <strong data-i18n="receipts_by_currency">
+                                    Receipts by Currency
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-report-icon accent">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="8"
+                                    />
+
+                                    <path
+                                        d="M12 7v10"
+                                    />
+
+                                    <path
+                                        d="M15 9.5c-.8-.8-1.8-1.2-3-1.2-1.7 0-3 .8-3 2s1.3 2 3 2 3 .8 3 2-1.3 2-3 2c-1.2 0-2.2-.4-3-1.2"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="receipt-currency-report"
+                            class="admin-report-content"
+                        >
+
+                            <div
+                                class="admin-report-loading"
+                                data-i18n="loading_report"
+                            >
+                                Loading report...
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- Users -->
+
+                    <article
+                        class="admin-receipt-report-card admin-report-users-card"
+                    >
+
+                        <div class="admin-report-card-header">
+
+                            <div>
+
+                                <span data-i18n="admin_user_activity">
+                                    USER ACTIVITY
+                                </span>
+
+                                <strong data-i18n="receipts_by_user">
+                                    Receipts by User
+                                </strong>
+
+                            </div>
+
+
+                            <div class="admin-report-icon purple">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+
+                                    <circle
+                                        cx="9"
+                                        cy="8"
+                                        r="3"
+                                    />
+
+                                    <path
+                                        d="M3.5 19.5v-1.2A4.8 4.8 0 0 1 8.3 13.5h1.4a4.8 4.8 0 0 1 4.8 4.8v1.2"
+                                    />
+
+                                    <path
+                                        d="M15.2 5.4a3 3 0 0 1 0 5.7"
+                                    />
+
+                                    <path
+                                        d="M16 13.7h.8a4.2 4.2 0 0 1 4.2 4.2v1.6"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="receipt-user-report"
+                            class="admin-report-content"
+                        >
+
+                            <div
+                                class="admin-report-loading"
+                                data-i18n="loading_report"
+                            >
+                                Loading report...
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ADMIN RECEIPT MANAGEMENT
+            ================================================== -->
+
+            <section
+                id="admin-receipts"
+                class="admin-section admin-receipt-management"
+            >
+
+                <div class="admin-section-heading">
+
+                    <div>
+
+                        <p
+                            class="admin-section-eyebrow"
+                            data-i18n="receipt_management"
+                        >
+                            RECEIPT MANAGEMENT
+                        </p>
+
+                        <h2 data-i18n="all_receipts">
+                            All Receipts
+                        </h2>
+
+                        <p data-i18n="receipt_system_description">
+                            Search, filter, inspect and remove system receipts.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="refresh-receipts"
+                        class="admin-refresh-button"
+                    >
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path
+                                d="M20 11a8 8 0 0 0-14.9-4"
+                            />
+
+                            <path
+                                d="M5 3v4h4"
+                            />
+
+                            <path
+                                d="M4 13a8 8 0 0 0 14.9 4"
+                            />
+
+                            <path
+                                d="M19 21v-4h-4"
+                            />
+
+                        </svg>
+
+                        <span data-i18n="refresh">
+                            Refresh
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <div class="admin-users-card">
+
+
+                    <!-- TOOLBAR -->
+
+                    <div class="admin-table-toolbar">
+
+                        <div class="admin-table-title">
+
+                            <div class="admin-table-title-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+
+                                    <path
+                                        d="M6 3.5h10A2.5 2.5 0 0 1 18.5 6v14.5H8A2.5 2.5 0 0 0 5.5 23V6A2.5 2.5 0 0 1 6 3.5Z"
+                                    />
+
+                                    <path
+                                        d="M8.5 9.5h7"
+                                    />
+
+                                    <path
+                                        d="M8.5 13.5h7"
+                                    />
+
+                                    <path
+                                        d="M8.5 17.5h4.5"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong data-i18n="system_receipts">
+                                    System Receipts
+                                </strong>
+
+                                <span data-i18n="all_processed_receipts">
+                                    All processed receipts
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-filter-result">
+
+                            <span id="admin-receipt-filter-result">
+                                0 receipts
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- RECEIPT FILTERS -->
+
+                    <div class="admin-filters">
+
+
+                        <!-- SEARCH -->
+
+                        <div class="admin-search-box">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <circle
+                                    cx="11"
+                                    cy="11"
+                                    r="6.5"
+                                />
+
+                                <path
+                                    d="m16 16 4.5 4.5"
+                                />
+
+                            </svg>
+
+
+                            <input
+                                type="search"
+                                id="admin-receipt-search"
+                                data-i18n-placeholder="search_admin_receipts"
+                                placeholder="Search by merchant, invoice, user or receipt ID..."
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+
+
+                        <!-- CURRENCY -->
+
+                        <div class="admin-filter-control">
+
+                            <label
+                                for="admin-receipt-currency"
+                                data-i18n="currency"
+                            >
+                                Currency
+                            </label>
+
+
+                            <select
+                                id="admin-receipt-currency"
+                            >
+
+                                <option
+                                    value="all"
+                                    data-i18n="all_currencies"
+                                >
+                                    All Currencies
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- USER -->
+
+                        <div class="admin-filter-control">
+
+                            <label
+                                for="admin-receipt-user"
+                                data-i18n="users"
+                            >
+                                User
+                            </label>
+
+
+                            <select
+                                id="admin-receipt-user"
+                            >
+
+                                <option
+                                    value="all"
+                                    data-i18n="all_users"
+                                >
+                                    All Users
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- SORT -->
+
+                        <div class="admin-filter-control">
+
+                            <label
+                                for="admin-receipt-sort"
+                                data-i18n="sort"
+                            >
+                                Sort
+                            </label>
+
+
+                            <select
+                                id="admin-receipt-sort"
+                            >
+
+                                <option
+                                    value="newest"
+                                    data-i18n="newest"
+                                >
+                                    Newest
+                                </option>
+
+                                <option
+                                    value="oldest"
+                                    data-i18n="oldest"
+                                >
+                                    Oldest
+                                </option>
+
+                                <option
+                                    value="total-high"
+                                    data-i18n="total_high_low"
+                                >
+                                    Total High–Low
+                                </option>
+
+                                <option
+                                    value="total-low"
+                                    data-i18n="total_low_high"
+                                >
+                                    Total Low–High
+                                </option>
+
+                                <option
+                                    value="merchant"
+                                    data-i18n="merchant_az"
+                                >
+                                    Merchant A–Z
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- RESET -->
+
+                        <button
+                            type="button"
+                            id="clear-admin-receipt-filters"
+                            class="admin-clear-filters"
+                            data-i18n="reset_filters"
+                        >
+                            Reset Filters
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- RECEIPT TABLE -->
+
+                    <div class="admin-table-wrapper">
+
+                        <table class="admin-users-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th data-i18n="receipt">
+                                        Receipt
+                                    </th>
+
+                                    <th data-i18n="users">
+                                        User
+                                    </th>
+
+                                    <th data-i18n="merchant">
+                                        Merchant
+                                    </th>
+
+                                    <th data-i18n="date">
+                                        Date
+                                    </th>
+
+                                    <th data-i18n="total">
+                                        Total
+                                    </th>
+
+                                    <th data-i18n="currency">
+                                        Currency
+                                    </th>
+
+                                    <th data-i18n="actions">
+                                        Actions
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody
+                                id="admin-receipts-table-body"
+                            >
+
+                                <tr>
+
+                                    <td
+                                        colspan="7"
+                                        class="admin-loading"
+                                    >
+
+                                        <div class="admin-loading-inner">
+
+                                            <span class="admin-loading-spinner"></span>
+
+                                            <span data-i18n="loading_receipts">
+                                                Loading receipts...
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 USERS
+            ================================================== -->
+
+            <section
+                id="users"
+                class="admin-section"
+            >
+
+
+                <div class="admin-section-heading">
+
+                    <div>
+
+                        <p
+                            class="admin-section-eyebrow"
+                            data-i18n="account_management"
+                        >
+                            ACCOUNT MANAGEMENT
+                        </p>
+
+                        <h2 data-i18n="users">
+                            Users
+                        </h2>
+
+                        <p data-i18n="search_manage_accounts">
+                            Search, filter and manage registered accounts.
+                        </p>
+
+                    </div>
+
+
+                    <div class="admin-heading-actions">
+
+
+                        <!-- ADD ADMIN -->
+
+                        <button
+                            type="button"
+                            id="create-admin-user"
+                            class="admin-refresh-button"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <circle
+                                    cx="9"
+                                    cy="8"
+                                    r="3"
+                                />
+
+                                <path
+                                    d="M3.5 19.5v-1.2A4.8 4.8 0 0 1 8.3 13.5h1.4a4.8 4.8 0 0 1 4.8 4.8v1.2"
+                                />
+
+                                <path
+                                    d="M17 14v6"
+                                />
+
+                                <path
+                                    d="M14 17h6"
+                                />
+
+                            </svg>
+
+                            <span data-i18n="add_admin">
+                                Add Admin
+                            </span>
+
+                        </button>
+
+
+
+                        <!-- REFRESH USERS -->
+
+                        <button
+                            type="button"
+                            id="refresh-users"
+                            class="admin-refresh-button"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <path
+                                    d="M20 11a8 8 0 0 0-14.9-4"
+                                />
+
+                                <path
+                                    d="M5 3v4h4"
+                                />
+
+                                <path
+                                    d="M4 13a8 8 0 0 0 14.9 4"
+                                />
+
+                                <path
+                                    d="M19 21v-4h-4"
+                                />
+
+                            </svg>
+
+                            <span data-i18n="refresh">
+                                Refresh
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- USERS CARD -->
+
+                <div class="admin-users-card">
+
+
+                    <!-- TOOLBAR -->
+
+                    <div class="admin-table-toolbar">
+
+                        <div class="admin-table-title">
+
+                            <div class="admin-table-title-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+
+                                    <circle
+                                        cx="9"
+                                        cy="8"
+                                        r="3"
+                                    />
+
+                                    <path
+                                        d="M3.5 19.5v-1.2A4.8 4.8 0 0 1 8.3 13.5h1.4a4.8 4.8 0 0 1 4.8 4.8v1.2"
+                                    />
+
+                                    <path
+                                        d="M15.2 5.4a3 3 0 0 1 0 5.7"
+                                    />
+
+                                    <path
+                                        d="M16 13.7h.8a4.2 4.2 0 0 1 4.2 4.2v1.6"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong data-i18n="registered_users">
+                                    Registered Users
+                                </strong>
+
+                                <span data-i18n="search_manage_accounts">
+                                    Search and manage account access
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-filter-result">
+
+                            <span id="user-filter-result">
+                                0 users
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- USER FILTERS -->
+
+                    <div class="admin-filters">
+
+
+                        <!-- SEARCH -->
+
+                        <div class="admin-search-box">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <circle
+                                    cx="11"
+                                    cy="11"
+                                    r="6.5"
+                                />
+
+                                <path
+                                    d="m16 16 4.5 4.5"
+                                />
+
+                            </svg>
+
+
+                            <input
+                                type="search"
+                                id="user-search"
+                                data-i18n-placeholder="search_admin_users"
+                                placeholder="Search by name, email or ID..."
+                                autocomplete="off"
+                            >
+
+
+                            <button
+                                type="button"
+                                id="user-search-clear"
+                                class="admin-search-clear"
+                                aria-label="Clear search"
+                                hidden
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+
+
+                        <!-- ROLE -->
+
+                        <div class="admin-filter-control">
+
+                            <label
+                                for="user-role-filter"
+                                data-i18n="role"
+                            >
+                                Role
+                            </label>
+
+
+                            <select
+                                id="user-role-filter"
+                            >
+
+                                <option
+                                    value="all"
+                                    data-i18n="all_roles"
+                                >
+                                    All Roles
+                                </option>
+
+                                <option
+                                    value="user"
+                                    data-i18n="users"
+                                >
+                                    Users
+                                </option>
+
+                                <option
+                                    value="admin"
+                                    data-i18n="admins"
+                                >
+                                    Admins
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- STATUS -->
+
+                        <div class="admin-filter-control">
+
+                            <label
+                                for="user-status-filter"
+                                data-i18n="status"
+                            >
+                                Status
+                            </label>
+
+
+                            <select
+                                id="user-status-filter"
+                            >
+
+                                <option
+                                    value="all"
+                                    data-i18n="admin_all_status"
+                                >
+                                    All Status
+                                </option>
+
+                                <option
+                                    value="active"
+                                    data-i18n="active"
+                                >
+                                    Active
+                                </option>
+
+                                <option
+                                    value="disabled"
+                                    data-i18n="disabled"
+                                >
+                                    Disabled
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- SORT -->
+
+                        <div class="admin-filter-control">
+
+                            <label
+                                for="user-sort"
+                                data-i18n="sort"
+                            >
+                                Sort
+                            </label>
+
+
+                            <select
+                                id="user-sort"
+                            >
+
+                                <option
+                                    value="newest"
+                                    data-i18n="newest"
+                                >
+                                    Newest
+                                </option>
+
+                                <option
+                                    value="oldest"
+                                    data-i18n="oldest"
+                                >
+                                    Oldest
+                                </option>
+
+                                <option
+                                    value="name-asc"
+                                    data-i18n="name_az"
+                                >
+                                    Name A–Z
+                                </option>
+
+                                <option
+                                    value="name-desc"
+                                    data-i18n="name_za"
+                                >
+                                    Name Z–A
+                                </option>
+
+                                <option
+                                    value="id-asc"
+                                    data-i18n="id_low_high"
+                                >
+                                    ID Low–High
+                                </option>
+
+                                <option
+                                    value="id-desc"
+                                    data-i18n="id_high_low"
+                                >
+                                    ID High–Low
+                                </option>
+
+                                <option
+                                    value="role"
+                                    data-i18n="role"
+                                >
+                                    Role
+                                </option>
+
+                                <option
+                                    value="status"
+                                    data-i18n="status"
+                                >
+                                    Status
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- RESET -->
+
+                        <button
+                            type="button"
+                            id="clear-user-filters"
+                            class="admin-clear-filters"
+                            data-i18n="reset_filters"
+                        >
+                            Reset Filters
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- USER TABLE -->
+
+                    <div class="admin-table-wrapper">
+
+                        <table class="admin-users-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th data-i18n="users">
+                                        User
+                                    </th>
+
+                                    <th data-i18n="role">
+                                        Role
+                                    </th>
+
+                                    <th data-i18n="status">
+                                        Status
+                                    </th>
+
+                                    <th data-i18n="user_id">
+                                        User ID
+                                    </th>
+
+                                    <th data-i18n="created">
+                                        Created
+                                    </th>
+
+                                    <th data-i18n="actions">
+                                        Actions
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="users-table-body">
+
+                                <tr>
+
+                                    <td
+                                        colspan="6"
+                                        class="admin-loading"
+                                    >
+
+                                        <div class="admin-loading-inner">
+
+                                            <span class="admin-loading-spinner"></span>
+
+                                            <span data-i18n="loading_users">
+                                                Loading users...
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
+
+            <footer class="admin-footer">
+
+                <span data-i18n="admin_panel">
+                    SmartReceiptAI Admin Panel
+                </span>
+
+                <span data-i18n="restricted_admin">
+                    Restricted to administrator accounts
+                </span>
+
+            </footer>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+
+<script src="/assets/js/language.js?v=4"></script>
+
+<script src="/assets/js/admin.js?v=3"></script>
+
+<script src="/assets/js/theme.js?v=1"></script>
+
+</body>
+
+</html>

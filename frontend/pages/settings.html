@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-page="settings">
+
+<head>
+    
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Settings — SmartReceiptAI</title>
+    <script>
+    (function () {
+
+        const key = "smartreceiptai_theme";
+
+        const saved =
+            localStorage.getItem(key) || "system";
+
+        let theme = saved;
+
+        if (theme === "system") {
+
+            theme =
+                window.matchMedia(
+                    "(prefers-color-scheme: dark)"
+                ).matches
+                    ? "dark"
+                    : "light";
+        }
+
+        document.documentElement.dataset.theme =
+            theme;
+
+        document.documentElement.dataset.themePreference =
+            saved;
+
+    })();
+    </script>
+    <link
+        rel="stylesheet"
+        href="/assets/css/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/settings.css"
+    >
+
+</head>
+
+<body>
+
+<div class="settings-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="settings-sidebar">
+
+        <div class="settings-brand">
+
+            <div class="settings-brand-icon">
+                <span>SR</span>
+            </div>
+
+            <div class="settings-brand-text">
+                <strong>SmartReceipt</strong>
+                <span>AI</span>
+            </div>
+
+        </div>
+
+
+        <nav class="settings-navigation">
+
+            <!-- =================================================
+                MAIN
+            ================================================== -->
+
+            <div class="settings-nav-section">
+
+                <span
+                    class="settings-nav-label"
+                    data-i18n="main"
+                >
+                    MAIN
+                </span>
+
+
+                <!-- Dashboard -->
+
+                <a
+                    href="/dashboard"
+                    class="settings-nav-item"
+                >
+
+                    <span
+                        class="settings-nav-icon icon-dashboard"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M3 10.5 12 3l9 7.5"></path>
+
+                            <path d="M5 9.5V21h14V9.5"></path>
+
+                            <path d="M9 21v-7h6v7"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="dashboard">
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <!-- Receipts -->
+
+                <a
+                    href="/receipts"
+                    class="settings-nav-item"
+                >
+
+                    <span
+                        class="settings-nav-icon icon-receipts"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"></path>
+
+                            <path d="M9 8h6"></path>
+
+                            <path d="M9 12h6"></path>
+
+                            <path d="M9 16h3"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="receipts">
+                        Receipts
+                    </span>
+
+                </a>
+
+
+                <!-- Analytics -->
+
+                <a
+                    href="/analytics"
+                    class="settings-nav-item"
+                >
+
+                    <span
+                        class="settings-nav-icon icon-analytics"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M4 19V5"></path>
+
+                            <path d="M4 19h17"></path>
+
+                            <rect
+                                x="7"
+                                y="12"
+                                width="3"
+                                height="5"
+                                rx="1"
+                            ></rect>
+
+                            <rect
+                                x="12"
+                                y="9"
+                                width="3"
+                                height="8"
+                                rx="1"
+                            ></rect>
+
+                            <rect
+                                x="17"
+                                y="5"
+                                width="3"
+                                height="12"
+                                rx="1"
+                            ></rect>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="analytics">
+                        Analytics
+                    </span>
+
+                </a>
+
+
+                <!-- Reports -->
+
+                <a
+                    href="/reports"
+                    class="settings-nav-item"
+                >
+
+                    <span
+                        class="settings-nav-icon icon-reports"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M6 3h12v18H6z"></path>
+
+                            <path d="M9 7h6"></path>
+
+                            <path d="M9 11h6"></path>
+
+                            <path d="M9 15h3"></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span>
+                        Reports
+                    </span>
+
+                </a>
+
+
+                <!-- AI Intelligence -->
+
+                <a
+                    href="/intelligence"
+                    class="settings-nav-item"
+                >
+
+                    <span
+                        class="settings-nav-icon icon-intelligence"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M12 3l1.4 4.6L18 9l-4.6 1.4L12 15l-1.4-4.6L6 9l4.6-1.4L12 3z"
+                            ></path>
+
+                            <path
+                                d="M19 14l.7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7L19 14z"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="intelligence">
+                        AI Intelligence
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                ACCOUNT
+            ================================================== -->
+
+            <div class="settings-nav-section">
+
+                <span
+                    class="settings-nav-label"
+                    data-i18n="account_section"
+                >
+                    ACCOUNT
+                </span>
+
+
+                <!-- Profile -->
+
+                <a
+                    href="/profile"
+                    class="settings-nav-item"
+                >
+
+                    <span
+                        class="settings-nav-icon icon-profile"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="12"
+                                cy="8"
+                                r="4"
+                            ></circle>
+
+                            <path
+                                d="M4 21c.8-4.1 3.5-6 8-6s7.2 1.9 8 6"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="profile">
+                        Profile
+                    </span>
+
+                </a>
+
+
+                <!-- Security -->
+
+                <a
+                    href="/security"
+                    class="settings-nav-item"
+                >
+
+                    <span
+                        class="settings-nav-icon icon-security"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M12 3l8 3v5c0 5.2-3.3 8.9-8 10-4.7-1.1-8-4.8-8-10V6l8-3z"
+                            ></path>
+
+                            <path
+                                d="M9 12l2 2 4-4"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="security">
+                        Security
+                    </span>
+
+                </a>
+
+
+                <!-- Settings -->
+
+                <a
+                    href="/settings"
+                    class="settings-nav-item active"
+                >
+
+                    <span
+                        class="settings-nav-icon icon-settings"
+                        aria-hidden="true"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="3"
+                            ></circle>
+
+                            <path
+                                d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 1.7-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5v.2h-2.4v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1L8 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H6v-2.4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L7.3 8.6 9 6.9l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1.9-1.5v-.2h2.4v.2a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.7 1.7-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.2v2.4h-.2a1.7 1.7 0 0 0-1.5 1z"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+                    <span data-i18n="settings">
+                        Settings
+                    </span>
+
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <!-- =====================================================
+            SIDEBAR STATUS
+        ====================================================== -->
+
+        <div class="settings-sidebar-bottom">
+
+            <div class="settings-sidebar-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong data-i18n="preferences">
+                        System Preferences
+                    </strong>
+
+                    <span data-i18n="preferences_description">
+                        Personalize your experience
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="settings-main">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="settings-header">
+
+            <div class="settings-header-left">
+
+                <div class="settings-breadcrumb">
+
+                    <span data-i18n="dashboard">
+                        Dashboard
+                    </span>
+
+                    <span>
+                        /
+                    </span>
+
+                    <strong data-i18n="settings">
+                        Settings
+                    </strong>
+
+                </div>
+
+
+                <h1 data-i18n="settings">
+                    Settings
+                </h1>
+
+
+                <p data-i18n="settings_description">
+                    Manage your SmartReceiptAI preferences and notifications.
+                </p>
+
+            </div>
+
+
+            <div class="settings-header-right">
+
+                <div class="settings-status-pill">
+
+                    <span class="settings-status-dot"></span>
+
+                    <span data-i18n="preferences_status">
+                        Preferences
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             GENERAL SETTINGS
+        ================================================== -->
+
+        <section class="settings-section">
+
+            <div class="settings-section-heading">
+
+                <div>
+
+                    <span
+                        class="section-eyebrow"
+                        data-i18n="general"
+                    >
+                        GENERAL
+                    </span>
+
+
+                    <h2 data-i18n="general_preferences">
+                        General Preferences
+                    </h2>
+
+
+                    <span
+                        class="section-description"
+                        data-i18n="general_preferences_description"
+                    >
+                        Configure how SmartReceiptAI displays and handles your account preferences.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+
+                <!-- =================================================
+                     LANGUAGE
+                ================================================== -->
+
+                <article class="settings-panel">
+
+                    <div class="settings-panel-header">
+
+                        <div class="panel-icon">
+                            A
+                        </div>
+
+                        <div>
+
+                            <h3 data-i18n="language">
+                                Language
+                            </h3>
+
+                            <p data-i18n="language_description">
+                                Choose the language used by the application.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-panel-body">
+
+                        <label
+                            for="settings-language"
+                            class="settings-field-label"
+                            data-i18n="application_language"
+                        >
+                            Application Language
+                        </label>
+
+
+                        <select
+                            id="settings-language"
+                            class="settings-select"
+                        >
+
+                            <option
+                                value="en"
+                                data-i18n="english"
+                            >
+                                English
+                            </option>
+
+                            <option
+                                value="ar"
+                                data-i18n="arabic"
+                            >
+                                العربية
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </article>
+
+
+                <!-- =================================================
+                     CURRENCY
+                ================================================== -->
+
+                <article class="settings-panel">
+
+                    <div class="settings-panel-header">
+
+                        <div class="panel-icon">
+                            $
+                        </div>
+
+                        <div>
+
+                            <h3 data-i18n="currency">
+                                Currency
+                            </h3>
+
+                            <p data-i18n="currency_description">
+                                Select your preferred receipt currency.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-panel-body">
+
+                        <label
+                            for="settings-currency"
+                            class="settings-field-label"
+                            data-i18n="default_currency"
+                        >
+                            Default Currency
+                        </label>
+
+
+                        <select
+                            id="settings-currency"
+                            class="settings-select"
+                        >
+
+                            <option
+                                value="SDG"
+                                data-i18n="currency_sdg"
+                            >
+                                Sudanese Pound (SDG)
+                            </option>
+
+                            <option
+                                value="USD"
+                                data-i18n="currency_usd"
+                            >
+                                US Dollar (USD)
+                            </option>
+
+                            <option
+                                value="EUR"
+                                data-i18n="currency_eur"
+                            >
+                                Euro (EUR)
+                            </option>
+
+                            <option
+                                value="GBP"
+                                data-i18n="currency_gbp"
+                            >
+                                British Pound (GBP)
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </article>
+                <!-- =================================================
+                    APPEARANCE
+                ================================================== -->
+
+                <article class="settings-panel settings-panel-wide">
+
+                    <div class="settings-panel-header">
+
+                        <div class="panel-icon">
+                            ◐
+                        </div>
+
+                        <div>
+
+                            <h3 data-i18n="appearance">
+                                Appearance
+                            </h3>
+
+                            <p data-i18n="appearance_description">
+                                Choose how SmartReceiptAI looks across the application.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-panel-body">
+
+                        <label
+                            class="settings-field-label"
+                            data-i18n="theme"
+                        >
+                            Theme
+                        </label>
+
+
+                        <div
+                            class="theme-options"
+                            id="settings-theme-options"
+                        >
+
+                            <!-- LIGHT -->
+
+                            <button
+                                type="button"
+                                class="theme-option"
+                                data-theme-option="light"
+                            >
+
+                                <span class="theme-option-icon">
+                                    ☀
+                                </span>
+
+                                <span class="theme-option-content">
+
+                                    <strong data-i18n="theme_light">
+                                        Light
+                                    </strong>
+
+                                    <small data-i18n="theme_light_description">
+                                        Bright and clean interface
+                                    </small>
+
+                                </span>
+
+                            </button>
+
+
+                            <!-- DARK -->
+
+                            <button
+                                type="button"
+                                class="theme-option"
+                                data-theme-option="dark"
+                            >
+
+                                <span class="theme-option-icon">
+                                    ☾
+                                </span>
+
+                                <span class="theme-option-content">
+
+                                    <strong data-i18n="theme_dark">
+                                        Dark
+                                    </strong>
+
+                                    <small data-i18n="theme_dark_description">
+                                        Comfortable for low light
+                                    </small>
+
+                                </span>
+
+                            </button>
+
+
+                            <!-- SYSTEM -->
+
+                            <button
+                                type="button"
+                                class="theme-option"
+                                data-theme-option="system"
+                            >
+
+                                <span class="theme-option-icon">
+                                    ◉
+                                </span>
+
+                                <span class="theme-option-content">
+
+                                    <strong data-i18n="theme_system">
+                                        System
+                                    </strong>
+
+                                    <small data-i18n="theme_system_description">
+                                        Follow your device preference
+                                    </small>
+
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- =================================================
+                     TIMEZONE
+                ================================================== -->
+
+                <article class="settings-panel settings-panel-wide">
+
+                    <div class="settings-panel-header">
+
+                        <div class="panel-icon">
+                            ◷
+                        </div>
+
+                        <div>
+
+                            <h3 data-i18n="timezone">
+                                Time Zone
+                            </h3>
+
+                            <p data-i18n="time_zone_description">
+                                Set the time zone used for account activity and timestamps.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-panel-body">
+
+                        <label
+                            for="settings-timezone"
+                            class="settings-field-label"
+                            data-i18n="timezone"
+                        >
+                            Time Zone
+                        </label>
+
+
+                        <select
+                            id="settings-timezone"
+                            class="settings-select"
+                        >
+
+                            <option value="Africa/Khartoum">
+                                Africa/Khartoum
+                            </option>
+
+                            <option value="UTC">
+                                UTC
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NOTIFICATIONS
+        ================================================== -->
+
+        <section class="settings-section">
+
+            <div class="settings-section-heading">
+
+                <div>
+
+                    <span
+                        class="section-eyebrow"
+                        data-i18n="notifications"
+                    >
+                        NOTIFICATIONS
+                    </span>
+
+
+                    <h2 data-i18n="notification_preferences">
+                        Notification Preferences
+                    </h2>
+
+
+                    <span
+                        class="section-description"
+                        data-i18n="notification_preferences_description"
+                    >
+                        Control which account and processing notifications you want to receive.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-notification-card">
+
+
+                <!-- =================================================
+                     EMAIL NOTIFICATIONS
+                ================================================== -->
+
+                <div class="settings-toggle-row">
+
+                    <div class="settings-toggle-content">
+
+                        <div class="settings-toggle-icon">
+                            @
+                        </div>
+
+                        <div>
+
+                            <strong data-i18n="email_notifications">
+                                Email Notifications
+                            </strong>
+
+                            <span data-i18n="email_notifications_description">
+                                Receive supported account notifications by email.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="settings-switch">
+
+                        <input
+                            type="checkbox"
+                            id="settings-email-notifications"
+                        >
+
+                        <span class="settings-switch-slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="settings-divider"></div>
+
+
+                <!-- =================================================
+                     PROCESSING NOTIFICATIONS
+                ================================================== -->
+
+                <div class="settings-toggle-row">
+
+                    <div class="settings-toggle-content">
+
+                        <div class="settings-toggle-icon">
+                            ✦
+                        </div>
+
+                        <div>
+
+                            <strong data-i18n="processing_notifications">
+                                Processing Notifications
+                            </strong>
+
+                            <span data-i18n="processing_notifications_description">
+                                Receive notifications related to receipt processing.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="settings-switch">
+
+                        <input
+                            type="checkbox"
+                            id="settings-processing-notifications"
+                        >
+
+                        <span class="settings-switch-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SAVE AREA
+        ================================================== -->
+
+        <section class="settings-save-section">
+
+            <div class="settings-save-info">
+
+                <div class="settings-save-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong data-i18n="preferences">
+                        Preferences
+                    </strong>
+
+                    <span data-i18n="preferences_description">
+                        Changes are saved to your account settings.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-form-actions">
+
+                <button
+                    type="button"
+                    class="settings-button secondary"
+                    id="settings-reset-button"
+                    data-i18n="reset"
+                >
+                    Reset
+                </button>
+
+
+                <button
+                    type="button"
+                    class="settings-button primary"
+                    id="settings-save-button"
+                    data-i18n="save_changes"
+                >
+                    Save Changes
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MESSAGE
+        ================================================== -->
+
+        <div
+            id="settings-message"
+            class="settings-message"
+        ></div>
+
+
+        <!-- =================================================
+             TOAST
+        ================================================== -->
+
+        <div
+            class="settings-toast-container"
+            id="settings-toast-container"
+        ></div>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="settings-footer">
+
+            <span data-i18n="smartreceipt_settings">
+                SmartReceiptAI Settings
+            </span>
+
+            <span data-i18n="settings_footer_description">
+                Manage your personal application preferences.
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="/assets/js/theme.js?v=1"></script>
+<script src="/assets/js/language.js?v=4"></script>
+<script src="/assets/js/settings.js?v=7"></script>
+
+</body>
+
+</html>

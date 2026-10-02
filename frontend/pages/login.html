@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login — SmartReceiptAI</title>
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/login.css"
+    >
+
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <!-- Background Effects -->
+
+        <div class="login-background">
+
+            <div class="glow-circle"></div>
+
+        </div>
+
+
+        <!-- Login Card -->
+
+        <section class="login-card">
+
+
+            <!-- Logo -->
+
+            <div class="login-logo">
+
+                <div class="login-logo-icon">
+
+                    <div class="mini-receipt">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                    <div class="mini-ai">
+                        AI
+                    </div>
+
+                </div>
+
+
+                <h1>
+                    Smart<span>Receipt</span>AI
+                </h1>
+
+
+                <p data-i18n="login_welcome">
+                    Welcome back
+                </p>
+
+            </div>
+
+
+            <!-- Form -->
+
+            <form class="login-form">
+
+
+                <!-- Email -->
+
+                <div class="input-group">
+
+                    <label data-i18n="email_address">
+                        Email Address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            data-i18n-placeholder="enter_your_email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="input-group">
+
+                    <label data-i18n="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            id="password"
+                            type="password"
+                            data-i18n-placeholder="enter_your_password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <span
+                            class="password-toggle"
+                            onclick="togglePassword()"
+                        >
+                            👁
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Options -->
+
+                <div class="form-options">
+
+                    <label class="remember">
+
+                    <input
+                        type="checkbox"
+                        id="remember-me"
+                    >
+
+                    <span data-i18n="remember_me">
+                        Remember me
+                    </span>
+
+                </label>
+
+
+                    <a
+                        href="/forgot-password"
+                        data-i18n="forgot_password"
+                    >
+                        Forgot password?
+                    </a>
+
+                </div>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    id="login-button"
+                >
+
+                    <span
+                        class="button-text"
+                        data-i18n="login"
+                    >
+                        Login
+                    </span>
+
+                    <span
+                        class="button-loader"
+                        data-i18n="signing_in"
+                    >
+                        Signing in...
+                    </span>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- Register Link -->
+
+            <div class="register-link">
+
+                <span data-i18n="dont_have_account">
+                    Don't have an account?
+                </span>
+
+                <a
+                    href="/register"
+                    data-i18n="create_account"
+                >
+                    Create Account
+                </a>
+
+            </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+    <script src="/assets/js/language.js"></script>
+    <script src="/assets/js/theme.js?v=1"></script>
+    <script src="/assets/js/login.js"></script>
+        
+</body>
+
+</html>

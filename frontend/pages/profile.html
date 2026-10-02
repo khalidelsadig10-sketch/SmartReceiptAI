@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-page="profile">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Profile — SmartReceiptAI</title>
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/base.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/dashboard.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/assets/css/profile.css"
+    >
+
+</head>
+
+<body>
+
+<div class="dashboard profile-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-icon">
+                <div class="mini-receipt">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="mini-ai">AI</div>
+            </div>
+
+            <div class="brand-text">
+                Smart<span>Receipt</span>AI
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <!-- Dashboard -->
+            <a href="/dashboard" class="nav-item">
+
+                <span class="nav-icon icon-dashboard" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 10.5 12 3l9 7.5"></path>
+                        <path d="M5 9.5V21h14V9.5"></path>
+                        <path d="M9 21v-7h6v7"></path>
+                    </svg>
+                </span>
+
+                <span data-i18n="dashboard">
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- Receipts -->
+            <a href="/receipts" class="nav-item">
+
+                <span class="nav-icon icon-receipts" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"></path>
+                        <path d="M9 8h6"></path>
+                        <path d="M9 12h6"></path>
+                        <path d="M9 16h3"></path>
+                    </svg>
+                </span>
+
+                <span data-i18n="receipts">
+                    Receipts
+                </span>
+
+            </a>
+
+
+            <!-- Analytics -->
+            <a href="/analytics" class="nav-item">
+
+                <span class="nav-icon icon-analytics" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19V5"></path>
+                        <path d="M4 19h17"></path>
+
+                        <rect
+                            x="7"
+                            y="12"
+                            width="3"
+                            height="5"
+                            rx="1"
+                        ></rect>
+
+                        <rect
+                            x="12"
+                            y="9"
+                            width="3"
+                            height="8"
+                            rx="1"
+                        ></rect>
+
+                        <rect
+                            x="17"
+                            y="5"
+                            width="3"
+                            height="12"
+                            rx="1"
+                        ></rect>
+                    </svg>
+                </span>
+
+                <span data-i18n="analytics">
+                    Analytics
+                </span>
+                        <a href="/reports" class="nav-item">
+
+                <span class="nav-icon icon-reports" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 3h12v18H6z"></path>
+                        <path d="M9 7h6"></path>
+                        <path d="M9 11h6"></path>
+                        <path d="M9 15h3"></path>
+                    </svg>
+                </span>
+
+                <span>
+                    Reports
+                </span>
+
+            </a>
+            </a>
+
+
+            <!-- AI Intelligence -->
+            <a href="/intelligence" class="nav-item">
+
+                <span
+                    class="nav-icon icon-intelligence"
+                    aria-hidden="true"
+                >
+            
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M12 3l1.4 4.6L18 9l-4.6 1.4L12 15l-1.4-4.6L6 9l4.6-1.4L12 3z"></path>
+
+                        <path d="M19 14l.7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7L19 14z"></path>
+
+                    </svg>
+                </span>
+
+                <span data-i18n="intelligence">
+                    AI Intelligence
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <!-- Profile -->
+            <a href="/profile" class="nav-item active">
+
+                <span
+                    class="nav-icon icon-profile"
+                    aria-hidden="true"
+                >
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="8"
+                            r="4"
+                        ></circle>
+
+                        <path d="M4 21c.8-4.1 3.5-6 8-6s7.2 1.9 8 6"></path>
+
+                    </svg>
+                </span>
+
+                <span data-i18n="profile">
+                    Profile
+                </span>
+
+            </a>
+
+
+            <!-- Security -->
+            <a href="/security" class="nav-item">
+
+                <span
+                    class="nav-icon icon-security"
+                    aria-hidden="true"
+                >
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M12 3l8 3v5c0 5.2-3.3 8.9-8 10-4.7-1.1-8-4.8-8-10V6l8-3z"></path>
+
+                        <path d="M9 12l2 2 4-4"></path>
+
+                    </svg>
+                </span>
+
+                <span data-i18n="security">
+                    Security
+                </span>
+
+            </a>
+
+
+            <!-- Settings -->
+            <a href="/settings" class="nav-item">
+
+                <span
+                    class="nav-icon icon-settings"
+                    aria-hidden="true"
+                >
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                        ></circle>
+
+                        <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 1.7-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5v.2h-2.4v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1L8 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H6v-2.4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L7.3 8.6 9 6.9l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5v-.2h2.4v.2a1.7 1.7 0 0 0 1.5 1 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.7 1.7-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0-1.5 1z"></path>
+
+                    </svg>
+                </span>
+
+                <span data-i18n="settings">
+                    Settings
+                </span>
+
+            </a>
+
+
+            <!-- Logout -->
+            <button
+                type="button"
+                class="nav-item logout-button"
+                id="logout-button"
+            >
+
+                <span
+                    class="nav-icon icon-logout"
+                    aria-hidden="true"
+                >
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 17l5-5-5-5"></path>
+
+                        <path d="M15 12H3"></path>
+
+                        <path d="M13 4h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"></path>
+
+                    </svg>
+                </span>
+
+                <span data-i18n="logout">
+                    Logout
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="topbar">
+
+            <div class="mobile-menu">
+
+                <button
+                    type="button"
+                    id="mobile-menu-button"
+                    aria-label="Open menu"
+                    data-i18n-title="open_navigation"
+                    title="Open menu"
+                >
+                    ☰
+                </button>
+
+            </div>
+
+
+            <div class="topbar-spacer"></div>
+
+
+            <div class="profile-topbar-user">
+
+                <div
+                    class="profile-topbar-avatar"
+                    id="topbar-avatar"
+                >
+                    <span id="topbar-initial">
+                        U
+                    </span>
+                </div>
+
+
+                <div>
+
+                    <strong id="topbar-name">
+                        Loading...
+                    </strong>
+
+                    <span data-i18n="account">
+                        Account
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <div class="dashboard-content profile-content">
+
+
+            <!-- PAGE HEADER -->
+
+            <section class="profile-page-header">
+
+                <div>
+
+                    <p
+                        class="page-eyebrow"
+                        data-i18n="smartreceiptai"
+                    >
+                        SMARTRECEIPTAI
+                    </p>
+
+                    <h1 data-i18n="profile">
+                        Profile
+                    </h1>
+
+                    <p data-i18n="profile_description">
+                        Manage your personal account information.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PROFILE
+            ================================================== -->
+
+            <section class="profile-layout">
+
+
+                <!-- PROFILE IMAGE -->
+
+                <article class="profile-card profile-photo-card">
+
+                    <div class="profile-card-heading">
+
+                        <div>
+
+                            <span
+                                class="section-eyebrow"
+                                data-i18n="profile_image_section"
+                            >
+                                PROFILE IMAGE
+                            </span>
+
+                            <h2 data-i18n="your_photo">
+                                Your Photo
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-photo-area">
+
+                        <div
+                            class="profile-avatar"
+                            id="profile-avatar"
+                        >
+
+                            <img
+                                id="profile-image"
+                                alt="Profile image"
+                                data-i18n-title="profile_image"
+                                title="Profile image"
+                                hidden
+                            >
+
+                            <span
+                                id="profile-initial"
+                            >
+                                U
+                            </span>
+
+                        </div>
+
+
+                        <div class="profile-photo-actions">
+
+                            <input
+                                type="file"
+                                id="profile-image-input"
+                                accept="image/jpeg,image/png,image/webp"
+                                hidden
+                            >
+
+
+                            <label
+                                for="profile-image-input"
+                                class="primary-button profile-choose-button"
+                                data-i18n="choose_photo"
+                            >
+                                Choose Photo
+                            </label>
+
+
+                            <button
+                                type="button"
+                                class="secondary-button"
+                                id="remove-profile-image"
+                                hidden
+                            >
+                                <span data-i18n="remove_photo">
+                                    Remove Photo
+                                </span>
+                            </button>
+
+
+                            <small
+                                id="profile-image-status"
+                                data-i18n="profile_image_limit"
+                            >
+                                JPG, PNG or WEBP · Maximum 50 MB
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ACCOUNT INFORMATION -->
+
+                <article class="profile-card">
+
+                    <div class="profile-card-heading">
+
+                        <div>
+
+                            <span
+                                class="section-eyebrow"
+                                data-i18n="account_information"
+                            >
+                                ACCOUNT INFORMATION
+                            </span>
+
+                            <h2 data-i18n="personal_details">
+                                Personal Details
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-form">
+
+
+                        <!-- Full Name -->
+
+                        <div class="profile-field">
+
+                            <label
+                                for="profile-full-name"
+                                data-i18n="full_name"
+                            >
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profile-full-name"
+                                placeholder="Your full name"
+                                data-i18n-placeholder="your_full_name"
+                                autocomplete="name"
+                            >
+
+                        </div>
+
+
+                        <!-- Email -->
+
+                        <div class="profile-field">
+
+                            <label
+                                for="profile-email"
+                                data-i18n="email"
+                            >
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="profile-email"
+                                disabled
+                            >
+
+                        </div>
+
+
+                        <!-- Status -->
+
+                        <div class="profile-field">
+
+                            <label data-i18n="account_status">
+                                Account Status
+                            </label>
+
+                            <div
+                                class="profile-status"
+                                id="profile-status"
+                                data-i18n="active"
+                            >
+                                Active
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-form-actions">
+
+                            <button
+                                type="button"
+                                class="primary-button"
+                                id="save-profile"
+                                data-i18n="save_changes"
+                            >
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- TOAST -->
+
+            <div
+                class="profile-toast-container"
+                id="profile-toast-container"
+            ></div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+<script src="/assets/js/theme.js?v=1"></script>
+<script src="/assets/js/language.js?v=8"></script>
+<script src="/assets/js/profile.js?v=2"></script>
+<script src="/static/assets/js/theme.js"></script>
+
+</body>
+
+</html>

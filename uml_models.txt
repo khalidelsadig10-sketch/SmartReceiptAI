@@ -1,0 +1,537 @@
+===== models\user.py =====
+from datetime import datetime
+
+from sqlalchemy import Boolean, DateTime, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.core.database import Base
+
+
+class UserModel(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+    )
+
+    # =========================================================
+    # User Information
+    # =========================================================
+
+    full_name: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+
+    email: Mapped[str] = mapped_column(
+        String(255),
+        unique=True,
+        index=True,
+        nullable=False,
+    )
+
+    profile_image: Mapped[str | None] = mapped_column(
+        String(500),
+        nullable=True,
+    )
+
+    # =========================================================
+    # Authentication
+    # =========================================================
+
+    password_hash: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+    )
+
+    is_active: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        nullable=False,
+    )
+
+    # =========================================================
+    # Metadata
+    # =========================================================
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False,
+    )
+
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False,
+    )
+
+    # =========================================================
+    # Relationships
+    # =========================================================
+
+    receipts = relationship(
+        "ReceiptModel",
+        back_populates="user",
+    )
+    settings = relationship(
+        "UserSettingsModel",
+        back_populates="user",
+        uselist=False,
+        cascade="all, delete-orphan",
+    )
+    notifications = relationship(
+        "NotificationModel",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+===== models\receipt.py =====
+from datetime import datetime
+
+from sqlalchemy import DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.core.database import Base
+
+
+class ReceiptModel(Base):
+    __tablename__ = "receipts"
+
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+    )
+    user_id: Mapped[int | None] = mapped_column(
+        ForeignKey("users.id"),
+        nullable=True,
+        index=True,
+    )
+
+    # Merchant
+    merchant_name: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+
+    merchant_category: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+
+    merchant_address: Mapped[str | None] = mapped_column(
+        String(500),
+        nullable=True,
+    )
+
+    merchant_phone: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+
+    # Receipt information
+    invoice_number: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+
+    receipt_date: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+    user = relationship(
+        "UserModel",
+        back_populates="receipts",
+    )
+
+    receipt_time: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+    
+
+    currency: Mapped[str | None] = mapped_column(
+        String(20),
+        nullable=True,
+    )
+
+    # Financial
+    subtotal: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    tax: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    tax_rate: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    discount: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    total: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    # Payment
+    payment_method: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+
+    # Metadata
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False,
+    )
+
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False,
+    )
+    items = relationship(
+        "ReceiptItemModel",
+        back_populates="receipt",
+        cascade="all, delete-orphan",
+    )
+    vision_analyses = relationship(
+        "VisionAnalysisModel",
+        back_populates="receipt",
+        cascade="all, delete-orphan",
+    )
+    images = relationship(
+        "ReceiptImageModel",
+        back_populates="receipt",
+        cascade="all, delete-orphan",
+    )
+    
+===== models\receipt_item.py =====
+from sqlalchemy import Float, ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.core.database import Base
+
+
+class ReceiptItemModel(Base):
+    __tablename__ = "receipt_items"
+
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+    )
+
+    receipt_id: Mapped[int] = mapped_column(
+        ForeignKey("receipts.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    name: Mapped[str] = mapped_column(
+        String(500),
+        nullable=False,
+    )
+
+    quantity: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    unit_price: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    total_price: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    receipt = relationship(
+        "ReceiptModel",
+        back_populates="items",
+    )
+===== models\receipt_image.py =====
+from datetime import datetime
+
+from sqlalchemy import DateTime, ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.core.database import Base
+
+
+class ReceiptImageModel(Base):
+    __tablename__ = "receipt_images"
+
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+    )
+
+    receipt_id: Mapped[int] = mapped_column(
+        ForeignKey("receipts.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    file_name: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+    )
+
+    file_path: Mapped[str] = mapped_column(
+        String(1000),
+        nullable=False,
+    )
+
+    mime_type: Mapped[str | None] = mapped_column(
+        String(100),
+        nullable=True,
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False,
+    )
+
+    receipt = relationship(
+        "ReceiptModel",
+        back_populates="images",
+    )
+===== models\vision_analysis.py =====
+from datetime import datetime
+
+from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.core.database import Base
+
+
+class VisionAnalysisModel(Base):
+    __tablename__ = "vision_analysis"
+
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+    )
+
+    receipt_id: Mapped[int] = mapped_column(
+        ForeignKey("receipts.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    model_name: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False,
+    )
+
+    status: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+    )
+
+    raw_response: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+
+    error_message: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False,
+    )
+
+    receipt = relationship(
+        "ReceiptModel",
+        back_populates="vision_analyses",
+    )
+===== models\notification.py =====
+from datetime import datetime
+
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.core.database import Base
+
+
+class NotificationModel(Base):
+    __tablename__ = "notifications"
+
+    # =========================================================
+    # Primary Key
+    # =========================================================
+
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+    )
+
+    # =========================================================
+    # User Relationship
+    # =========================================================
+
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    # =========================================================
+    # Notification Information
+    # =========================================================
+
+    type: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+        index=True,
+    )
+
+    title: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+    )
+
+    message: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+
+    # =========================================================
+    # Status
+    # =========================================================
+
+    is_read: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+        index=True,
+    )
+
+    # =========================================================
+    # Optional Reference
+    # =========================================================
+
+    reference_id: Mapped[int | None] = mapped_column(
+        Integer,
+        nullable=True,
+    )
+
+    # =========================================================
+    # Metadata
+    # =========================================================
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False,
+        index=True,
+    )
+
+    # =========================================================
+    # Relationship
+    # =========================================================
+
+    user = relationship(
+        "UserModel",
+        back_populates="notifications",
+    )
+===== schemas\receipt.py =====
+from typing import Optional
+
+from pydantic import BaseModel, Field
+
+
+class Merchant(BaseModel):
+    name: Optional[str] = None
+    category: Optional[str] = None
+    address: Optional[str] = None
+    phone: Optional[str] = None
+
+
+class ReceiptInfo(BaseModel):
+    invoice_number: Optional[str] = None
+    date: Optional[str] = None
+    time: Optional[str] = None
+    currency: Optional[str] = None
+
+
+class ReceiptItem(BaseModel):
+    name: str
+    quantity: Optional[float] = None
+    unit_price: Optional[float] = None
+    total_price: Optional[float] = None
+
+
+class Financial(BaseModel):
+    subtotal: Optional[float] = None
+    tax: Optional[float] = None
+    tax_rate: Optional[float] = None
+    discount: Optional[float] = None
+    total: Optional[float] = None
+
+
+class Payment(BaseModel):
+    method: Optional[str] = None
+
+
+class Receipt(BaseModel):
+    merchant: Merchant = Field(default_factory=Merchant)
+    receipt_info: ReceiptInfo = Field(default_factory=ReceiptInfo)
+    items: list[ReceiptItem] = Field(default_factory=list)
+    financial: Financial = Field(default_factory=Financial)
+    payment: Payment = Field(default_factory=Payment)
+class ValidationResponse(BaseModel):
+    is_valid: bool
+    warnings: list[str] = Field(default_factory=list)
+    errors: list[str] = Field(default_factory=list)
+
+
+class DatabaseResponse(BaseModel):
+    saved: bool
+    receipt_id: Optional[int] = None
+
+
+class ReceiptProcessResponse(BaseModel):
+    success: bool
+    receipt: Receipt
+    validation: ValidationResponse
+    database: DatabaseResponse
+class BatchReceiptItem(BaseModel):
+    filename: str
+    success: bool
+    receipt: Optional[Receipt] = None
+    validation: Optional[ValidationResponse] = None
+    database: Optional[DatabaseResponse] = None
+    error: Optional[str] = None
+
+
+class BatchReceiptProcessResponse(BaseModel):
+    success: bool
+    total_files: int
+    processed: int
+    failed: int
+    results: list[BatchReceiptItem] = Field(default_factory=list)

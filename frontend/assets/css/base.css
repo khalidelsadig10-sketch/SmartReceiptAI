@@ -1,0 +1,416 @@
+/* =========================================================
+   SmartReceiptAI
+   Global Base Styles
+   Theme System — Light / Dark / System
+   ========================================================= */
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: var(--app-bg);
+    color: var(--text-primary);
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+
+    transition:
+        background-color .25s ease,
+        color .25s ease;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+:focus-visible {
+    outline: 2px solid #4e51c8;
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   GLOBAL THEME TOKENS
+   ========================================================= */
+
+/*
+   LIGHT THEME
+*/
+
+:root {
+
+    color-scheme: light;
+
+    /* Application */
+    --app-bg: #f5f6fa;
+    --app-surface: #ffffff;
+    --app-surface-soft: #f8f9fb;
+
+    /* Sidebar */
+    --sidebar-bg: #eef1f5;
+    --sidebar-border: #d9dee7;
+
+    /* Cards */
+    --card-bg: #ffffff;
+    --card-bg-soft: #f8f9fb;
+    --card-border: #d9dee7;
+
+    /* Text */
+    --text-primary: #14171f;
+    --text-secondary: #4f5664;
+    --text-muted: #7b8492;
+    --text-soft: #9aa2ae;
+
+    /* Borders */
+    --border-color: #d9dee7;
+    --border-soft: #e6e9ef;
+
+    /* Inputs */
+    --input-bg: #ffffff;
+    --input-border: #d5dae3;
+    --input-text: #14171f;
+    --input-placeholder: #9299a5;
+
+    /* Accent */
+    --accent: #d7a85b;
+    --accent-hover: #c9974b;
+    --accent-soft: rgba(215, 168, 91, .14);
+
+    /* Status */
+    --success: #38a169;
+    --danger: #d9534f;
+    --warning: #d99a35;
+    --info: #4e51c8;
+
+    /* Shadows */
+    --shadow-sm:
+        0 4px 12px rgba(20, 23, 31, .06);
+
+    --shadow-md:
+        0 12px 30px rgba(20, 23, 31, .10);
+
+    --shadow-lg:
+        0 22px 55px rgba(20, 23, 31, .14);
+
+    /* Notification */
+    --notification-bg: #ffffff;
+    --notification-border: #d9dee7;
+    --notification-text: #4f5664;
+
+    /* Transitions */
+    --theme-transition:
+        background-color .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        box-shadow .25s ease;
+}
+
+
+/*
+   DARK THEME
+
+   Applied through:
+   <html data-theme="dark">
+*/
+
+html[data-theme="dark"] {
+
+    color-scheme: dark;
+
+    /* Application */
+    --app-bg: #0a0c12;
+    --app-surface: #11151f;
+    --app-surface-soft: #151a25;
+
+    /* Sidebar */
+    --sidebar-bg: #0e121a;
+    --sidebar-border: #242b38;
+
+    /* Cards */
+    --card-bg: #141923;
+    --card-bg-soft: #171d29;
+    --card-border: #293140;
+
+    /* Text */
+    --text-primary: #f4f5f8;
+    --text-secondary: #c1c7d1;
+    --text-muted: #929baa;
+    --text-soft: #697383;
+
+    /* Borders */
+    --border-color: #293140;
+    --border-soft: #202734;
+
+    /* Inputs */
+    --input-bg: #111722;
+    --input-border: #303948;
+    --input-text: #f4f5f8;
+    --input-placeholder: #697383;
+
+    /* Accent */
+    --accent: #d7a85b;
+    --accent-hover: #e0b76e;
+    --accent-soft: rgba(215, 168, 91, .14);
+
+    /* Status */
+    --success: #4fc477;
+    --danger: #e87878;
+    --warning: #e0aa52;
+    --info: #777bea;
+
+    /* Shadows */
+    --shadow-sm:
+        0 4px 14px rgba(0, 0, 0, .22);
+
+    --shadow-md:
+        0 12px 32px rgba(0, 0, 0, .30);
+
+    --shadow-lg:
+        0 22px 55px rgba(0, 0, 0, .45);
+
+    /* Notification */
+    --notification-bg: #141923;
+    --notification-border: #293140;
+    --notification-text: #b8c0cc;
+}
+
+
+/*
+   SYSTEM THEME
+
+   When user selects System, follow
+   Windows / browser appearance.
+*/
+
+html[data-theme="system"] {
+
+    color-scheme: light;
+}
+
+
+/* =========================================================
+   SYSTEM DARK
+   ========================================================= */
+
+@media (prefers-color-scheme: dark) {
+
+    html[data-theme="system"] {
+
+        color-scheme: dark;
+
+        --app-bg: #0a0c12;
+        --app-surface: #11151f;
+        --app-surface-soft: #151a25;
+
+        --sidebar-bg: #0e121a;
+        --sidebar-border: #242b38;
+
+        --card-bg: #141923;
+        --card-bg-soft: #171d29;
+        --card-border: #293140;
+
+        --text-primary: #f4f5f8;
+        --text-secondary: #c1c7d1;
+        --text-muted: #929baa;
+        --text-soft: #697383;
+
+        --border-color: #293140;
+        --border-soft: #202734;
+
+        --input-bg: #111722;
+        --input-border: #303948;
+        --input-text: #f4f5f8;
+        --input-placeholder: #697383;
+
+        --accent: #d7a85b;
+        --accent-hover: #e0b76e;
+        --accent-soft: rgba(215, 168, 91, .14);
+
+        --success: #4fc477;
+        --danger: #e87878;
+        --warning: #e0aa52;
+        --info: #777bea;
+
+        --shadow-sm:
+            0 4px 14px rgba(0, 0, 0, .22);
+
+        --shadow-md:
+            0 12px 32px rgba(0, 0, 0, .30);
+
+        --shadow-lg:
+            0 22px 55px rgba(0, 0, 0, .45);
+
+        --notification-bg: #141923;
+        --notification-border: #293140;
+        --notification-text: #b8c0cc;
+    }
+}
+
+
+/* =========================================================
+   GLOBAL NOTIFICATION BUTTON
+   ========================================================= */
+
+.global-notification-button {
+
+    position: relative;
+
+    width: 42px;
+    height: 42px;
+
+    margin-right: 10px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid
+        var(--notification-border);
+
+    border-radius: 10px;
+
+    background:
+        var(--notification-bg);
+
+    color:
+        var(--notification-text);
+
+    cursor: pointer;
+
+    transition:
+        var(--theme-transition),
+        transform .15s ease;
+}
+
+.global-notification-button:hover {
+
+    background:
+        var(--card-bg-soft);
+
+    border-color:
+        var(--accent);
+
+    color:
+        var(--text-primary);
+
+    transform:
+        translateY(-1px);
+}
+
+.global-notification-icon {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    font-size: 16px;
+    line-height: 1;
+}
+
+.global-notification-badge {
+
+    position: absolute;
+
+    top: -5px;
+    right: -5px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 5px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid
+        var(--app-bg);
+
+    border-radius: 20px;
+
+    background: #f5a623;
+
+    color: #1a1204;
+
+    font-size: 8px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.global-notification-badge[hidden] {
+    display: none;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 780px) {
+
+    .global-notification-button {
+
+        width: 40px;
+        height: 40px;
+
+        margin-right: 8px;
+    }
+
+    .global-notification-icon {
+        font-size: 15px;
+    }
+}

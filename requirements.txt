@@ -47,3 +47,4 @@ typing_extensions==4.16.0
 uvicorn==0.52.1
 opencv-python-headless==4.9.0.80
 numpy<2.0.0
+reportlab

@@ -49,7 +49,17 @@ app = FastAPI(
 
 
 # =========================================================
-# PASSWORD RESET TABLE
+# DATABASE INITIALIZATION
+# =========================================================
+from app.database_init import initialize_database
+
+try:
+    initialize_database()
+except Exception as e:
+    print(f"Warning during core database initialization: {e}")
+
+# =========================================================
+# ADDITIONAL TABLES
 # =========================================================
 
 PasswordResetTokenModel.__table__.create(

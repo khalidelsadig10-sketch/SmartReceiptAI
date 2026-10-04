@@ -4476,6 +4476,11 @@ function updateAdminNavigation(
         document.getElementById(
             "admin-dashboard-nav"
         );
+        
+    const upgradeLink = 
+        document.getElementById(
+            "upgrade-account-nav"
+        );
 
     if (!adminLink) {
         return;
@@ -4487,11 +4492,15 @@ function updateAdminNavigation(
 
         adminLink.hidden =
             false;
+            
+        if (upgradeLink) upgradeLink.hidden = true;
 
     } else {
 
         adminLink.hidden =
             true;
+            
+        if (upgradeLink) upgradeLink.hidden = false;
     }
 }
 /* =========================================================
@@ -4917,3 +4926,26 @@ document.addEventListener(
         ]);
     }
 );
+
+/* =========================================================
+   UPGRADE POPUP
+   ========================================================= */
+
+window.showUpgradePopup = function(event) {
+    if (event) {
+        event.preventDefault();
+    }
+    
+    // We can use SweetAlert2 (Swal) since it's already used in the project
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            icon: 'info',
+            title: 'ترقية الحساب / Upgrade',
+            html: '<p style="line-height: 1.6; margin-top: 10px;">بوابة الدفع قيد التطوير للنسخة التجارية. يرجى التواصل مع الإدارة للتفعيل.<br><br>Payment gateway is under development for the commercial phase. Please contact Admin to upgrade your account.</p>',
+            confirmButtonText: 'حسناً / OK',
+            confirmButtonColor: '#2563eb'
+        });
+    } else {
+        alert("بوابة الدفع قيد التطوير للنسخة التجارية. يرجى التواصل مع الإدارة للتفعيل.\n\nPayment gateway is under development for the commercial phase. Please contact Admin to upgrade your account.");
+    }
+};

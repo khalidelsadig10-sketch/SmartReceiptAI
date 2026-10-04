@@ -193,7 +193,8 @@ def send_password_reset_email(
     msg.attach(part)
 
     try:
-        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server = smtplib.SMTP('smtp.gmail.com', 587, timeout=10)
+        server.starttls()
         server.login(SMTP_EMAIL, SMTP_PASSWORD)
         server.sendmail(SMTP_EMAIL, recipient, msg.as_string())
         server.quit()

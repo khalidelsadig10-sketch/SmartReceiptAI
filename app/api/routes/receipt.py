@@ -265,7 +265,7 @@ async def process_receipt(
             if total >= 3:
                 raise HTTPException(
                     status_code=403,
-                    detail="Free trial limit reached. You can only process 3 receipts for free. Please upgrade your account to continue."
+                    detail="عفواً، لقد استنفدت رصيدك المجاني (3 فواتير). يرجى ترقية حسابك للمزيد. / Free trial limit reached (max 3 receipts). Please upgrade your account."
                 )
         finally:
             db.close()
@@ -437,7 +437,7 @@ async def process_pdf_receipt(
             if total >= 3:
                 raise HTTPException(
                     status_code=403,
-                    detail="Free trial limit reached. You can only process 3 receipts for free. Please upgrade your account to continue."
+                    detail="عفواً، لقد استنفدت رصيدك المجاني (3 فواتير). يرجى ترقية حسابك للمزيد. / Free trial limit reached (max 3 receipts). Please upgrade your account."
                 )
         finally:
             db.close()
@@ -571,7 +571,7 @@ async def process_receipts_batch(
             if total + len(files) > 3:
                 raise HTTPException(
                     status_code=403,
-                    detail=f"Free trial limit reached (max 3 receipts). You currently have {total} receipts and are trying to upload {len(files)} more. Please upgrade your account to continue."
+                    detail=f"عفواً، لقد استنفدت رصيدك المجاني. رصيدك الحالي {total} وتحاول رفع {len(files)} فواتير إضافية. يرجى الترقية. / Free trial limit reached. You have {total} receipts and are trying to upload {len(files)} more. Please upgrade."
                 )
         finally:
             db.close()

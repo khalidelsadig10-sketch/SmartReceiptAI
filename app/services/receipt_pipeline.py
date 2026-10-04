@@ -101,6 +101,37 @@ class ReceiptPipeline:
                 repr(receipt.receipt_info.currency)
             )
 
+            # --- Duplicate Detection Logic ---
+            from app.models.receipt import ReceiptModel
+            
+            merchant_name = receipt.receipt_info.merchant_name
+            receipt_date = receipt.receipt_info.date
+            total_amount = receipt.financial.total
+
+            if merchant_name and receipt_date and total_amount is not None:
+                existing_duplicate = db.query(ReceiptModel).filter(
+                    ReceiptModel.user_id == user_id,
+                    ReceiptModel.merchant_name == merchant_name,
+                    ReceiptModel.receipt_date == receipt_date,
+                    ReceiptModel.total == total_amount
+                ).first()
+
+                if existing_duplicate:
+                    return {
+                        "success": False,
+                        "receipt": receipt,
+                        "validation": {
+                            "is_valid": False,
+                            "warnings": [],
+                            "errors": ["Duplicate Warning: This receipt has already been uploaded previously (Matched by Merchant, Date, and Total)."],
+                        },
+                        "database": {
+                            "saved": False,
+                            "receipt_id": None,
+                        },
+                    }
+            # ---------------------------------
+
             saved_receipt = self.storage.save(
                 db=db,
                 receipt=receipt,

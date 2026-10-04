@@ -1020,7 +1020,7 @@ function initializeReceiptUpload() {
                 t(
                     "analyzing_receipt"
                 );
-
+            status.style.color = "var(--text-secondary, #94a3b8)";
 
             clearAnalysisResult();
 
@@ -1058,12 +1058,19 @@ function initializeReceiptUpload() {
                     error
                 );
 
-
-                status.textContent =
-                    error.message ||
-                    t(
-                        "receipt_processing_failed"
-                    );
+                const msg = error.message || t("receipt_processing_failed");
+                
+                status.textContent = msg;
+                status.style.color = "#dc2626"; // Red color
+                
+                if (typeof Swal !== 'undefined' && msg.includes("Free trial")) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'تنبيه / Alert',
+                        text: msg,
+                        confirmButtonColor: '#dc2626'
+                    });
+                }
 
 
             } finally {

@@ -1,16 +1,18 @@
 import os
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-import resend
 
-
-RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+SMTP_EMAIL = os.getenv("SMTP_EMAIL", "khalidelsadig10@gmail.com")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "wzpjarkfahzmktqb")
 MAIL_FROM = os.getenv(
     "MAIL_FROM",
-    "SmartReceiptAI <onboarding@resend.dev>",
+    "SmartReceiptAI <khalidelsadig10@gmail.com>",
 )
 RESET_PASSWORD_URL = os.getenv(
     "RESET_PASSWORD_URL",
-    "http://127.0.0.1:8000/reset-password",
+    "https://smartreceiptai1.up.railway.app/reset-password",
 )
 
 
@@ -19,12 +21,10 @@ def send_password_reset_email(
     token: str,
 ) -> None:
 
-    if not RESEND_API_KEY:
+    if not SMTP_EMAIL or not SMTP_PASSWORD:
         raise RuntimeError(
-            "RESEND_API_KEY is not configured."
+            "SMTP_EMAIL or SMTP_PASSWORD is not configured."
         )
-
-    resend.api_key = RESEND_API_KEY
 
     reset_url = (
         f"{RESET_PASSWORD_URL}"
@@ -184,11 +184,18 @@ def send_password_reset_email(
 </html>
 """
 
-    params = {
-        "from": MAIL_FROM,
-        "to": [recipient],
-        "subject": "Reset your SmartReceiptAI password",
-        "html": html,
-    }
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = "Reset your SmartReceiptAI password"
+    msg["From"] = MAIL_FROM
+    msg["To"] = recipient
 
-    resend.Emails.send(params)
+    part = MIMEText(html, "html")
+    msg.attach(part)
+
+    try:
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login(SMTP_EMAIL, SMTP_PASSWORD)
+        server.sendmail(SMTP_EMAIL, recipient, msg.as_string())
+        server.quit()
+    except Exception as e:
+        raise RuntimeError(f"Failed to send email via SMTP: {e}")

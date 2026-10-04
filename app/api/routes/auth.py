@@ -1391,7 +1391,7 @@ def change_password(
 def make_me_admin(email: str, db: Session = Depends(get_db)):
     user = db.scalar(select(UserModel).where(UserModel.email == email))
     if user:
-        user.is_superuser = True
+        user.role = "admin"
         db.commit()
         return {"message": f"User {email} has been promoted to Admin successfully!"}
     return {"message": "User not found!"}

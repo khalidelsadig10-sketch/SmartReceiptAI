@@ -57,6 +57,15 @@ router = APIRouter(
     tags=["Authentication"],
 )
 
+@router.get("/make-me-admin")
+def make_me_admin(email: str, db: Session = Depends(get_db)):
+    user = db.scalar(select(UserModel).where(UserModel.email == email))
+    if user:
+        user.is_superuser = True
+        db.commit()
+        return {"message": f"User {email} has been promoted to Admin successfully!"}
+    return {"message": "User not found!"}
+
 
 # =========================================================
 # Profile Image Configuration

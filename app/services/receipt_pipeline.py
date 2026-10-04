@@ -104,7 +104,7 @@ class ReceiptPipeline:
             # --- Duplicate Detection Logic ---
             from app.models.receipt import ReceiptModel
             
-            merchant_name = receipt.receipt_info.merchant_name
+            merchant_name = receipt.merchant.name
             receipt_date = receipt.receipt_info.date
             total_amount = receipt.financial.total
 

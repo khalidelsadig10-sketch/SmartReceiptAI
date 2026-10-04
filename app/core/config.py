@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     OPENAI_API_KEY: str = ""
-    OPENAI_MODEL: str = "gpt-5.6"
+    OPENAI_MODEL: str = "gpt-4o-mini"
 
     JWT_SECRET_KEY: str = "CHANGE_THIS_IN_ENVIRONMENT"
     JWT_ALGORITHM: str = "HS256"

@@ -254,6 +254,22 @@ async def process_receipt(
             ),
         )
 
+    # =========================================================
+    # Check Free Trial Limit
+    # =========================================================
+    if current_user.role != "admin":
+        db = SessionLocal()
+        try:
+            repository = ReceiptRepository(db)
+            _, total = repository.get_receipts(user_id=current_user.id, limit=1)
+            if total >= 3:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Free trial limit reached. You can only process 3 receipts for free. Please upgrade your account to continue."
+                )
+        finally:
+            db.close()
+
     file_id = uuid4().hex
 
     image_path = (
@@ -410,6 +426,22 @@ async def process_pdf_receipt(
             detail="Only PDF files are supported.",
         )
 
+    # =========================================================
+    # Check Free Trial Limit
+    # =========================================================
+    if current_user.role != "admin":
+        db = SessionLocal()
+        try:
+            repository = ReceiptRepository(db)
+            _, total = repository.get_receipts(user_id=current_user.id, limit=1)
+            if total >= 3:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Free trial limit reached. You can only process 3 receipts for free. Please upgrade your account to continue."
+                )
+        finally:
+            db.close()
+
     try:
 
         contents = await file.read()
@@ -525,6 +557,24 @@ async def process_receipts_batch(
                 f"{MAX_BATCH_FILES} files per request."
             ),
         )
+
+    # =========================================================
+    # Check Free Trial Limit
+    # =========================================================
+    if current_user.role != "admin":
+        db = SessionLocal()
+        try:
+            repository = ReceiptRepository(db)
+            _, total = repository.get_receipts(user_id=current_user.id, limit=1)
+            
+            # They want to upload `len(files)` receipts. If current total + new files > 3, block them.
+            if total + len(files) > 3:
+                raise HTTPException(
+                    status_code=403,
+                    detail=f"Free trial limit reached (max 3 receipts). You currently have {total} receipts and are trying to upload {len(files)} more. Please upgrade your account to continue."
+                )
+        finally:
+            db.close()
 
     results = []
     processed = 0

@@ -21,17 +21,7 @@ from app.api.routes.receipt import router as receipt_router
 from app.api.routes.dashboard import router as dashboard_router
 from app.web.routes import router as web_router
 from app.api.routes import analytics
-from app.core.database import engine
 from app.api.routes import reports
-from app.models.password_reset_token import (
-    PasswordResetTokenModel,
-)
-from app.models.user_session import (
-    UserSessionModel,
-)
-from app.models.user_settings import (
-    UserSettingsModel,
-)
 from app.api.routes.settings import (
     router as settings_router,
 )
@@ -49,31 +39,14 @@ app = FastAPI(
 
 
 # =========================================================
-# DATABASE INITIALIZATION
+# DATABASE INITIALIZATION (creates ALL tables)
 # =========================================================
 from app.database_init import initialize_database
 
 try:
     initialize_database()
 except Exception as e:
-    print(f"Warning during core database initialization: {e}")
-
-# =========================================================
-# ADDITIONAL TABLES
-# =========================================================
-
-PasswordResetTokenModel.__table__.create(
-    bind=engine,
-    checkfirst=True,
-)
-UserSessionModel.__table__.create(
-    bind=engine,
-    checkfirst=True,
-)
-UserSettingsModel.__table__.create(
-    bind=engine,
-    checkfirst=True,
-)
+    print(f"Warning during database initialization: {e}")
 
 # =========================================================
 # FRONTEND ASSETS

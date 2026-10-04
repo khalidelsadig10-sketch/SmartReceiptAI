@@ -575,68 +575,14 @@ def forgot_password(
             message=generic_message,
         )
 
-    old_tokens = db.scalars(
-        select(
-            PasswordResetTokenModel
-        ).where(
-            PasswordResetTokenModel.user_id
-            == user.id,
-            PasswordResetTokenModel.used_at.is_(
-                None
-            ),
-        )
-    ).all()
-
-    for old_token in old_tokens:
-        old_token.used_at = (
-            datetime.utcnow()
-        )
-
-    raw_token = generate_reset_token()
-
-    token_hash = hash_reset_token(
-        raw_token
-    )
-
-    expires_at = (
-        datetime.utcnow()
-        + timedelta(minutes=15)
-    )
-
-    reset_token = (
-        PasswordResetTokenModel(
-            user_id=user.id,
-            token_hash=token_hash,
-            expires_at=expires_at,
-        )
-    )
-
-    db.add(reset_token)
+    # Bypass email due to Railway blocking outbound SMTP
+    # Directly reset the password to 12345678 for the graduation project
+    user.password_hash = hash_password("12345678")
     db.commit()
-
-    try:
-
-        send_password_reset_email(
-            recipient=user.email,
-            token=raw_token,
-        )
-
-    except Exception as exc:
-
-        reset_token.used_at = (
-            datetime.utcnow()
-        )
-
-        db.commit()
-
-        print(
-            "Password reset email failed:",
-            exc,
-        )
 
     return ForgotPasswordResponse(
         success=True,
-        message=generic_message,
+        message="تم إعادة ضبط كلمة المرور إلى 12345678 بنجاح. يرجى تسجيل الدخول بها الآن. / Password reset to 12345678. Please login.",
     )
 
 

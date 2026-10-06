@@ -5910,3 +5910,89 @@ html[data-theme="dark"]
     }
 
 }
+
+/* ==========================================================
+   RTL SUPPORT (ARABIC)
+   ========================================================== */
+
+html[dir="rtl"] .admin-sidebar {
+    border-right: none;
+    border-left: 1px solid var(--admin-divider);
+}
+
+html[dir="rtl"] .admin-nav-item:hover {
+    transform: translateX(-1px);
+}
+
+html[dir="rtl"] .admin-nav-item.active {
+    box-shadow: inset -2px 0 0 var(--admin-purple-active);
+}
+
+html[dir="rtl"] .admin-brand-ai {
+    right: auto;
+    left: -4px;
+}
+
+html[dir="rtl"] .admin-topbar-actions {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+html[dir="rtl"] .admin-heading-badge {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+html[dir="rtl"] .admin-stat-card-top .admin-stat-icon {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+html[dir="rtl"] .admin-table-filters {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+html[dir="rtl"] .admin-table-search {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+html[dir="rtl"] .admin-table-title-icon {
+    margin-right: 0;
+    margin-left: 11px;
+}
+
+html[dir="rtl"] th {
+    text-align: right;
+}
+
+html[dir="rtl"] td {
+    text-align: right;
+}
+
+html[dir="rtl"] .admin-table td:last-child,
+html[dir="rtl"] .admin-table th:last-child {
+    text-align: left;
+}
+
+html[dir="rtl"] .admin-user-card-info {
+    margin-left: 0;
+    margin-right: 9px;
+}
+
+html[dir="rtl"] .admin-stat-trend {
+    margin-left: 0;
+    margin-right: 6px;
+}
+
+html[dir="rtl"] .admin-trend-up svg,
+html[dir="rtl"] .admin-trend-down svg {
+    margin-right: 0;
+    margin-left: 4px;
+}
+
+html[dir="rtl"] .admin-table-status {
+    padding-left: 9px;
+    padding-right: 7px;
+}

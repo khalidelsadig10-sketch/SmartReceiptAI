@@ -587,6 +587,10 @@ function applySettings(settings) {
 
         languageInput.value =
             settings.language || "en";
+            
+        if (window.SmartReceiptLanguage) {
+            window.SmartReceiptLanguage.setLanguage(settings.language || "en");
+        }
     }
 
 

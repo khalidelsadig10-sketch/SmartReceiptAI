@@ -1646,6 +1646,9 @@ function createReceiptRow(
             "SDG"
         );
 
+    const sourceBadge = receipt.source === 'digital'
+        ? `<span style="display:inline-block; margin-top:4px; padding:2px 6px; border-radius:4px; background:var(--color-primary-light, rgba(33, 150, 243, 0.1)); color:var(--color-primary, #2196f3); font-size:11px; font-weight:600;">${escapeHtml(t("digital"))}</span>`
+        : `<span style="display:inline-block; margin-top:4px; padding:2px 6px; border-radius:4px; background:var(--bg-secondary); color:var(--text-secondary); font-size:11px; font-weight:600;">${escapeHtml(t("scanned"))}</span>`;
 
     return `
 
@@ -1677,6 +1680,10 @@ function createReceiptRow(
                         <span>
                             ${invoice}
                         </span>
+                        
+                        <div>
+                            ${sourceBadge}
+                        </div>
 
                     </div>
 
@@ -2544,6 +2551,22 @@ function createReceiptDetailsHtml(
                                 receipt.invoice_number ||
                                 "—"
                             )}
+                        </strong>
+
+                    </div>
+
+                    <div
+                        class="detail-section"
+                    >
+
+                        <p
+                            class="detail-label"
+                        >
+                            Source
+                        </p>
+
+                        <strong>
+                            ${receipt.source === 'digital' ? escapeHtml(t('digital')) : escapeHtml(t('scanned'))}
                         </strong>
 
                     </div>

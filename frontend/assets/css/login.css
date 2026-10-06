@@ -85,8 +85,8 @@
 .login-card {
 
 
-    width:430px;
-
+    width: 100%;
+    max-width: 430px;
 
     padding:45px;
 
@@ -668,3 +668,26 @@
     cursor: wait;
     opacity: 0.8;
 }
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+    
+    .login-logo-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .login-logo h1 {
+        font-size: 26px;
+    }
+    
+    .input-group input {
+        padding: 12px 14px 12px 42px;
+    }
+}

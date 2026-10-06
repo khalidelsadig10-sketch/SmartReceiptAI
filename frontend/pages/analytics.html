@@ -936,6 +936,36 @@
 
                         </article>
 
+                        <!-- Receipt Source (Digital vs Scanned) -->
+
+                        <article class="insight-card">
+
+                            <div class="section-heading insight-heading">
+
+                                <div>
+
+                                    <p
+                                        class="section-eyebrow"
+                                        data-i18n="integration"
+                                    >
+                                        INTEGRATION
+                                    </p>
+
+                                    <h2 data-i18n="receipt_source">
+                                        Receipt Source
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+
+                            <div style="position: relative; height: 200px; width: 100%; display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+                                <canvas id="sourceChart"></canvas>
+                            </div>
+
+                        </article>
+
                     </div>
 
                 </section>
@@ -1102,8 +1132,46 @@
     ====================================================== -->
     <script src="/assets/js/theme.js?v=1"></script>
     <script src="/assets/js/language.js?v=6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/assets/js/analytics.js?v=11"></script>
     <script src="/assets/js/notifications-global.js?v=1"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('sourceChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Digital', 'Scanned'],
+                        datasets: [{
+                            data: [4, 6], // Dummy data for presentation
+                            backgroundColor: [
+                                '#2196f3', // Blue for digital
+                                '#9e9e9e'  // Grey for scanned
+                            ],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '75%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true,
+                                    pointStyle: 'circle'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

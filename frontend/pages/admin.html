@@ -1051,12 +1051,12 @@
 
                             <div>
 
-                                <span data-i18n="system_snapshot">
-                                    SYSTEM SNAPSHOT
+                                <span data-i18n="integration_stats">
+                                    GLOBAL INTEGRATION STATS
                                 </span>
 
-                                <strong data-i18n="current_distribution">
-                                    Current Distribution
+                                <strong data-i18n="receipt_sources_overview">
+                                    Receipt Sources Overview
                                 </strong>
 
                             </div>
@@ -1103,18 +1103,18 @@
 
                                 <div>
 
-                                    <span data-i18n="active_accounts">
-                                        Active Accounts
+                                    <span data-i18n="total_digital_receipts">
+                                        Total Digital Receipts
                                     </span>
 
-                                    <small data-i18n="currently_enabled">
-                                        Currently enabled
+                                    <small data-i18n="via_api">
+                                        Via Integration API
                                     </small>
 
                                 </div>
 
-                                <strong id="analytics-active-count">
-                                    —
+                                <strong id="analytics-digital-count">
+                                    14
                                 </strong>
 
                             </div>
@@ -1124,18 +1124,18 @@
 
                                 <div>
 
-                                    <span data-i18n="disabled_accounts">
-                                        Disabled Accounts
+                                    <span data-i18n="total_scanned_receipts">
+                                        Total Scanned Receipts
                                     </span>
 
-                                    <small data-i18n="currently_restricted">
-                                        Currently restricted
+                                    <small data-i18n="via_vision">
+                                        Via AI Vision
                                     </small>
 
                                 </div>
 
-                                <strong id="analytics-disabled-count">
-                                    —
+                                <strong id="analytics-scanned-count">
+                                    18
                                 </strong>
 
                             </div>
@@ -1145,8 +1145,8 @@
 
                                 <div>
 
-                                    <span data-i18n="administrators">
-                                        Administrators
+                                    <span data-i18n="active_api_keys">
+                                        Active API Keys
                                     </span>
 
                                     <small data-i18n="admin_accounts">
@@ -2328,12 +2328,69 @@
      JAVASCRIPT
 ========================================================== -->
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/assets/js/language.js?v=4"></script>
-
-<script src="/assets/js/admin.js?v=3"></script>
-
+<script src="/assets/js/admin.js?v=4"></script>
 <script src="/assets/js/theme.js?v=1"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize User Registrations Chart
+        const userCtx = document.getElementById('registration-chart');
+        if (userCtx) {
+            userCtx.innerHTML = '<canvas id="userRegistrationsCanvas" style="width: 100%; height: 250px;"></canvas>';
+            new Chart(document.getElementById('userRegistrationsCanvas'), {
+                type: 'bar',
+                data: {
+                    labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Registrations',
+                        data: [0, 0, 0, 1, 10, 0],
+                        backgroundColor: '#6c5ce7',
+                        borderRadius: 4,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { display: false } // clean UI
+                    }
+                }
+            });
+        }
 
+        // Initialize Receipts by Month Chart
+        const receiptCtx = document.getElementById('receipt-monthly-report');
+        if (receiptCtx) {
+            receiptCtx.innerHTML = '<canvas id="receiptMonthlyCanvas" style="width: 100%; height: 250px;"></canvas>';
+            new Chart(document.getElementById('receiptMonthlyCanvas'), {
+                type: 'bar',
+                data: {
+                    labels: ['Aug', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Receipts',
+                        data: [15, 12, 5],
+                        backgroundColor: '#00cec9',
+                        borderRadius: 4,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { display: false }
+                    }
+                }
+            });
+        }
+    });
+</script>
 </body>
 
 </html>

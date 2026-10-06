@@ -56,6 +56,23 @@ class ReceiptModel(Base):
         back_populates="receipts",
     )
 
+    integration_id: Mapped[int | None] = mapped_column(
+        ForeignKey("integration_settings.id"),
+        nullable=True,
+        index=True,
+    )
+
+    integration = relationship(
+        "IntegrationSettingModel",
+        back_populates="receipts",
+    )
+
+    source: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+        default="scanned",
+    )
+
     receipt_time: Mapped[str | None] = mapped_column(
         String(100),
         nullable=True,

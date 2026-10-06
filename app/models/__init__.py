@@ -6,6 +6,7 @@ from app.models.receipt import ReceiptModel
 from app.models.receipt_item import ReceiptItemModel
 from app.models.receipt_image import ReceiptImageModel
 from app.models.vision_analysis import VisionAnalysisModel
+from app.models.integration import IntegrationSettingModel
 
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     "ReceiptItemModel",
     "ReceiptImageModel",
     "VisionAnalysisModel",
+    "IntegrationSettingModel",
 ]

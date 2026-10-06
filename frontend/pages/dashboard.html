@@ -1139,6 +1139,25 @@
                     </article>
 
                 </section>
+                
+                <!-- =========================================
+                     ANALYTICS CHART
+                ========================================== -->
+                <section class="chart-section" style="margin-bottom: 30px; background: var(--bg-primary); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); border: 1px solid var(--border-color, #e5e7eb);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin: 0;" data-i18n="expenses_overview">Expenses Overview</h3>
+                        <select id="chart-filter" style="padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 12px; outline: none; cursor: pointer;">
+                            <option value="7" data-i18n="last_7_days">Last 7 Days</option>
+                            <option value="30" selected data-i18n="last_30_days">Last 30 Days</option>
+                            <option value="90" data-i18n="last_90_days">Last 90 Days</option>
+                            <option value="365" data-i18n="this_year">This Year</option>
+                            <option value="all" data-i18n="all_time">All Time</option>
+                        </select>
+                    </div>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="expensesChart"></canvas>
+                    </div>
+                </section>
 
 
                 <!-- =========================================
@@ -1847,7 +1866,76 @@
     <script src="/assets/js/theme.js?v=1"></script>
     <script src="/assets/js/notifications-global.js?v=1"></script>
     <script src="/assets/js/language.js?v=4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/assets/js/dashboard.js?v=..."></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('expensesChart');
+            if (ctx) {
+                // Generate some dummy data for the presentation
+                const labels = [];
+                const dataPoints = [];
+                const today = new Date();
+                for (let i = 29; i >= 0; i--) {
+                    const d = new Date(today);
+                    d.setDate(today.getDate() - i);
+                    labels.push(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                    // Generate random spikes for a realistic look
+                    dataPoints.push(Math.floor(Math.random() * 5000) + 500);
+                }
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Expenses (SDG)',
+                            data: dataPoints,
+                            borderColor: '#2196f3',
+                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4, // smooth curves
+                            pointRadius: 0,
+                            pointHoverRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                titleFont: { size: 13 },
+                                bodyFont: { size: 14, weight: 'bold' },
+                                padding: 10,
+                                cornerRadius: 8
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: { maxTicksLimit: 7 }
+                            },
+                            y: {
+                                border: { display: false },
+                                grid: { color: 'rgba(0,0,0,0.05)' },
+                                beginAtZero: true
+                            }
+                        },
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 

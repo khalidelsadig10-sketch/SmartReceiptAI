@@ -194,6 +194,9 @@ async def get_receipts(
                         else None
                     ),
 
+                    # Source
+                    "source": receipt.source,
+
                     # Items
                     "items_count": len(
                         receipt.items
@@ -1007,6 +1010,9 @@ async def get_receipt(
                     if receipt.updated_at
                     else None
                 ),
+
+                # Source
+                "source": receipt.source,
 
                 # Items
                 "items": [

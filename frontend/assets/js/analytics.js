@@ -969,97 +969,58 @@ function renderProcessingTrend(
         );
 
 
-    container.innerHTML = `
+    const labels = trend.map(item => formatDate(item.date));
+    const dataPoints = trend.map(item => Number(item.receipts) || 0);
 
-        <div
-            class="simple-trend-list"
-        >
-
-            ${
-                trend
-                    .map(
-                        item => {
-
-                            const receipts =
-                                Number(
-                                    item.receipts
-                                ) ||
-                                0;
-
-
-                            const percentage =
-                                Math.max(
-                                    (
-                                        receipts /
-                                        maxReceipts
-                                    ) *
-                                    100,
-                                    6
-                                );
-
-
-                            return `
-
-                                <div
-                                    class="trend-row"
-                                >
-
-                                    <div
-                                        class="trend-row-header"
-                                    >
-
-                                        <span>
-                                            ${escapeHtml(
-                                                formatDate(
-                                                    item.date
-                                                )
-                                            )}
-                                        </span>
-
-
-                                        <strong>
-
-                                            ${formatNumber(
-                                                receipts
-                                            )}
-
-                                            ${
-                                                receipts === 1
-                                                    ? ` ${escapeHtml(
-                                                        t("receipt")
-                                                    )}`
-                                                    : ` ${escapeHtml(
-                                                        t("receipts")
-                                                    )}`
-                                            }
-
-                                        </strong>
-
-                                    </div>
-
-
-                                    <div
-                                        class="trend-track"
-                                    >
-
-                                        <div
-                                            class="trend-bar"
-                                            style="width:${percentage}%"
-                                        ></div>
-
-                                    </div>
-
-                                </div>
-
-                            `;
-                        }
-                    )
-                    .join("")
+    container.innerHTML = `<canvas id="processingTrendCanvas" style="width: 100%; height: 250px;"></canvas>`;
+    
+    const ctx = document.getElementById('processingTrendCanvas');
+    
+    if (window.processingTrendChart) {
+        window.processingTrendChart.destroy();
+    }
+    
+    window.processingTrendChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: t("receipts") || "Receipts",
+                data: dataPoints,
+                backgroundColor: 'rgba(255, 152, 0, 0.8)', // Orange color to match the original theme
+                borderRadius: 4,
+                borderWidth: 0,
+                barPercentage: 0.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    titleFont: { size: 13 },
+                    bodyFont: { size: 14, weight: 'bold' },
+                    padding: 10,
+                    cornerRadius: 8
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false }
+                },
+                y: {
+                    border: { display: false },
+                    grid: { color: 'rgba(0,0,0,0.05)' },
+                    beginAtZero: true,
+                    ticks: { precision: 0 } // whole numbers only
+                }
             }
-
-        </div>
-
-    `;
+        }
+    });
 }
 
 

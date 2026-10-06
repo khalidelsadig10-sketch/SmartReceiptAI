@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Billing System - Demo POS</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f6; padding: 2rem; display: flex; justify-content: center; }
+        .pos-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: #555; font-size: 0.9rem; }
+        input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
+        .btn-send { width: 100%; padding: 1rem; background-color: #2196F3; color: white; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 1rem; transition: background 0.3s; }
+        .btn-send:hover { background-color: #1976D2; }
+        .btn-send:disabled { background-color: #90CAF9; cursor: not-allowed; }
+        .status-msg { margin-top: 1rem; padding: 1rem; border-radius: 6px; text-align: center; font-weight: bold; display: none; }
+        .success { background-color: #e8f5e9; color: #2e7d32; }
+        .error { background-color: #ffebee; color: #c62828; }
+        .settings-link { text-align: center; margin-top: 1rem; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<div class="pos-container">
+    <h2>🏥 Hospital Billing System</h2>
+    
+    <div class="form-group">
+        <label>Integration API Key (From SmartReceiptAI Settings)</label>
+        <input type="text" id="apiKey" placeholder="Enter API Key to connect" value="">
+    </div>
+    <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #eee;">
+    
+    <div class="form-group">
+        <label>Receipt Number</label>
+        <input type="text" id="receiptNumber">
+    </div>
+    
+    <div class="form-group">
+        <label>Patient Name</label>
+        <input type="text" id="patientName" value="Ahmed Ali">
+    </div>
+
+    <div class="form-group">
+        <label>Service / Item</label>
+        <input type="text" id="itemName" value="Medical Consultation">
+    </div>
+
+    <div style="display: flex; gap: 1rem;">
+        <div class="form-group" style="flex: 1;">
+            <label>Price</label>
+            <input type="number" id="price" value="5000">
+        </div>
+        <div class="form-group" style="flex: 1;">
+            <label>Currency</label>
+            <input type="text" id="currency" value="SDG">
+        </div>
+    </div>
+
+    <button type="button" class="btn-send" id="btnSend">Send & Print Receipt</button>
+    
+    <div id="statusMsg" class="status-msg"></div>
+</div>
+
+<script>
+    // Generate a random invoice number on load
+    document.getElementById('receiptNumber').value = 'INV-' + Math.floor(1000 + Math.random() * 9000);
+
+    document.getElementById('btnSend').addEventListener('click', async () => {
+        const apiKey = document.getElementById('apiKey').value.trim();
+        const receiptNumber = document.getElementById('receiptNumber').value.trim();
+        const patientName = document.getElementById('patientName').value.trim();
+        const itemName = document.getElementById('itemName').value.trim();
+        const price = parseFloat(document.getElementById('price').value);
+        const currency = document.getElementById('currency').value.trim();
+        const statusMsg = document.getElementById('statusMsg');
+        const btn = document.getElementById('btnSend');
+
+        if (!apiKey) {
+            alert('Please enter the API Key from SmartReceiptAI Integration Settings first.');
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Processing...';
+        statusMsg.style.display = 'none';
+
+        const payload = {
+            receipt_number: receiptNumber,
+            customer_name: patientName,
+            items: [
+                {
+                    name: itemName,
+                    quantity: 1,
+                    price: price
+                }
+            ],
+            currency: currency,
+            total: price,
+            subtotal: price,
+            receipt_date: new Date().toISOString().split('T')[0],
+            payment_method: 'Cash'
+        };
+
+        try {
+            // Send to our SmartReceiptAI Integration API
+            const response = await fetch('/api/v1/integrations/digital-receipt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + apiKey
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                statusMsg.textContent = '✅ Success: Receipt sent to SmartReceiptAI! Physical printing simulated.';
+                statusMsg.className = 'status-msg success';
+                
+                // Generate next invoice number
+                setTimeout(() => {
+                    document.getElementById('receiptNumber').value = 'INV-' + Math.floor(1000 + Math.random() * 9000);
+                }, 2000);
+            } else {
+                throw new Error(data.detail || 'Unknown error occurred');
+            }
+        } catch (error) {
+            statusMsg.textContent = '❌ Failed: ' + error.message;
+            statusMsg.className = 'status-msg error';
+        } finally {
+            statusMsg.style.display = 'block';
+            btn.disabled = false;
+            btn.textContent = 'Send & Print Receipt';
+        }
+    });
+</script>
+</body>
+</html>

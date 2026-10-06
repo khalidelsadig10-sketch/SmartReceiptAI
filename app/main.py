@@ -28,6 +28,9 @@ from app.api.routes.settings import (
 from app.api.routes.notifications import (
     router as notifications_router,
 )
+from app.api.routes.integration import (
+    router as integration_router,
+)
 
 app = FastAPI(
     title="SmartReceiptAI V2",
@@ -123,4 +126,7 @@ app.include_router(
 )
 app.include_router(
     admin.router
+)
+app.include_router(
+    integration_router
 )

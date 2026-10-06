@@ -836,13 +836,13 @@
                             class="settings-select"
                         >
 
-                            <option value="Africa/Khartoum">
-                                Africa/Khartoum
-                            </option>
-
-                            <option value="UTC">
-                                UTC
-                            </option>
+                            <option value="Africa/Khartoum">Africa/Khartoum</option>
+                            <option value="Africa/Cairo">Africa/Cairo</option>
+                            <option value="Asia/Riyadh">Asia/Riyadh</option>
+                            <option value="Asia/Dubai">Asia/Dubai</option>
+                            <option value="Europe/London">Europe/London</option>
+                            <option value="America/New_York">America/New_York</option>
+                            <option value="UTC">UTC</option>
 
                         </select>
 
@@ -983,6 +983,98 @@
 
 
         <!-- =================================================
+             INTEGRATION SETTINGS
+        ================================================== -->
+
+        <section class="settings-section">
+
+            <div class="settings-section-heading">
+
+                <div>
+
+                    <span
+                        class="section-eyebrow"
+                        data-i18n="integration"
+                    >
+                        INTEGRATION
+                    </span>
+
+                    <h2 data-i18n="integration_settings">
+                        External System Integration
+                    </h2>
+
+                    <span
+                        class="section-description"
+                        data-i18n="integration_settings_description"
+                    >
+                        Connect SmartReceiptAI with an external billing or POS system to receive digital receipts directly.
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="settings-grid">
+
+                <article class="settings-panel">
+                    <div class="settings-panel-header">
+                        <div class="panel-icon">⎘</div>
+                        <div>
+                            <h3 data-i18n="system_configuration">System Configuration</h3>
+                            <p data-i18n="system_configuration_description">Configure the external system details.</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-panel-body" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <label class="settings-field-label" data-i18n="system_name">System Name</label>
+                            <input type="text" id="integration-system-name" class="settings-select" style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem;" placeholder="e.g. Hospital Billing System" data-i18n-placeholder="system_name_placeholder">
+                        </div>
+
+                        <div>
+                            <label class="settings-field-label" data-i18n="org_name">Organization Name</label>
+                            <input type="text" id="integration-org-name" class="settings-select" style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem;" placeholder="e.g. White Nile Hospital" data-i18n-placeholder="org_name_placeholder">
+                        </div>
+                        
+                        <div>
+                           <button type="button" class="settings-button secondary" id="integration-generate-key" data-i18n="generate_connect">Generate & Connect</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="settings-panel">
+                    <div class="settings-panel-header">
+                        <div class="panel-icon">🔐</div>
+                        <div>
+                            <h3 data-i18n="connection_details">Connection Details</h3>
+                            <p data-i18n="connection_details_description">API keys and connection status.</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-panel-body" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <label class="settings-field-label" data-i18n="api_key">API Key</label>
+                            <input type="text" id="integration-api-key" class="settings-select" style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem; background: var(--bg-secondary);" readonly placeholder="API Key will appear here" data-i18n-placeholder="api_key_placeholder">
+                        </div>
+                        
+                        <div>
+                            <label class="settings-field-label" data-i18n="endpoint_url">Endpoint URL</label>
+                            <input type="text" id="integration-url" class="settings-select" style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem; background: var(--bg-secondary);" readonly value="/api/v1/integrations/digital-receipt">
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                            <span id="integration-status-dot" class="status-dot" style="background: var(--color-error, #f44336); width: 10px; height: 10px; border-radius: 50%; display: inline-block;"></span>
+                            <strong id="integration-status-text" data-i18n="disconnected">Disconnected</strong>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
              SAVE AREA
         ================================================== -->
 
@@ -1083,6 +1175,7 @@
 <script src="/assets/js/theme.js?v=1"></script>
 <script src="/assets/js/language.js?v=4"></script>
 <script src="/assets/js/settings.js?v=7"></script>
+<script src="/assets/js/integration.js?v=1"></script>
 
 </body>
 

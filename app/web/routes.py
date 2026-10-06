@@ -236,3 +236,16 @@ async def admin_page(
     return FileResponse(
         PAGES_DIR / "admin.html"
     )
+
+# =========================================================
+# Demo POS Page
+# =========================================================
+
+@router.get(
+    "/demo-pos",
+    include_in_schema=False,
+)
+async def demo_pos_page():
+    return FileResponse(
+        PAGES_DIR / "demo_pos.html"
+    )

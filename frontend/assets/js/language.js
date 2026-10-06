@@ -3842,6 +3842,37 @@
                 en: "SmartReceiptAI",
                 ar: "SmartReceiptAI"
             }
+            /* New Keys */
+            expenses_overview: "نظرة عامة على المصروفات",
+            last_7_days: "آخر 7 أيام",
+            last_30_days: "آخر 30 يوم",
+            last_90_days: "آخر 90 يوم",
+            this_year: "هذا العام",
+            all_time: "كل الوقت",
+            integration: "الربط التقني",
+            receipt_source: "مصدر الفواتير",
+            system_name: "اسم النظام",
+            system_name_placeholder: "مثال: نظام مستشفى النيل الأبيض",
+            org_name: "اسم المؤسسة",
+            org_name_placeholder: "مثال: مستشفى النيل الأبيض",
+            generate_connect: "توليد مفتاح وربط",
+            api_key: "مفتاح الربط (API Key)",
+            api_key_placeholder: "سيظهر مفتاح الربط هنا",
+            endpoint_url: "رابط الاستقبال (Endpoint)",
+            disconnected: "غير متصل",
+            connected: "متصل",
+            digital: "رقمي",
+            scanned: "ممسوح ضوئياً",
+
+            /* Admin Keys */
+            integration_stats: "إحصائيات الربط التقني العامة",
+            receipt_sources_overview: "نظرة عامة على مصادر الإيصالات",
+            total_digital_receipts: "إجمالي الفواتير الرقمية",
+            via_api: "عبر الـ API",
+            total_scanned_receipts: "إجمالي الفواتير الممسوحة",
+            via_vision: "عبر الذكاء الاصطناعي",
+            active_api_keys: "مفاتيح الـ API النشطة",
+
         };
 
 

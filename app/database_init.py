@@ -11,6 +11,7 @@ from app.models import (
     VisionAnalysisModel,
     UserSettingsModel,
     NotificationModel,
+    IntegrationSettingModel,
 )
 from app.models.password_reset_token import PasswordResetTokenModel
 from app.models.user_session import UserSessionModel
@@ -38,6 +39,27 @@ def initialize_database():
                 )
             )
 
+    if "source" not in receipts_columns:
+        with engine.begin() as connection:
+            connection.execute(
+                text(
+                    """
+                    ALTER TABLE receipts
+                    ADD COLUMN source VARCHAR(50) NOT NULL DEFAULT 'scanned'
+                    """
+                )
+            )
+
+    if "integration_id" not in receipts_columns:
+        with engine.begin() as connection:
+            connection.execute(
+                text(
+                    """
+                    ALTER TABLE receipts
+                    ADD COLUMN integration_id INTEGER
+                    """
+                )
+            )
 
 if __name__ == "__main__":
     initialize_database()

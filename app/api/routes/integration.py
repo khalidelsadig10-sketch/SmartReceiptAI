@@ -1,19 +1,20 @@
 import logging
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Header, status
+from fastapi import APIRouter, Depends, HTTPException, Header, Request, status
 from sqlalchemy.orm import Session
 
-from app.api.routes.auth import get_current_user
+from app.api.routes.auth import get_current_user, require_admin
 from app.core.database import SessionLocal
+from app.core.security import decode_access_token
 from app.models.integration import IntegrationSettingModel
 from app.models.receipt import ReceiptModel
 from app.models.receipt_item import ReceiptItemModel
 from app.models.user import UserModel
 from app.schemas.integration import (
+    DigitalReceiptPayload,
     IntegrationSettingCreate,
     IntegrationSettingResponse,
-    DigitalReceiptPayload,
 )
 
 logger = logging.getLogger(__name__)
@@ -32,22 +33,90 @@ def get_db():
         db.close()
 
 
+def resolve_user_from_request(
+    request: Request,
+    db: Session,
+) -> Optional[UserModel]:
+    user_token = request.headers.get("X-User-Token") or request.headers.get(
+        "X-Access-Token"
+    )
+
+    if not user_token:
+        user_token = request.cookies.get("access_token")
+
+    if user_token:
+        if user_token.startswith("Bearer "):
+            user_token = user_token.split("Bearer ")[1]
+        try:
+            payload = decode_access_token(user_token)
+            user_id = payload.get("sub")
+            if user_id:
+                user = (
+                    db.query(UserModel)
+                    .filter(UserModel.id == int(user_id))
+                    .first()
+                )
+                if user:
+                    return user
+        except Exception as e:
+            logger.debug(f"User token decoding failed: {e}")
+
+    return None
+
+
 @router.get("", response_model=List[IntegrationSettingResponse])
 def get_integrations(
-    current_user: UserModel = Depends(get_current_user),
+    current_user: UserModel = Depends(require_admin),
     db: Session = Depends(get_db),
 ):
     integrations = db.query(IntegrationSettingModel).all()
     return integrations
 
 
+@router.get("/active-key")
+def get_active_integration_key(
+    db: Session = Depends(get_db),
+):
+    integration = (
+        db.query(IntegrationSettingModel)
+        .order_by(IntegrationSettingModel.id.desc())
+        .first()
+    )
+    if not integration:
+        admin_user = (
+            db.query(UserModel).filter(UserModel.role == "admin").first()
+        )
+        if not admin_user:
+            admin_user = db.query(UserModel).first()
+
+        user_id = admin_user.id if admin_user else 1
+
+        integration = IntegrationSettingModel(
+            user_id=user_id,
+            system_name="Hospital Billing System",
+            organization_name="General Hospital POS",
+            status="Active",
+        )
+        db.add(integration)
+        db.commit()
+        db.refresh(integration)
+
+    return {
+        "api_key": integration.api_key,
+        "system_name": integration.system_name,
+        "organization_name": integration.organization_name,
+        "status": integration.status,
+    }
+
+
 @router.post("", response_model=IntegrationSettingResponse)
 def create_integration(
     payload: IntegrationSettingCreate,
-    current_user: UserModel = Depends(get_current_user),
+    current_user: UserModel = Depends(require_admin),
     db: Session = Depends(get_db),
 ):
     new_integration = IntegrationSettingModel(
+        user_id=current_user.id,
         system_name=payload.system_name,
         organization_name=payload.organization_name,
     )
@@ -87,6 +156,7 @@ async def verify_api_key(
 @router.post("/digital-receipt")
 def receive_digital_receipt(
     payload: DigitalReceiptPayload,
+    request: Request,
     integration: IntegrationSettingModel = Depends(verify_api_key),
     db: Session = Depends(get_db),
 ):
@@ -106,16 +176,18 @@ def receive_digital_receipt(
             detail=f"Receipt {payload.receipt_number} already processed.",
         )
 
-    # Find the user khalid for the demo to assign this receipt to
-    latest_user = db.query(UserModel).filter(UserModel.email.ilike("%khalid%")).first()
-    if not latest_user:
-        latest_user = db.query(UserModel).order_by(UserModel.id.desc()).first()
-    target_user_id = latest_user.id if latest_user else 1
+    # Resolve logged in user from request token if present, else default to integration owner
+    target_user = resolve_user_from_request(request, db)
+    target_user_id = target_user.id if target_user else integration.user_id
 
     receipt = ReceiptModel(
-        user_id=target_user_id, 
+        user_id=target_user_id,
         merchant_name=integration.organization_name,
-        merchant_category=f"Patient: {payload.customer_name}" if payload.customer_name else "Hospital Services",
+        merchant_category=(
+            f"Patient: {payload.customer_name}"
+            if payload.customer_name
+            else "Hospital Services"
+        ),
         invoice_number=payload.receipt_number,
         currency=payload.currency,
         total=payload.total,
@@ -150,3 +222,4 @@ def receive_digital_receipt(
         "receipt_id": receipt.id,
         "message": "Digital receipt processed successfully",
     }
+

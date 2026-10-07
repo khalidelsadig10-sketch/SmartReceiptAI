@@ -61,6 +61,34 @@ def initialize_database():
                 )
             )
 
+    # Add user_id to integration_settings if missing
+    integration_columns = {
+        column["name"]
+        for column in inspector.get_columns("integration_settings")
+    }
+
+    if "user_id" not in integration_columns:
+        with engine.begin() as connection:
+            # Add column as nullable first, then set default to first admin user
+            connection.execute(
+                text(
+                    """
+                    ALTER TABLE integration_settings
+                    ADD COLUMN user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+                    """
+                )
+            )
+            # Set existing rows to the first user in the DB
+            connection.execute(
+                text(
+                    """
+                    UPDATE integration_settings
+                    SET user_id = (SELECT id FROM users ORDER BY id LIMIT 1)
+                    WHERE user_id IS NULL
+                    """
+                )
+            )
+
 if __name__ == "__main__":
     initialize_database()
     print("SmartReceiptAI V2 database initialized.")

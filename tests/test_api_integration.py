@@ -1,4 +1,5 @@
 from pathlib import Path
+from uuid import uuid4
 
 from fastapi.testclient import TestClient
 
@@ -68,3 +69,42 @@ def test_process_receipt_end_to_end():
 
     finally:
         app.dependency_overrides.clear()
+
+
+def test_get_active_integration_key():
+    response = client.get("/api/v1/integrations/active-key")
+    assert response.status_code == 200
+    data = response.json()
+    assert "api_key" in data
+    assert "system_name" in data
+    assert len(data["api_key"]) > 0
+
+
+def test_receive_digital_receipt_auto():
+    # 1. Get active key
+    key_resp = client.get("/api/v1/integrations/active-key")
+    assert key_resp.status_code == 200
+    api_key = key_resp.json()["api_key"]
+
+    # 2. Post digital receipt with unique invoice number
+    inv_num = f"INV-TEST-{uuid4().hex[:6]}"
+    payload = {
+        "receipt_number": inv_num,
+        "customer_name": "Test Patient",
+        "items": [{"name": "Test Consultation", "quantity": 1, "price": 150.0}],
+        "currency": "SDG",
+        "total": 150.0,
+        "subtotal": 150.0,
+        "receipt_date": "2026-10-07",
+        "payment_method": "Cash",
+    }
+    response = client.post(
+        "/api/v1/integrations/digital-receipt",
+        headers={"Authorization": f"Bearer {api_key}"},
+        json=payload,
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert "receipt_id" in data
+

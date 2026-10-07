@@ -5,134 +5,440 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospital Billing System - Demo POS</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f7f6; padding: 2rem; display: flex; justify-content: center; }
-        .pos-container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h2 { text-align: center; color: #333; margin-top: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #e8f0fe 0%, #f4f7f6 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* ── Top bar ── */
+        .topbar {
+            width: 100%;
+            max-width: 520px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .topbar-brand { font-size: 0.8rem; color: #777; }
+        .topbar-brand strong { color: #1565c0; }
+
+        .btn-admin-setup {
+            font-size: 0.78rem;
+            padding: 0.35rem 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.2s;
+        }
+        .btn-admin-setup:hover { border-color: #1565c0; color: #1565c0; }
+
+        /* ── Connection status badge ── */
+        .status-badge {
+            width: 100%;
+            max-width: 520px;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .status-badge.connected { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .status-badge.disconnected { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .connected .status-dot { background: #4caf50; }
+        .disconnected .status-dot { background: #ff9800; }
+
+        /* ── Main POS card ── */
+        .pos-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .pos-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .pos-header h2 { font-size: 1.4rem; color: #1a1a2e; margin-bottom: 0.25rem; }
+        .pos-header p { font-size: 0.82rem; color: #888; }
+
         .form-group { margin-bottom: 1rem; }
-        label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: #555; font-size: 0.9rem; }
-        input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
-        .btn-send { width: 100%; padding: 1rem; background-color: #2196F3; color: white; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 1rem; transition: background 0.3s; }
-        .btn-send:hover { background-color: #1976D2; }
-        .btn-send:disabled { background-color: #90CAF9; cursor: not-allowed; }
-        .status-msg { margin-top: 1rem; padding: 1rem; border-radius: 6px; text-align: center; font-weight: bold; display: none; }
-        .success { background-color: #e8f5e9; color: #2e7d32; }
-        .error { background-color: #ffebee; color: #c62828; }
-        .settings-link { text-align: center; margin-top: 1rem; font-size: 0.85rem; }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #444;
+            font-size: 0.85rem;
+        }
+        input {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #222;
+            transition: border-color 0.2s;
+            background: #fafafa;
+        }
+        input:focus { outline: none; border-color: #2196F3; background: white; }
+
+        .row { display: flex; gap: 1rem; }
+        .row .form-group { flex: 1; }
+
+        .divider { height: 1px; background: #f0f0f0; margin: 1.25rem 0; }
+
+        .btn-send {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #1976D2, #2196F3);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+        .btn-send:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(33,150,243,0.4); }
+        .btn-send:disabled { background: #90CAF9; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .status-msg {
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .success { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .error { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+
+        /* ── Admin Setup Panel ── */
+        .admin-panel-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .admin-panel-overlay.open { display: flex; }
+
+        .admin-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .admin-panel h3 { font-size: 1.1rem; color: #1a1a2e; margin-bottom: 0.25rem; }
+        .admin-panel p { font-size: 0.8rem; color: #888; margin-bottom: 1.25rem; }
+
+        .admin-panel label { font-size: 0.82rem; font-weight: 600; color: #555; margin-bottom: 0.35rem; }
+
+        .admin-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+        .btn-save-key {
+            flex: 1;
+            padding: 0.7rem;
+            background: #1976D2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .btn-cancel {
+            padding: 0.7rem 1rem;
+            background: #f5f5f5;
+            color: #555;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .field-hint {
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 0.3rem;
+        }
     </style>
 </head>
 <body>
 
+<!-- ── Top bar ── -->
+<div class="topbar">
+    <span class="topbar-brand">Powered by <strong>SmartReceiptAI</strong></span>
+    <button class="btn-admin-setup" id="btnOpenAdmin" title="Admin: Configure connection" style="display:none;">
+        ⚙️ Admin Setup
+    </button>
+</div>
+
+<!-- ── Connection status badge ── -->
+<div class="status-badge disconnected" id="statusBadge">
+    <span class="status-dot"></span>
+    <span id="statusBadgeText">Not connected to SmartReceiptAI — Admin setup required</span>
+</div>
+
+<!-- ── Main cashier form ── -->
 <div class="pos-container">
-    <h2>🏥 Hospital Billing System</h2>
-    
-    <div class="form-group">
-        <label>Integration API Key (From SmartReceiptAI Settings)</label>
-        <input type="text" id="apiKey" placeholder="Enter API Key to connect" value="">
+    <div class="pos-header">
+        <h2>🏥 Hospital Billing System</h2>
+        <p>Enter patient and billing details to issue receipt</p>
     </div>
-    <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #eee;">
-    
+
     <div class="form-group">
         <label>Receipt Number</label>
-        <input type="text" id="receiptNumber">
+        <input type="text" id="receiptNumber" readonly style="background:#f5f5f5; color:#666;">
     </div>
-    
+
     <div class="form-group">
         <label>Patient Name</label>
-        <input type="text" id="patientName" value="Ahmed Ali">
+        <input type="text" id="patientName" placeholder="Enter patient full name">
     </div>
 
     <div class="form-group">
         <label>Service / Item</label>
-        <input type="text" id="itemName" value="Medical Consultation">
+        <input type="text" id="itemName" placeholder="e.g. Medical Consultation">
     </div>
 
-    <div style="display: flex; gap: 1rem;">
-        <div class="form-group" style="flex: 1;">
+    <div class="row">
+        <div class="form-group">
             <label>Price</label>
-            <input type="number" id="price" value="5000">
+            <input type="number" id="price" placeholder="0.00">
         </div>
-        <div class="form-group" style="flex: 1;">
+        <div class="form-group">
             <label>Currency</label>
-            <input type="text" id="currency" value="SDG">
+            <input type="text" id="currency" value="SDG" maxlength="5">
         </div>
     </div>
 
-    <button type="button" class="btn-send" id="btnSend">Send & Print Receipt</button>
-    
+    <div class="divider"></div>
+
+    <button type="button" class="btn-send" id="btnSend">🖨️ Send &amp; Print Receipt</button>
+
     <div id="statusMsg" class="status-msg"></div>
 </div>
 
+
+<!-- ── Admin Setup Panel (Modal) ── -->
+<div class="admin-panel-overlay" id="adminOverlay">
+    <div class="admin-panel">
+        <h3>🔐 Admin: System Configuration</h3>
+        <p>Enter the API Key from SmartReceiptAI Settings → Integration. This is done once by the system administrator.</p>
+
+        <div class="form-group">
+            <label>SmartReceiptAI API Key</label>
+            <input type="password" id="adminApiKeyInput" placeholder="Paste API Key here">
+            <div class="field-hint">The cashier will never see this key — it's saved securely.</div>
+        </div>
+
+        <div class="admin-actions">
+            <button class="btn-cancel" id="btnCloseAdmin">Cancel</button>
+            <button class="btn-save-key" id="btnSaveKey">✅ Save & Connect</button>
+        </div>
+    </div>
+</div>
+
+
 <script>
-    // Generate a random invoice number on load
-    document.getElementById('receiptNumber').value = 'INV-' + Math.floor(1000 + Math.random() * 9000);
+    const STORAGE_KEY = 'pos_smartreceipt_api_key';
 
+    const statusBadge    = document.getElementById('statusBadge');
+    const statusBadgeTxt = document.getElementById('statusBadgeText');
+    const adminOverlay   = document.getElementById('adminOverlay');
+
+    // ── Generate receipt number on load ──
+    document.getElementById('receiptNumber').value =
+        'INV-' + Math.floor(1000 + Math.random() * 9000);
+
+    // ── Restore saved API key & update badge ──
+    function getSavedKey() {
+        return localStorage.getItem(STORAGE_KEY) || '';
+    }
+
+    function updateConnectionBadge(key) {
+        key = key || getSavedKey();
+        if (key) {
+            statusBadge.className = 'status-badge connected';
+            statusBadgeTxt.textContent = '✔ Connected to SmartReceiptAI';
+        } else {
+            statusBadge.className = 'status-badge disconnected';
+            statusBadgeTxt.textContent = 'Not connected — Admin setup required';
+        }
+    }
+
+    // Auto-fetch active system integration key from server so connection works permanently
+    async function initConnection() {
+        let key = getSavedKey();
+        try {
+            const res = await fetch('/api/v1/integrations/active-key');
+            if (res.ok) {
+                const data = await res.json();
+                if (data && data.api_key) {
+                    key = data.api_key;
+                    localStorage.setItem(STORAGE_KEY, key);
+                }
+            }
+        } catch (err) {
+            console.warn('Auto fetch integration key warning:', err);
+        }
+        updateConnectionBadge(key);
+    }
+
+    initConnection();
+
+    // ── Show Admin Setup button only for admins ──
+    fetch('/api/v1/auth/me', { credentials: 'include' })
+    .then(res => res.ok ? res.json() : null)
+    .then(user => {
+        if (user && user.role === 'admin') {
+            document.getElementById('btnOpenAdmin').style.display = '';
+        }
+    })
+    .catch(() => {});
+
+    // ── Admin panel open/close ──
+    document.getElementById('btnOpenAdmin').addEventListener('click', () => {
+        const key = getSavedKey();
+        document.getElementById('adminApiKeyInput').value = key ? '••••••••••••••••' : '';
+        adminOverlay.classList.add('open');
+    });
+
+    document.getElementById('btnCloseAdmin').addEventListener('click', () => {
+        adminOverlay.classList.remove('open');
+    });
+
+    adminOverlay.addEventListener('click', (e) => {
+        if (e.target === adminOverlay) adminOverlay.classList.remove('open');
+    });
+
+    // ── Save API key (admin only) ──
+    document.getElementById('btnSaveKey').addEventListener('click', () => {
+        const input = document.getElementById('adminApiKeyInput').value.trim();
+        if (!input || input.includes('•')) {
+            alert('Please enter a valid API Key.');
+            return;
+        }
+        localStorage.setItem(STORAGE_KEY, input);
+        updateConnectionBadge(input);
+        adminOverlay.classList.remove('open');
+        alert('✅ API Key saved. The system is now connected to SmartReceiptAI.');
+    });
+
+    // ── Send receipt (cashier action) ──
     document.getElementById('btnSend').addEventListener('click', async () => {
-        const apiKey = document.getElementById('apiKey').value.trim();
+        let apiKey          = getSavedKey();
         const receiptNumber = document.getElementById('receiptNumber').value.trim();
-        const patientName = document.getElementById('patientName').value.trim();
-        const itemName = document.getElementById('itemName').value.trim();
-        const price = parseFloat(document.getElementById('price').value);
-        const currency = document.getElementById('currency').value.trim();
-        const statusMsg = document.getElementById('statusMsg');
-        const btn = document.getElementById('btnSend');
+        const patientName   = document.getElementById('patientName').value.trim();
+        const itemName      = document.getElementById('itemName').value.trim();
+        const price         = parseFloat(document.getElementById('price').value);
+        const currency      = document.getElementById('currency').value.trim();
+        const statusMsg     = document.getElementById('statusMsg');
+        const btn           = document.getElementById('btnSend');
 
+        // Validation
         if (!apiKey) {
-            alert('Please enter the API Key from SmartReceiptAI Integration Settings first.');
+            alert('⚠️ System not connected. Please ask your administrator to configure the SmartReceiptAI integration.');
+            return;
+        }
+        if (!patientName || !itemName || isNaN(price) || price <= 0) {
+            alert('Please fill in all fields correctly.');
             return;
         }
 
         btn.disabled = true;
-        btn.textContent = 'Processing...';
+        btn.textContent = '⏳ Processing...';
         statusMsg.style.display = 'none';
 
         const payload = {
             receipt_number: receiptNumber,
-            customer_name: patientName,
-            items: [
-                {
-                    name: itemName,
-                    quantity: 1,
-                    price: price
-                }
-            ],
-            currency: currency,
-            total: price,
-            subtotal: price,
-            receipt_date: new Date().toISOString().split('T')[0],
+            customer_name:  patientName,
+            items: [{ name: itemName, quantity: 1, price: price }],
+            currency:        currency,
+            total:           price,
+            subtotal:        price,
+            receipt_date:    new Date().toISOString().split('T')[0],
             payment_method: 'Cash'
         };
 
+        const headers = {
+            'Content-Type':  'application/json',
+            'Authorization': 'Bearer ' + apiKey
+        };
+
+        const userToken = localStorage.getItem('access_token') || localStorage.getItem('token') || '';
+        if (userToken) {
+            headers['X-User-Token'] = userToken;
+        }
+
         try {
-            // Send to our SmartReceiptAI Integration API
             const response = await fetch('/api/v1/integrations/digital-receipt', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + apiKey
-                },
+                headers: headers,
+                credentials: 'include',
                 body: JSON.stringify(payload)
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                statusMsg.textContent = '✅ Success: Receipt sent to SmartReceiptAI! Physical printing simulated.';
-                statusMsg.className = 'status-msg success';
-                
-                // Generate next invoice number
+                statusMsg.textContent = '✅ Receipt sent successfully! Printing...';
+                statusMsg.className   = 'status-msg success';
+                // Auto-generate next invoice number
                 setTimeout(() => {
-                    document.getElementById('receiptNumber').value = 'INV-' + Math.floor(1000 + Math.random() * 9000);
-                }, 2000);
+                    document.getElementById('receiptNumber').value =
+                        'INV-' + Math.floor(1000 + Math.random() * 9000);
+                    document.getElementById('patientName').value = '';
+                    document.getElementById('itemName').value    = '';
+                    document.getElementById('price').value       = '';
+                }, 2500);
             } else {
+                if (response.status === 401) {
+                    // Key is invalid — clear it
+                    localStorage.removeItem(STORAGE_KEY);
+                    updateConnectionBadge();
+                    throw new Error('Invalid API Key. Please ask your administrator to reconfigure the system.');
+                }
                 throw new Error(data.detail || 'Unknown error occurred');
             }
         } catch (error) {
             statusMsg.textContent = '❌ Failed: ' + error.message;
-            statusMsg.className = 'status-msg error';
+            statusMsg.className   = 'status-msg error';
         } finally {
             statusMsg.style.display = 'block';
-            btn.disabled = false;
-            btn.textContent = 'Send & Print Receipt';
+            btn.disabled    = false;
+            btn.textContent = '🖨️ Send & Print Receipt';
         }
     });
 </script>

@@ -1033,6 +1033,49 @@ function initializeReceiptUpload() {
                     );
 
 
+                if (
+                    response && 
+                    !response.success && 
+                    response.validation && 
+                    response.validation.errors
+                ) {
+                    const hasDuplicate = response.validation.errors.some(
+                        e => e.includes("Duplicate Warning")
+                    );
+                    if (hasDuplicate) {
+                        if (typeof Swal !== 'undefined') {
+                            const result = await Swal.fire({
+                                icon: 'warning',
+                                title: 'تنبيه: فاتورة مكررة (Duplicate)',
+                                text: 'تمت معالجة هذا الإيصال مسبقاً. هل ترغب في المواصلة أم تأكيد الرفض؟',
+                                showCancelButton: true,
+                                confirmButtonText: 'المواصلة',
+                                cancelButtonText: 'تأكيد الرفض',
+                                confirmButtonColor: '#f59e0b',
+                                cancelButtonColor: '#64748b'
+                            });
+                            
+                            if (result.isConfirmed) {
+                                // Re-process with force = true
+                                status.textContent = t("analyzing_receipt");
+                                const forcedResponse = await processReceipt(selectedReceipt, true);
+                                currentAnalysisResponse = forcedResponse;
+                                renderAnalysisResult(forcedResponse);
+                                status.textContent = t("receipt_analyzed");
+                                await refreshDashboard();
+                                return;
+                            }
+                        } else {
+                            alert("تنبيه: لقد قمت برفع ومعالجة هذه الفاتورة مسبقاً!");
+                        }
+                        
+                        // Set status and stop rendering if cancelled or no Swal
+                        status.textContent = "تم إيقاف المعالجة لتجنب التكرار.";
+                        return;
+                    }
+                }
+
+
                 currentAnalysisResponse =
                     response;
 
@@ -1092,7 +1135,7 @@ function initializeReceiptUpload() {
    ========================================================= */
 
 async function processReceipt(
-    file
+    file, force = false
 ) {
 
     const formData =
@@ -1103,6 +1146,10 @@ async function processReceipt(
         "file",
         file
     );
+    
+    if (force) {
+        formData.append("force", true);
+    }
 
 
     const response =
@@ -2298,10 +2345,6 @@ async function loadReceiptImage(
             );
 
 
-        imageElement.src =
-            objectUrl;
-
-
         imageElement.onload =
             () => {
 
@@ -2319,6 +2362,10 @@ async function loadReceiptImage(
                     )
                     ?.remove();
             };
+
+
+        imageElement.src =
+            objectUrl;
 
 
     } catch (error) {

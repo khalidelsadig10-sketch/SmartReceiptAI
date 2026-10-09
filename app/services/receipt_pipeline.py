@@ -30,6 +30,7 @@ class ReceiptPipeline:
         self,
         image_path: str,
         user_id: int,
+        force: bool = False,
     ) -> dict:
 
         db = SessionLocal()
@@ -108,7 +109,7 @@ class ReceiptPipeline:
             receipt_date = receipt.receipt_info.date
             total_amount = receipt.financial.total
 
-            if merchant_name and receipt_date and total_amount is not None:
+            if not force and merchant_name and receipt_date and total_amount is not None:
                 existing_duplicate = db.query(ReceiptModel).filter(
                     ReceiptModel.user_id == user_id,
                     ReceiptModel.merchant_name == merchant_name,

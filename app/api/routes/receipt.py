@@ -7,6 +7,7 @@ from fastapi import (
     APIRouter,
     Depends,
     File,
+    Form,
     HTTPException,
     UploadFile,
 )
@@ -231,6 +232,7 @@ async def get_receipts(
 )
 async def process_receipt(
     file: UploadFile = File(...),
+    force: bool = Form(False),
     pipeline: ReceiptPipeline = Depends(
         get_receipt_pipeline
     ),
@@ -273,15 +275,7 @@ async def process_receipt(
         finally:
             db.close()
 
-    file_id = uuid4().hex
-
-    image_path = (
-        UPLOAD_DIR
-        / f"{file_id}{extension}"
-    )
-
     try:
-
         contents = await file.read()
 
         if not contents:
@@ -293,10 +287,54 @@ async def process_receipt(
         if len(contents) > MAX_FILE_SIZE:
             raise HTTPException(
                 status_code=413,
-                detail=(
-                    "File size exceeds the 10 MB limit."
-                ),
+                detail="File size exceeds the 10 MB limit.",
             )
+
+        import hashlib
+        file_hash = hashlib.md5(contents).hexdigest()
+        
+        # =========================================================
+        # Pre-API Duplicate File Check (Cost Optimization)
+        # =========================================================
+        db_check = SessionLocal()
+        try:
+            from app.models.receipt_image import ReceiptImageModel
+            
+            existing_image = None
+            if not force:
+                existing_image = db_check.query(ReceiptImageModel).join(
+                    ReceiptModel, ReceiptImageModel.receipt_id == ReceiptModel.id
+                ).filter(
+                    ReceiptImageModel.file_name.startswith(file_hash),
+                    ReceiptModel.user_id == current_user.id
+                ).first()
+            
+            if existing_image:
+                from app.schemas.receipt import Receipt
+                logger.info(f"Duplicate file detected (Hash: {file_hash}) for user {current_user.id}. Blocking before AI processing.")
+                return {
+                    "success": False,
+                    "receipt": Receipt(),
+                    "validation": {
+                        "is_valid": False,
+                        "warnings": [],
+                        "errors": ["Duplicate Warning: لقد قمت برفع نفس الصورة تماماً مسبقاً. تم حظر العملية قبل إرسالها للذكاء الاصطناعي لتوفير التكلفة."],
+                    },
+                    "database": {
+                        "saved": False,
+                        "receipt_id": existing_image.receipt_id,
+                    },
+                }
+        finally:
+            db_check.close()
+        # =========================================================
+
+        file_id = file_hash
+
+        image_path = (
+            UPLOAD_DIR
+            / f"{file_id}{extension}"
+        )
 
         image_path.write_bytes(
             contents
@@ -311,6 +349,7 @@ async def process_receipt(
         result = pipeline.process(
             str(image_path),
             user_id=current_user.id,
+            force=force,
         )
 
         # =====================================================
@@ -406,6 +445,7 @@ async def process_receipt(
 )
 async def process_pdf_receipt(
     file: UploadFile = File(...),
+    force: bool = Form(False),
     pipeline: ReceiptPipeline = Depends(
         get_receipt_pipeline
     ),
@@ -462,13 +502,20 @@ async def process_pdf_receipt(
                     "File size exceeds the 10 MB limit."
                 ),
             )
-
-        file_id = uuid4().hex
+        import hashlib
+        file_hash = hashlib.md5(contents).hexdigest()
+        file_id = file_hash
 
         pdf_path = (
             PDF_UPLOAD_DIR
             / f"{file_id}.pdf"
         )
+        
+        if not force and pdf_path.exists():
+            raise HTTPException(
+                status_code=400,
+                detail="Duplicate Warning: لقد قمت برفع هذا الملف (PDF) مسبقاً. تم حظر العملية لتوفير التكلفة."
+            )
 
         pdf_path.write_bytes(
             contents
@@ -539,6 +586,7 @@ async def process_pdf_receipt(
 )
 async def process_receipts_batch(
     files: list[UploadFile] = File(...),
+    force: bool = Form(False),
     pipeline: ReceiptPipeline = Depends(
         get_receipt_pipeline
     ),
@@ -1090,12 +1138,17 @@ async def get_receipt_image(
         )
 
         if not image_path.exists():
-            raise HTTPException(
-                status_code=404,
-                detail=(
-                    "Receipt image file not found."
-                ),
-            )
+            # Fallback to local UPLOAD_DIR using just the filename
+            fallback_path = UPLOAD_DIR / image_path.name
+            if fallback_path.exists():
+                image_path = fallback_path
+            else:
+                raise HTTPException(
+                    status_code=404,
+                    detail=(
+                        "Receipt image file not found."
+                    ),
+                )
 
         return FileResponse(
             path=image_path,
